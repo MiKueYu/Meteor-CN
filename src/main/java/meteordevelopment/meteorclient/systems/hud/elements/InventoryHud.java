@@ -21,7 +21,7 @@ import net.minecraft.util.Identifier;
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 
 public class InventoryHud extends HudElement {
-    public static final HudElementInfo<InventoryHud> INFO = new HudElementInfo<>(Hud.GROUP, "inventory", "Displays your inventory.", InventoryHud::new);
+    public static final HudElementInfo<InventoryHud> INFO = new HudElementInfo<>(Hud.GROUP, "背包", "显示你的背包.", InventoryHud::new);
 
     private static final Identifier TEXTURE = new MeteorIdentifier("textures/container.png");
     private static final Identifier TEXTURE_TRANSPARENT = new MeteorIdentifier("textures/container-transparent.png");
@@ -29,15 +29,15 @@ public class InventoryHud extends HudElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> containers = sgGeneral.add(new BoolSetting.Builder()
-        .name("containers")
-        .description("Shows the contents of a container when holding them.")
+        .name("容器")
+        .description("拿着容器时显示容器的内容.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
-        .name("scale")
-        .description("The scale.")
+        .name("比例")
+        .description("比例.")
         .defaultValue(2)
         .min(1)
         .sliderRange(1, 5)
@@ -46,16 +46,16 @@ public class InventoryHud extends HudElement {
     );
 
     private final Setting<Background> background = sgGeneral.add(new EnumSetting.Builder<Background>()
-        .name("background")
-        .description("Background of inventory viewer.")
+        .name("背景")
+        .description("背包查看器的背景.")
         .defaultValue(Background.Texture)
         .onChanged(bg -> calculateSize())
         .build()
     );
 
     private final Setting<SettingColor> color = sgGeneral.add(new ColorSetting.Builder()
-        .name("background-color")
-        .description("Color of the background.")
+        .name("背景颜色")
+        .description("用于背景的颜色.")
         .defaultValue(new SettingColor(255, 255, 255))
         .visible(() -> background.get() != Background.None)
         .build()

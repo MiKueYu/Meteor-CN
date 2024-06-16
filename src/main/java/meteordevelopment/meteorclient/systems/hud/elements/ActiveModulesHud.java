@@ -126,7 +126,7 @@ public class ActiveModulesHud extends HudElement {
 
     private final Setting<Double> rainbowSpread = sgGeneral.add(new DoubleSetting.Builder()
         .name("彩虹扩散")
-        .description("彩虹颜色模式的彩虹扩散.")
+        .description("彩虹颜色模式的彩虹跨度.")
         .defaultValue(0.01)
         .sliderMin(0.001)
         .sliderMax(0.05)

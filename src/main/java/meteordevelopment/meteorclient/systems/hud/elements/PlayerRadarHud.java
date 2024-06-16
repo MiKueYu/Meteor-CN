@@ -21,17 +21,17 @@ import java.util.List;
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 
 public class PlayerRadarHud extends HudElement {
-    public static final HudElementInfo<PlayerRadarHud> INFO = new HudElementInfo<>(Hud.GROUP, "player-radar", "Displays players in your visual range.", PlayerRadarHud::new);
+    public static final HudElementInfo<PlayerRadarHud> INFO = new HudElementInfo<>(Hud.GROUP, "玩家雷达", "显示在你视觉范围内的玩家.", PlayerRadarHud::new);
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgScale = settings.createGroup("Scale");
-    private final SettingGroup sgBackground = settings.createGroup("Background");
+    private final SettingGroup sgScale = settings.createGroup("比例");
+    private final SettingGroup sgBackground = settings.createGroup("背景");
 
     // General
 
     private final Setting<Integer> limit = sgGeneral.add(new IntSetting.Builder()
-        .name("limit")
-        .description("The max number of players to show.")
+        .name("限制")
+        .description("要显示的玩家的最大数量.")
         .defaultValue(10)
         .min(1)
         .sliderRange(1, 20)
@@ -39,50 +39,50 @@ public class PlayerRadarHud extends HudElement {
     );
 
     private final Setting<Boolean> distance = sgGeneral.add(new BoolSetting.Builder()
-        .name("distance")
-        .description("Shows the distance to the player next to their name.")
+        .name("距离")
+        .description("在玩家名字旁边显示到他们的距离.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> friends = sgGeneral.add(new BoolSetting.Builder()
-        .name("display-friends")
-        .description("Whether to show friends or not.")
+        .name("显示好友")
+        .description("是否显示好友.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> shadow = sgGeneral.add(new BoolSetting.Builder()
-        .name("shadow")
-        .description("Renders shadow behind text.")
+        .name("阴影")
+        .description("在文本后面渲染阴影.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<SettingColor> primaryColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("primary-color")
-        .description("Primary color.")
+        .name("主色")
+        .description("主色.")
         .defaultValue(new SettingColor())
         .build()
     );
 
     private final Setting<SettingColor> secondaryColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("secondary-color")
-        .description("Secondary color.")
+        .name("次要颜色")
+        .description("次要颜色.")
         .defaultValue(new SettingColor(175, 175, 175))
         .build()
     );
 
     private final Setting<Alignment> alignment = sgGeneral.add(new EnumSetting.Builder<Alignment>()
-        .name("alignment")
-        .description("Horizontal alignment.")
+        .name("对齐")
+        .description("水平对齐.")
         .defaultValue(Alignment.Auto)
         .build()
     );
 
     private final Setting<Integer> border = sgGeneral.add(new IntSetting.Builder()
-        .name("border")
-        .description("How much space to add around the element.")
+        .name("边框")
+        .description("边框大小.")
         .defaultValue(0)
         .build()
     );
@@ -90,15 +90,15 @@ public class PlayerRadarHud extends HudElement {
     // Scale
 
     private final Setting<Boolean> customScale = sgScale.add(new BoolSetting.Builder()
-        .name("custom-scale")
-        .description("Applies custom text scale rather than the global one.")
+        .name("自定义比例")
+        .description("应用自定义文本缩放比例，而不是全局缩放比例.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Double> scale = sgScale.add(new DoubleSetting.Builder()
-        .name("scale")
-        .description("Custom scale.")
+        .name("比例")
+        .description("自定义比例.")
         .visible(customScale::get)
         .defaultValue(1)
         .min(0.5)
@@ -109,15 +109,15 @@ public class PlayerRadarHud extends HudElement {
     // Background
 
     private final Setting<Boolean> background = sgBackground.add(new BoolSetting.Builder()
-        .name("background")
-        .description("Displays background.")
+        .name("背景")
+        .description("显示背景.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<SettingColor> backgroundColor = sgBackground.add(new ColorSetting.Builder()
-        .name("background-color")
-        .description("Color used for the background.")
+        .name("背景颜色")
+        .description("用于背景的颜色.")
         .visible(background::get)
         .defaultValue(new SettingColor(25, 25, 25, 50))
         .build()
@@ -141,7 +141,7 @@ public class PlayerRadarHud extends HudElement {
 
     @Override
     public void tick(HudRenderer renderer) {
-        double width = renderer.textWidth("Players:", shadow.get(), getScale());
+        double width = renderer.textWidth("玩家:", shadow.get(), getScale());
         double height = renderer.textHeight(shadow.get(), getScale());
 
         if (mc.world == null) {
@@ -171,7 +171,7 @@ public class PlayerRadarHud extends HudElement {
             renderer.quad(this.x, this.y, getWidth(), getHeight(), backgroundColor.get());
         }
 
-        renderer.text("Players:", x + border.get() + alignX(renderer.textWidth("Players:", shadow.get(), getScale()), alignment.get()), y, secondaryColor.get(), shadow.get(), getScale());
+        renderer.text("Players:", x + border.get() + alignX(renderer.textWidth("玩家:", shadow.get(), getScale()), alignment.get()), y, secondaryColor.get(), shadow.get(), getScale());
 
         if (mc.world == null) return;
         double spaceWidth = renderer.textWidth(" ", shadow.get(), getScale());

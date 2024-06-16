@@ -23,15 +23,15 @@ import org.joml.Vector3f;
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 
 public class PlayerModelHud extends HudElement {
-    public static final HudElementInfo<PlayerModelHud> INFO = new HudElementInfo<>(Hud.GROUP, "player-model", "Displays a model of your player.", PlayerModelHud::new);
+    public static final HudElementInfo<PlayerModelHud> INFO = new HudElementInfo<>(Hud.GROUP, "玩家模型", "显示玩家的模型.", PlayerModelHud::new);
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgBackground = settings.createGroup("Background");
+    private final SettingGroup sgBackground = settings.createGroup("背景");
 
     // General
 
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
-        .name("scale")
-        .description("The scale.")
+        .name("比例")
+        .description("自定义比例.")
         .defaultValue(2)
         .min(1)
         .sliderRange(1, 5)
@@ -40,15 +40,15 @@ public class PlayerModelHud extends HudElement {
     );
 
     private final Setting<Boolean> copyYaw = sgGeneral.add(new BoolSetting.Builder()
-        .name("copy-yaw")
-        .description("Makes the player model's yaw equal to yours.")
+        .name("复制偏航角")
+        .description("使玩家模型的偏航角与你的偏航角一致.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Integer> customYaw = sgGeneral.add(new IntSetting.Builder()
-        .name("custom-yaw")
-        .description("Custom yaw for when copy yaw is off.")
+        .name("自定义偏航角")
+        .description("当复制偏航角关闭时使用的自定义偏航角.")
         .defaultValue(0)
         .range(-180, 180)
         .sliderRange(-180, 180)
@@ -57,15 +57,15 @@ public class PlayerModelHud extends HudElement {
     );
 
     private final Setting<Boolean> copyPitch = sgGeneral.add(new BoolSetting.Builder()
-        .name("copy-pitch")
-        .description("Makes the player model's pitch equal to yours.")
+        .name("复制俯仰角")
+        .description("使玩家模型的俯仰角与你的俯仰角一致.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Integer> customPitch = sgGeneral.add(new IntSetting.Builder()
-        .name("custom-pitch")
-        .description("Custom pitch for when copy pitch is off.")
+        .name("自定义俯仰角")
+        .description("当复制俯仰关闭时使用的自定义俯仰角.")
         .defaultValue(0)
         .range(-90, 90)
         .sliderRange(-90, 90)
@@ -74,8 +74,8 @@ public class PlayerModelHud extends HudElement {
     );
 
     private final Setting<CenterOrientation> centerOrientation = sgGeneral.add(new EnumSetting.Builder<CenterOrientation>()
-        .name("center-orientation")
-        .description("Which direction the player faces when the HUD model faces directly forward.")
+        .name("中心方向")
+        .description("HUD 模型正对前方时，玩家面对的方向.")
         .defaultValue(CenterOrientation.South)
         .build()
     );
@@ -83,15 +83,15 @@ public class PlayerModelHud extends HudElement {
     // Background
 
     private final Setting<Boolean> background = sgBackground.add(new BoolSetting.Builder()
-        .name("background")
-        .description("Displays background.")
+        .name("背景")
+        .description("显示背景.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<SettingColor> backgroundColor = sgBackground.add(new ColorSetting.Builder()
-        .name("background-color")
-        .description("Color used for the background.")
+        .name("背景颜色")
+        .description("用于背景的颜色.")
         .visible(background::get)
         .defaultValue(new SettingColor(25, 25, 25, 50))
         .build()

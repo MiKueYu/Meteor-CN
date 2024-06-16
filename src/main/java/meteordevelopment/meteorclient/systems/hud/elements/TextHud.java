@@ -27,9 +27,9 @@ public class TextHud extends HudElement {
     private static final Color WHITE = new Color();
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgShown = settings.createGroup("Shown");
-    private final SettingGroup sgScale = settings.createGroup("Scale");
-    private final SettingGroup sgBackground = settings.createGroup("Background");
+    private final SettingGroup sgShown = settings.createGroup("显示");
+    private final SettingGroup sgScale = settings.createGroup("比例");
+    private final SettingGroup sgBackground = settings.createGroup("背景");
 
     private double originalWidth, originalHeight;
     private boolean needsCompile, recalculateSize;
@@ -39,8 +39,8 @@ public class TextHud extends HudElement {
     // General
 
     public final Setting<String> text = sgGeneral.add(new StringSetting.Builder()
-        .name("text")
-        .description("Text to display with Starscript.")
+        .name("文本")
+        .description("使用 Starscript 显示的文本.")
         .defaultValue(MeteorClient.NAME)
         .onChanged(s -> recompile())
         .wide()
@@ -49,8 +49,8 @@ public class TextHud extends HudElement {
     );
 
     public final Setting<Integer> updateDelay = sgGeneral.add(new IntSetting.Builder()
-        .name("update-delay")
-        .description("Update delay in ticks")
+        .name("更新延迟")
+        .description("以ticks为单位的更新延迟")
         .defaultValue(4)
         .onChanged(integer -> {
             if (timer > integer) timer = integer;
@@ -60,16 +60,16 @@ public class TextHud extends HudElement {
     );
 
     public final Setting<Boolean> shadow = sgGeneral.add(new BoolSetting.Builder()
-        .name("shadow")
-        .description("Renders shadow behind text.")
+        .name("阴影")
+        .description("在文本后面渲染阴影.")
         .defaultValue(true)
         .onChanged(aBoolean -> recalculateSize = true)
         .build()
     );
 
     public final Setting<Integer> border = sgGeneral.add(new IntSetting.Builder()
-        .name("border")
-        .description("How much space to add around the text.")
+        .name("边框")
+        .description("边框大小.")
         .defaultValue(0)
         .onChanged(integer -> super.setSize(originalWidth + integer * 2, originalHeight + integer * 2))
         .build()
@@ -78,16 +78,16 @@ public class TextHud extends HudElement {
     // Shown
 
     public final Setting<Shown> shown = sgShown.add(new EnumSetting.Builder<Shown>()
-        .name("shown")
-        .description("When this text element is shown.")
+        .name("显示")
+        .description("当此文本元素显示时.")
         .defaultValue(Shown.Always)
         .onChanged(s -> recompile())
         .build()
     );
 
     public final Setting<String> condition = sgShown.add(new StringSetting.Builder()
-        .name("condition")
-        .description("Condition to check when shown is not Always.")
+        .name("条件")
+        .description("当显示不总是时要检查的条件.")
         .visible(() -> shown.get() != Shown.Always)
         .onChanged(s -> recompile())
         .renderer(StarscriptTextBoxRenderer.class)
@@ -97,7 +97,7 @@ public class TextHud extends HudElement {
     // Scale
 
     public final Setting<Boolean> customScale = sgScale.add(new BoolSetting.Builder()
-        .name("custom-scale")
+        .name("自定义比例")
         .description("Applies custom text scale rather than the global one.")
         .defaultValue(false)
         .onChanged(integer -> recalculateSize = true)
@@ -105,8 +105,8 @@ public class TextHud extends HudElement {
     );
 
     public final Setting<Double> scale = sgScale.add(new DoubleSetting.Builder()
-        .name("scale")
-        .description("Custom scale.")
+        .name("比例")
+        .description("自定义比例.")
         .visible(customScale::get)
         .defaultValue(1)
         .onChanged(integer -> recalculateSize = true)
@@ -118,15 +118,15 @@ public class TextHud extends HudElement {
     // Background
 
     public final Setting<Boolean> background = sgBackground.add(new BoolSetting.Builder()
-        .name("background")
-        .description("Displays background.")
+        .name("背景")
+        .description("显示背景.")
         .defaultValue(false)
         .build()
     );
 
     public final Setting<SettingColor> backgroundColor = sgBackground.add(new ColorSetting.Builder()
-        .name("background-color")
-        .description("Color used for the background.")
+        .name("背景颜色")
+        .description("用于背景的颜色.")
         .visible(background::get)
         .defaultValue(new SettingColor(25, 25, 25, 50))
         .build()
@@ -275,9 +275,9 @@ public class TextHud extends HudElement {
         @Override
         public String toString() {
             return switch (this) {
-                case Always -> "Always";
-                case WhenTrue -> "When True";
-                case WhenFalse -> "When False";
+                case Always -> "总是";
+                case WhenTrue -> "当为真时";
+                case WhenFalse -> "当为假时";
             };
         }
     }

@@ -16,24 +16,24 @@ import net.minecraft.util.math.MathHelper;
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 
 public class CompassHud extends HudElement {
-    public static final HudElementInfo<CompassHud> INFO = new HudElementInfo<>(Hud.GROUP, "compass", "Displays a compass.", CompassHud::new);
+    public static final HudElementInfo<CompassHud> INFO = new HudElementInfo<>(Hud.GROUP, "指南针", "显示指南针.", CompassHud::new);
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgTextScale = settings.createGroup("Text Scale");
-    private final SettingGroup sgBackground = settings.createGroup("Background");
+    private final SettingGroup sgTextScale = settings.createGroup("文字缩放比例");
+    private final SettingGroup sgBackground = settings.createGroup("背景");
 
     // General
 
     private final Setting<CompassHud.Mode> mode = sgGeneral.add(new EnumSetting.Builder<CompassHud.Mode>()
-        .name("type")
-        .description("Which type of direction information to show.")
+        .name("类型")
+        .description("显示哪种类型的方向信息.")
         .defaultValue(Mode.Axis)
         .build()
     );
 
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
-        .name("scale")
-        .description("The scale.")
+        .name("比例")
+        .description("比例.")
         .defaultValue(1)
         .min(1)
         .sliderRange(1, 5)
@@ -42,29 +42,29 @@ public class CompassHud extends HudElement {
     );
 
     private final Setting<SettingColor> colorNorth = sgGeneral.add(new ColorSetting.Builder()
-        .name("color-north")
-        .description("Color of north.")
+        .name("北方的颜色")
+        .description("北方的颜色.")
         .defaultValue(new SettingColor(225, 45, 45))
         .build()
     );
 
     private final Setting<SettingColor> colorOther = sgGeneral.add(new ColorSetting.Builder()
-        .name("color-north")
-        .description("Color of other directions.")
+        .name("其他方向的颜色")
+        .description("其他方向的颜色.")
         .defaultValue(new SettingColor())
         .build()
     );
 
     private final Setting<Boolean> shadow = sgGeneral.add(new BoolSetting.Builder()
-        .name("shadow")
-        .description("Text shadow.")
+        .name("阴影")
+        .description("文本阴影.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Integer> border = sgGeneral.add(new IntSetting.Builder()
-        .name("border")
-        .description("How much space to add around the element.")
+        .name("边框")
+        .description("边框大小.")
         .defaultValue(0)
         .onChanged(integer -> calculateSize())
         .build()
@@ -73,15 +73,15 @@ public class CompassHud extends HudElement {
     // Scale
 
     private final Setting<Boolean> customTextScale = sgTextScale.add(new BoolSetting.Builder()
-        .name("custom-text-scale")
-        .description("Applies custom text scale rather than the global one.")
+        .name("自定义文字缩放比例")
+        .description("应用自定义文字缩放比例而不是全局缩放比例.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Double> textScale = sgTextScale.add(new DoubleSetting.Builder()
-        .name("text-scale")
-        .description("Custom text scale.")
+        .name("文字缩放比例")
+        .description("自定义文字缩放比例.")
         .visible(customTextScale::get)
         .defaultValue(1)
         .min(0.5)
@@ -92,15 +92,15 @@ public class CompassHud extends HudElement {
     // Background
 
     private final Setting<Boolean> background = sgBackground.add(new BoolSetting.Builder()
-        .name("background")
-        .description("Displays background.")
+        .name("背景")
+        .description("显示背景.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<SettingColor> backgroundColor = sgBackground.add(new ColorSetting.Builder()
-        .name("background-color")
-        .description("Color used for the background.")
+        .name("背景颜色")
+        .description("用于背景的颜色.")
         .visible(background::get)
         .defaultValue(new SettingColor(25, 25, 25, 50))
         .build()

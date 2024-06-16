@@ -22,45 +22,45 @@ import java.util.List;
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 
 public class PotionTimersHud extends HudElement {
-    public static final HudElementInfo<PotionTimersHud> INFO = new HudElementInfo<>(Hud.GROUP, "potion-timers", "Displays active potion effects with timers.", PotionTimersHud::new);
+    public static final HudElementInfo<PotionTimersHud> INFO = new HudElementInfo<>(Hud.GROUP, "药水计时器", "显示带有计时器的药水效果.", PotionTimersHud::new);
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgScale = settings.createGroup("Scale");
-    private final SettingGroup sgBackground = settings.createGroup("Background");
+    private final SettingGroup sgScale = settings.createGroup("比例");
+    private final SettingGroup sgBackground = settings.createGroup("背景");
 
     // General
 
     private final Setting<List<StatusEffect>> hiddenEffects = sgGeneral.add(new StatusEffectListSetting.Builder()
-        .name("hidden-effects")
-        .description("Which effects not to show in the list.")
+        .name("隐藏效果")
+        .description("在列表中不显示的效果.")
         .build()
     );
 
     private final Setting<Boolean> showAmbient = sgGeneral.add(new BoolSetting.Builder()
-        .name("show-ambient")
-        .description("Whether to show ambient effects like from beacons and conduits.")
+        .name("显示环境效果")
+        .description("是否显示环境效果，比如来自信标和潮涌核心的效果.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<ColorMode> colorMode = sgGeneral.add(new EnumSetting.Builder<ColorMode>()
-        .name("color-mode")
-        .description("What color to use for effects.")
+        .name("颜色模式")
+        .description("用于效果的颜色.")
         .defaultValue(ColorMode.Effect)
         .build()
     );
 
     private final Setting<SettingColor> flatColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("flat-color")
-        .description("Color for flat color mode.")
+        .name("单色")
+        .description("单色模式的颜色.")
         .defaultValue(new SettingColor(225, 25, 25))
         .visible(() -> colorMode.get() == ColorMode.Flat)
         .build()
     );
 
     private final Setting<Double> rainbowSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("rainbow-speed")
-        .description("Rainbow speed of rainbow color mode.")
+        .name("彩虹速度")
+        .description("彩虹颜色模式的彩虹速度.")
         .defaultValue(0.05)
         .sliderMin(0.01)
         .sliderMax(0.2)
@@ -70,8 +70,8 @@ public class PotionTimersHud extends HudElement {
     );
 
     private final Setting<Double> rainbowSpread = sgGeneral.add(new DoubleSetting.Builder()
-        .name("rainbow-spread")
-        .description("Rainbow spread of rainbow color mode.")
+        .name("彩虹跨度")
+        .description("彩虹颜色模式的彩虹跨度.")
         .defaultValue(0.01)
         .sliderMin(0.001)
         .sliderMax(0.05)
@@ -81,8 +81,8 @@ public class PotionTimersHud extends HudElement {
     );
 
     private final Setting<Double> rainbowSaturation = sgGeneral.add(new DoubleSetting.Builder()
-        .name("rainbow-saturation")
-        .description("Saturation of rainbow color mode.")
+        .name("彩虹饱和度")
+        .description("彩虹颜色模式的饱和度.")
         .defaultValue(1.0d)
         .sliderRange(0.0d, 1.0d)
         .visible(() -> colorMode.get() == ColorMode.Rainbow)
@@ -90,8 +90,8 @@ public class PotionTimersHud extends HudElement {
     );
 
     private final Setting<Double> rainbowBrightness = sgGeneral.add(new DoubleSetting.Builder()
-        .name("rainbow-brightness")
-        .description("Brightness of rainbow color mode.")
+        .name("彩虹亮度")
+        .description("彩虹颜色模式的亮度.")
         .defaultValue(1.0d)
         .sliderRange(0.0d, 1.0d)
         .visible(() -> colorMode.get() == ColorMode.Rainbow)
@@ -99,22 +99,22 @@ public class PotionTimersHud extends HudElement {
     );
 
     private final Setting<Boolean> shadow = sgGeneral.add(new BoolSetting.Builder()
-        .name("shadow")
-        .description("Renders shadow behind text.")
+        .name("阴影")
+        .description("在文本后面渲染阴影.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Alignment> alignment = sgGeneral.add(new EnumSetting.Builder<Alignment>()
-        .name("alignment")
-        .description("Horizontal alignment.")
+        .name("对齐")
+        .description("水平对齐.")
         .defaultValue(Alignment.Auto)
         .build()
     );
 
     private final Setting<Integer> border = sgGeneral.add(new IntSetting.Builder()
-        .name("border")
-        .description("How much space to add around the element.")
+        .name("边框")
+        .description("边框大小.")
         .defaultValue(0)
         .build()
     );
@@ -122,15 +122,15 @@ public class PotionTimersHud extends HudElement {
     // Scale
 
     private final Setting<Boolean> customScale = sgScale.add(new BoolSetting.Builder()
-        .name("custom-scale")
-        .description("Applies custom text scale rather than the global one.")
+        .name("自定义比例")
+        .description("应用自定义文本缩放比例，而不是全局缩放比例.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Double> scale = sgScale.add(new DoubleSetting.Builder()
-        .name("scale")
-        .description("Custom scale.")
+        .name("比例")
+        .description("自定义比例.")
         .visible(customScale::get)
         .defaultValue(1)
         .min(0.5)
@@ -141,15 +141,15 @@ public class PotionTimersHud extends HudElement {
     // Background
 
     private final Setting<Boolean> background = sgBackground.add(new BoolSetting.Builder()
-        .name("background")
-        .description("Displays background.")
+        .name("背景")
+        .description("显示背景.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<SettingColor> backgroundColor = sgBackground.add(new ColorSetting.Builder()
-        .name("background-color")
-        .description("Color used for the background.")
+        .name("背景颜色")
+        .description("用于背景的颜色.")
         .visible(background::get)
         .defaultValue(new SettingColor(25, 25, 25, 50))
         .build()
@@ -175,7 +175,7 @@ public class PotionTimersHud extends HudElement {
     @Override
     public void tick(HudRenderer renderer) {
         if (mc.player == null || (isInEditor() && hasNoVisibleEffects())) {
-            setSize(renderer.textWidth("Potion Timers 0:00", shadow.get(), getScale()), renderer.textHeight(shadow.get(), getScale()));
+            setSize(renderer.textWidth("药水剩余时间 0:00", shadow.get(), getScale()), renderer.textHeight(shadow.get(), getScale()));
             return;
         }
 
@@ -206,7 +206,7 @@ public class PotionTimersHud extends HudElement {
         }
 
         if (mc.player == null || (isInEditor() && hasNoVisibleEffects())) {
-            renderer.text("Potion Timers 0:00", x, y, Color.WHITE, shadow.get(), getScale());
+            renderer.text("药水剩余时间 0:00", x, y, Color.WHITE, shadow.get(), getScale());
             return;
         }
 

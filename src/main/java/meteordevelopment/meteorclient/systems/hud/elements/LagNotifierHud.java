@@ -15,52 +15,52 @@ import meteordevelopment.meteorclient.utils.render.color.SettingColor;
 import meteordevelopment.meteorclient.utils.world.TickRate;
 
 public class LagNotifierHud extends HudElement {
-    public static final HudElementInfo<LagNotifierHud> INFO = new HudElementInfo<>(Hud.GROUP, "lag-notifier", "Displays if the server is lagging in ticks.", LagNotifierHud::new);
+    public static final HudElementInfo<LagNotifierHud> INFO = new HudElementInfo<>(Hud.GROUP, "服务器延迟通知器", "显示服务器是否卡顿（以滴答声为单位）.", LagNotifierHud::new);
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgScale = settings.createGroup("Scale");
-    private final SettingGroup sgBackground = settings.createGroup("Background");
+    private final SettingGroup sgScale = settings.createGroup("比例");
+    private final SettingGroup sgBackground = settings.createGroup("背景");
 
     // General
 
     private final Setting<Boolean> shadow = sgGeneral.add(new BoolSetting.Builder()
-        .name("shadow")
-        .description("Text shadow.")
+        .name("阴影")
+        .description("文本阴影.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<SettingColor> textColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("text-color")
-        .description("A.")
+        .name("文本颜色")
+        .description("文本的颜色.")
         .defaultValue(new SettingColor())
         .build()
     );
 
     private final Setting<SettingColor> color1 = sgGeneral.add(new ColorSetting.Builder()
-        .name("color-1")
-        .description("First color.")
+        .name("颜色-1")
+        .description("第一色.")
         .defaultValue(new SettingColor(255, 255, 5))
         .build()
     );
 
     private final Setting<SettingColor> color2 = sgGeneral.add(new ColorSetting.Builder()
-        .name("color-2")
-        .description("Second color.")
+        .name("颜色-2")
+        .description("第二色.")
         .defaultValue(new SettingColor(235, 158, 52))
         .build()
     );
 
     private final Setting<SettingColor> color3 = sgGeneral.add(new ColorSetting.Builder()
-        .name("color-3")
-        .description("Third color.")
+        .name("颜色-3")
+        .description("第三色.")
         .defaultValue(new SettingColor(225, 45, 45))
         .build()
     );
 
     private final Setting<Integer> border = sgGeneral.add(new IntSetting.Builder()
-        .name("border")
-        .description("How much space to add around the element.")
+        .name("边框")
+        .description("边框大小.")
         .defaultValue(0)
         .build()
     );
@@ -68,15 +68,15 @@ public class LagNotifierHud extends HudElement {
     // Scale
 
     private final Setting<Boolean> customScale = sgScale.add(new BoolSetting.Builder()
-        .name("custom-scale")
-        .description("Applies custom text scale rather than the global one.")
+        .name("自定义比例")
+        .description("应用自定义文本缩放比例，而不是全局缩放比例。.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Double> scale = sgScale.add(new DoubleSetting.Builder()
-        .name("scale")
-        .description("Custom scale.")
+        .name("比例")
+        .description("自定义比例.")
         .visible(customScale::get)
         .defaultValue(1)
         .min(0.5)
@@ -87,15 +87,15 @@ public class LagNotifierHud extends HudElement {
     // Background
 
     private final Setting<Boolean> background = sgBackground.add(new BoolSetting.Builder()
-        .name("background")
-        .description("Displays background.")
+        .name("背景")
+        .description("显示背景.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<SettingColor> backgroundColor = sgBackground.add(new ColorSetting.Builder()
-        .name("background-color")
-        .description("Color used for the background.")
+        .name("背景颜色")
+        .description("用于背景的颜色.")
         .visible(background::get)
         .defaultValue(new SettingColor(25, 25, 25, 50))
         .build()
@@ -138,7 +138,7 @@ public class LagNotifierHud extends HudElement {
         double x = this.x + border.get();
         double y = this.y + border.get();
 
-        double x2 = renderer.text("Time since last tick ", x, y, textColor.get(), shadow.get(), getScale());
+        double x2 = renderer.text("距离上次滴答的时间 ", x, y, textColor.get(), shadow.get(), getScale());
         x2 = renderer.text(right, x2, y, rightColor, shadow.get(), getScale());
 
         setSize(x2 - x, renderer.textHeight(shadow.get(), getScale()));
