@@ -17,32 +17,32 @@ import net.minecraft.item.Items;
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 
 public class ArmorHud extends HudElement {
-    public static final HudElementInfo<ArmorHud> INFO = new HudElementInfo<>(Hud.GROUP, "armor", "Displays your armor.", ArmorHud::new);
+    public static final HudElementInfo<ArmorHud> INFO = new HudElementInfo<>(Hud.GROUP, "护甲", "显示你的护甲.", ArmorHud::new);
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgDurability = settings.createGroup("Durability");
-    private final SettingGroup sgBackground = settings.createGroup("Background");
+    private final SettingGroup sgDurability = settings.createGroup("耐久");
+    private final SettingGroup sgBackground = settings.createGroup("背景");
 
     // General
 
     private final Setting<Orientation> orientation = sgGeneral.add(new EnumSetting.Builder<Orientation>()
-        .name("orientation")
-        .description("How to display armor.")
+        .name("方向")
+        .description("如何显示盔甲.")
         .defaultValue(Orientation.Horizontal)
         .onChanged(val -> calculateSize())
         .build()
     );
 
     private final Setting<Boolean> flipOrder = sgGeneral.add(new BoolSetting.Builder()
-        .name("flip-order")
-        .description("Flips the order of armor items.")
+        .name("颠倒顺序")
+        .description("颠倒盔甲物品的顺序.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
-        .name("scale")
-        .description("The scale.")
+        .name("比例")
+        .description("比例.")
         .defaultValue(2)
         .onChanged(aDouble -> calculateSize())
         .min(1)
@@ -51,8 +51,8 @@ public class ArmorHud extends HudElement {
     );
 
     private final Setting<Integer> border = sgGeneral.add(new IntSetting.Builder()
-        .name("border")
-        .description("How much space to add around the element.")
+        .name("边框")
+        .description("边框大小.")
         .defaultValue(0)
         .onChanged(integer -> calculateSize())
         .build()
@@ -61,24 +61,24 @@ public class ArmorHud extends HudElement {
     // Durability
 
     private final Setting<Durability> durability = sgDurability.add(new EnumSetting.Builder<Durability>()
-        .name("durability")
-        .description("How to display armor durability.")
+        .name("耐久")
+        .description("如何显示盔甲耐久.")
         .defaultValue(Durability.Bar)
         .onChanged(durability1 -> calculateSize())
         .build()
     );
 
     private final Setting<SettingColor> durabilityColor = sgDurability.add(new ColorSetting.Builder()
-        .name("durability-color")
-        .description("Color of the text.")
+        .name("耐久颜色")
+        .description("文本的颜色.")
         .visible(() -> durability.get() == Durability.Total || durability.get() == Durability.Percentage)
         .defaultValue(new SettingColor())
         .build()
     );
 
     private final Setting<Boolean> durabilityShadow = sgDurability.add(new BoolSetting.Builder()
-        .name("durability-shadow")
-        .description("Text shadow.")
+        .name("耐久阴影")
+        .description("文本阴影.")
         .visible(() -> durability.get() == Durability.Total || durability.get() == Durability.Percentage)
         .defaultValue(true)
         .build()
@@ -87,15 +87,15 @@ public class ArmorHud extends HudElement {
     // Background
 
     private final Setting<Boolean> background = sgBackground.add(new BoolSetting.Builder()
-        .name("background")
-        .description("Displays background.")
+        .name("背景")
+        .description("显示背景.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<SettingColor> backgroundColor = sgBackground.add(new ColorSetting.Builder()
-        .name("background-color")
-        .description("Color used for the background.")
+        .name("背景颜色")
+        .description("背景颜色.")
         .visible(background::get)
         .defaultValue(new SettingColor(25, 25, 25, 50))
         .build()

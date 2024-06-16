@@ -27,22 +27,22 @@ public class Macro implements ISerializable<Macro> {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public Setting<String> name = sgGeneral.add(new StringSetting.Builder()
-        .name("name")
-        .description("The name of the macro.")
+        .name("名称")
+        .description("宏的名称.")
         .build()
     );
 
     public Setting<List<String>> messages = sgGeneral.add(new StringListSetting.Builder()
-        .name("messages")
-        .description("The messages for the macro to send.")
+        .name("消息")
+        .description("宏发送的消息.")
         .onChanged(v -> dirty = true)
         .renderer(StarscriptTextBoxRenderer.class)
         .build()
     );
 
     public Setting<Keybind> keybind = sgGeneral.add(new KeybindSetting.Builder()
-        .name("keybind")
-        .description("The bind to run the macro.")
+        .name("快捷键")
+        .description("运行宏的快捷键.")
         .build()
     );
 
