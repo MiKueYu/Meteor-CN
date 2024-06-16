@@ -55,7 +55,7 @@ public class HudEditorScreen extends WidgetScreen implements Snapper.Container {
     private double splitLinesAnimation;
 
     public HudEditorScreen(GuiTheme theme) {
-        super(theme, "Hud Editor");
+        super(theme, "HUD 编辑");
 
         hud = Hud.get();
         snapper = new Snapper(this);

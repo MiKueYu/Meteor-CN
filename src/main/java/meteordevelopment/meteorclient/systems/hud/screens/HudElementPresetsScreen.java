@@ -23,7 +23,7 @@ public class HudElementPresetsScreen extends WindowScreen {
     private HudElementInfo<?>.Preset firstPreset;
 
     public HudElementPresetsScreen(GuiTheme theme, HudElementInfo<?> info, int x, int y) {
-        super(theme, "Select preset for " + info.title);
+        super(theme, "选择预设为 " + info.title);
 
         this.info = info;
         this.x = x + 9;

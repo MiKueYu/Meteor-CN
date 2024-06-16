@@ -25,7 +25,7 @@ public class Macros extends System<Macros> implements Iterable<Macro> {
     private List<Macro> macros = new ArrayList<>();
 
     public Macros() {
-        super("macros");
+        super("宏");
     }
 
     public static Macros get() {

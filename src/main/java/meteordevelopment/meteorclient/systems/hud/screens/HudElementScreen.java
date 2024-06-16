@@ -38,10 +38,10 @@ public class HudElementScreen extends WindowScreen {
         this.element = element;
 
         settings = new Settings();
-        SettingGroup sg = settings.createGroup("Anchors");
+        SettingGroup sg = settings.createGroup("位置");
         sg.add(new BoolSetting.Builder()
-            .name("auto-anchors")
-            .description("Automatically assigns anchors based on the position.")
+            .name("自动位置")
+            .description("根据位置自动分配位置.")
             .defaultValue(true)
             .onModuleActivated(booleanSetting -> booleanSetting.set(element.autoAnchors))
             .onChanged(aBoolean -> {
@@ -51,8 +51,8 @@ public class HudElementScreen extends WindowScreen {
             .build()
         );
         sg.add(new EnumSetting.Builder<XAnchor>()
-            .name("x-anchor")
-            .description("Horizontal anchor.")
+            .name("X-位置")
+            .description("水平位置.")
             .defaultValue(XAnchor.Left)
             .visible(() -> !element.autoAnchors)
             .onModuleActivated(xAnchorSetting -> xAnchorSetting.set(element.box.xAnchor))
@@ -60,8 +60,8 @@ public class HudElementScreen extends WindowScreen {
             .build()
         );
         sg.add(new EnumSetting.Builder<YAnchor>()
-            .name("y-anchor")
-            .description("Vertical anchor.")
+            .name("y-位置")
+            .description("垂直位置.")
             .defaultValue(YAnchor.Top)
             .visible(() -> !element.autoAnchors)
             .onModuleActivated(yAnchorSetting -> yAnchorSetting.set(element.box.yAnchor))
@@ -104,7 +104,7 @@ public class HudElementScreen extends WindowScreen {
         WHorizontalList bottomList = add(theme.horizontalList()).expandX().widget();
 
         //   Active
-        bottomList.add(theme.label("Active:"));
+        bottomList.add(theme.label("激活:"));
         WCheckbox active = bottomList.add(theme.checkbox(element.isActive())).widget();
         active.action = () -> {
             if (element.isActive() != active.checked) element.toggle();
