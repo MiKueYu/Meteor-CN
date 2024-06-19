@@ -45,12 +45,12 @@ public class Nametags extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgPlayers = settings.createGroup("Players");
     private final SettingGroup sgItems = settings.createGroup("Items");
-    private final SettingGroup sgRender = settings.createGroup("Render");
+    private final SettingGroup sgRender = settings.createGroup("渲染");
 
     // General
 
     private final Setting<Set<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
-        .name("entities")
+        .name("实体")
         .description("Select entities to draw nametags on.")
         .defaultValue(EntityType.PLAYER, EntityType.ITEM)
         .build()

@@ -50,7 +50,7 @@ public class Notifier extends Module {
     );
 
     private final Setting<Boolean> totemsIgnoreOwn = sgTotemPops.add(new BoolSetting.Builder()
-        .name("ignore-own")
+        .name("忽略自身")
         .description("Ignores your own totem pops.")
         .defaultValue(false)
         .build()
@@ -87,7 +87,7 @@ public class Notifier extends Module {
     );
 
     private final Setting<Set<EntityType<?>>> entities = sgVisualRange.add(new EntityTypeListSetting.Builder()
-        .name("entities")
+        .name("实体")
         .description("Which entities to notify about.")
         .defaultValue(EntityType.PLAYER)
         .build()
@@ -124,7 +124,7 @@ public class Notifier extends Module {
     );
 
     private final Setting<Boolean> pearlIgnoreOwn = sgPearl.add(new BoolSetting.Builder()
-        .name("ignore-own")
+        .name("忽略自身")
         .description("Ignores your own pearls.")
         .defaultValue(false)
         .build()

@@ -33,7 +33,7 @@ import java.util.List;
 
 public class HoleESP extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgRender = settings.createGroup("Render");
+    private final SettingGroup sgRender = settings.createGroup("渲染");
 
     // General
 
@@ -65,14 +65,14 @@ public class HoleESP extends Module {
     );
 
     private final Setting<Boolean> doubles = sgGeneral.add(new BoolSetting.Builder()
-        .name("doubles")
+        .name("双重")
         .description("Highlights double holes that can be stood across.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> ignoreOwn = sgGeneral.add(new BoolSetting.Builder()
-        .name("ignore-own")
+        .name("忽略自身")
         .description("Ignores rendering the hole you are currently standing in.")
         .defaultValue(false)
         .build()
@@ -88,14 +88,14 @@ public class HoleESP extends Module {
     // Render
 
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .name("形状模式")
+        .description("形状的渲染方式.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
 
     private final Setting<Double> height = sgRender.add(new DoubleSetting.Builder()
-        .name("height")
+        .name("高度")
         .description("The height of rendering.")
         .defaultValue(0.2)
         .min(0)

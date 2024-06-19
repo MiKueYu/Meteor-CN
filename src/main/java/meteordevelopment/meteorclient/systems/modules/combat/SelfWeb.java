@@ -21,15 +21,15 @@ public class SelfWeb extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
-        .name("mode")
-        .description("The mode to use for selfweb.")
+        .name("模式")
+        .description("自网使用的模式.")
         .defaultValue(Mode.Normal)
         .build()
     );
 
     private final Setting<Integer> range = sgGeneral.add(new IntSetting.Builder()
-        .name("range")
-        .description("How far away the player has to be from you to place webs. Requires Mode to Smart.")
+        .name("范围")
+        .description("玩家必须距离你多远才能放置网.需要模式为智能.")
         .defaultValue(3)
         .min(1)
         .sliderRange(1, 7)
@@ -38,28 +38,28 @@ public class SelfWeb extends Module {
     );
 
     private final Setting<Boolean> doubles = sgGeneral.add(new BoolSetting.Builder()
-        .name("double-place")
-        .description("Places webs in your upper hitbox as well.")
+        .name("双重放置")
+        .description("将网也放置在你的上部碰撞箱中.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> turnOff = sgGeneral.add(new BoolSetting.Builder()
-        .name("auto-toggle")
-        .description("Toggles off after placing the webs.")
+        .name("自动切换")
+        .description("放置网后关闭.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
-        .description("Forces you to rotate downwards when placing webs.")
+        .name("旋转")
+        .description("放置网时强制您向下旋转.")
         .defaultValue(true)
         .build()
     );
 
     public SelfWeb() {
-        super(Categories.Combat, "self-web", "Automatically places webs on you.");
+        super(Categories.Combat, "自网", "自动在你身上放置网.");
     }
 
     @EventHandler

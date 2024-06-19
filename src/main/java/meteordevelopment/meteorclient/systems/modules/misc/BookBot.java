@@ -74,7 +74,7 @@ public class BookBot extends Module {
     );
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
-        .name("delay")
+        .name("延迟")
         .description("The amount of delay between writing books.")
         .defaultValue(20)
         .min(1)

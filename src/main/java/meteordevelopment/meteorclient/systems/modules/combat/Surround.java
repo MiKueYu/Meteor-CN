@@ -40,80 +40,80 @@ import java.util.function.Predicate;
 
 public class Surround extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgToggles = settings.createGroup("Toggles");
-    private final SettingGroup sgRender = settings.createGroup("Render");
+    private final SettingGroup sgToggles = settings.createGroup("切换");
+    private final SettingGroup sgRender = settings.createGroup("渲染");
 
     // General
 
     private final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
-        .name("blocks")
-        .description("What blocks to use for surround.")
+        .name("方块")
+        .description("用于包围的方块.")
         .defaultValue(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN, Blocks.NETHERITE_BLOCK)
         .filter(this::blockFilter)
         .build()
     );
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
-        .name("delay")
-        .description("Delay, in ticks, between block placements.")
+        .name("延迟")
+        .description("方块放置之间的延迟(以tick为单位).")
         .min(0)
         .defaultValue(0)
         .build()
     );
 
     private final Setting<Center> center = sgGeneral.add(new EnumSetting.Builder<Center>()
-        .name("center")
-        .description("Teleports you to the center of the block.")
+        .name("中心")
+        .description("将你传送到方块的中心.")
         .defaultValue(Center.Incomplete)
         .build()
     );
 
     private final Setting<Boolean> doubleHeight = sgGeneral.add(new BoolSetting.Builder()
-        .name("double-height")
-        .description("Places obsidian on top of the original surround blocks to prevent people from face-placing you.")
+        .name("双重高度")
+        .description("在原始包围方块的上方放置黑曜石，以防止人们对着你放置.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> onlyOnGround = sgGeneral.add(new BoolSetting.Builder()
-        .name("only-on-ground")
-        .description("Works only when you are standing on blocks.")
+        .name("仅在地面")
+        .description("仅当您站在方块上时才有效.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> toggleModules = sgGeneral.add(new BoolSetting.Builder()
-        .name("toggle-modules")
-        .description("Turn off other modules when surround is activated.")
+        .name("切换模块")
+        .description("当包围被激活时关闭其他模块.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> toggleBack = sgGeneral.add(new BoolSetting.Builder()
-        .name("toggle-back-on")
-        .description("Turn the other modules back on when surround is deactivated.")
+        .name("重新打开")
+        .description("当包围被停用时重新开启其他模块.")
         .defaultValue(false)
         .visible(toggleModules::get)
         .build()
     );
 
     private final Setting<List<Module>> modules = sgGeneral.add(new ModuleListSetting.Builder()
-        .name("modules")
-        .description("Which modules to disable on activation.")
+        .name("模块")
+        .description("激活时要禁用的模块.")
         .visible(toggleModules::get)
         .build()
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
-        .description("Automatically faces towards the obsidian being placed.")
+        .name("旋转")
+        .description("自动面向放置的黑曜石.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> protect = sgGeneral.add(new BoolSetting.Builder()
-        .name("protect")
-        .description("Attempts to break crystals around surround positions to prevent surround break.")
+        .name("保护")
+        .description("尝试破坏包围位置周围的水晶，以防止包围被破坏.")
         .defaultValue(true)
         .build()
     );
@@ -121,22 +121,22 @@ public class Surround extends Module {
     // Toggles
 
     private final Setting<Boolean> toggleOnYChange = sgToggles.add(new BoolSetting.Builder()
-        .name("toggle-on-y-change")
-        .description("Automatically disables when your y level changes (step, jumping, etc).")
+        .name("切换y更改")
+        .description("当您的y级别发生变化(走路,跳跃等)时自动禁用.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> toggleOnComplete = sgToggles.add(new BoolSetting.Builder()
-        .name("toggle-on-complete")
-        .description("Toggles off when all blocks are placed.")
+        .name("切换完成")
+        .description("当所有方块都放置好时切换关闭.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> toggleOnDeath = sgToggles.add(new BoolSetting.Builder()
-        .name("toggle-on-death")
-        .description("Toggles off when you die.")
+        .name("死亡时切换")
+        .description("当你死后关闭.")
         .defaultValue(true)
         .build()
     );
@@ -144,76 +144,76 @@ public class Surround extends Module {
     // Render
 
     private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
-        .name("swing")
-        .description("Render your hand swinging when placing surround blocks.")
+        .name("挥手")
+        .description("渲染放置环绕块时手部摆动.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
-        .name("render")
-        .description("Renders a block overlay where the obsidian will be placed.")
+        .name("渲染")
+        .description("在黑曜石将被放置的地方渲染一个覆盖层.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> renderBelow = sgRender.add(new BoolSetting.Builder()
-        .name("below")
-        .description("Renders the block below you.")
+        .name("下方")
+        .description("渲染您下方的方块.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .name("形状模式")
+        .description("形状的渲染方式.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
 
     private final Setting<SettingColor> safeSideColor = sgRender.add(new ColorSetting.Builder()
-        .name("safe-side-color")
-        .description("The side color for safe blocks.")
+        .name("安全面颜色")
+        .description("安全方块的侧面颜色.")
         .defaultValue(new SettingColor(13, 255, 0, 0))
         .visible(() -> render.get() && shapeMode.get() != ShapeMode.Lines)
         .build()
     );
 
     private final Setting<SettingColor> safeLineColor = sgRender.add(new ColorSetting.Builder()
-        .name("safe-line-color")
-        .description("The line color for safe blocks.")
+        .name("安全线颜色")
+        .description("安全方块的线条颜色.")
         .defaultValue(new SettingColor(13, 255, 0, 0))
         .visible(() -> render.get() && shapeMode.get() != ShapeMode.Sides)
         .build()
     );
 
     private final Setting<SettingColor> normalSideColor = sgRender.add(new ColorSetting.Builder()
-        .name("normal-side-color")
-        .description("The side color for normal blocks.")
+        .name("正常面颜色")
+        .description("普通方块的侧面颜色.")
         .defaultValue(new SettingColor(0, 255, 238, 12))
         .visible(() -> render.get() && shapeMode.get() != ShapeMode.Lines)
         .build()
     );
 
     private final Setting<SettingColor> normalLineColor = sgRender.add(new ColorSetting.Builder()
-        .name("normal-line-color")
-        .description("The line color for normal blocks.")
+        .name("正常线条颜色")
+        .description("普通方块的线条颜色.")
         .defaultValue(new SettingColor(0, 255, 238, 100))
         .visible(() -> render.get() && shapeMode.get() != ShapeMode.Sides)
         .build()
     );
 
     private final Setting<SettingColor> unsafeSideColor = sgRender.add(new ColorSetting.Builder()
-        .name("unsafe-side-color")
-        .description("The side color for unsafe blocks.")
+        .name("不安全的侧面颜色")
+        .description("不安全方块的侧面颜色.")
         .defaultValue(new SettingColor(204, 0, 0, 12))
         .visible(() -> render.get() && shapeMode.get() != ShapeMode.Lines)
         .build()
     );
 
     private final Setting<SettingColor> unsafeLineColor = sgRender.add(new ColorSetting.Builder()
-        .name("unsafe-line-color")
-        .description("The line color for unsafe blocks.")
+        .name("不安全的线条颜色")
+        .description("不安全方块的线条颜色.")
         .defaultValue(new SettingColor(204, 0, 0, 100))
         .visible(() -> render.get() && shapeMode.get() != ShapeMode.Sides)
         .build()
@@ -226,7 +226,7 @@ public class Surround extends Module {
     private int ticks;
 
     public Surround() {
-        super(Categories.Combat, "surround", "Surrounds you in blocks to prevent massive crystal damage.");
+        super(Categories.Combat, "包围", "将你包围在方块中以防止大量水晶伤害.");
     }
 
     // Render
@@ -400,7 +400,7 @@ public class Surround extends Module {
             Entity entity = mc.world.getEntityById(packet.playerId());
             if (entity == mc.player && toggleOnDeath.get()) {
                 toggle();
-                info("Toggled off because you died.");
+                info("因为你死了而关闭.");
             }
         }
     }

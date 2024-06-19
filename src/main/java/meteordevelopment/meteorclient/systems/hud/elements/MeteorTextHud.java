@@ -51,7 +51,7 @@ public class MeteorTextHud {
         REAL_TIME = addPreset("现实时间", "时间: #1{time}");
         ROTATION = addPreset("方向", "{camera.direction} #1({round(camera.yaw, 1)}, {round(camera.pitch, 1)})", 0);
         MODULE_ENABLED = addPreset("启用的模块", "杀戮光环: {meteor.is_module_active(\"kill-aura\") ? #2 \"开启\" : #3 \"关闭\"}", 0);
-        MODULE_ENABLED_WITH_INFO = addPreset("启用的模块，并提供信息", "杀戮光环: {meteor.is_module_active(\"kill-aura\") ? #2 \"开启\" : #3 \"关闭\"} #1{meteor.get_module_info(\"kill-aura\")}", 0);
+        MODULE_ENABLED_WITH_INFO = addPreset("启用的模块,并提供信息", "杀戮光环: {meteor.is_module_active(\"kill-aura\") ? #2 \"开启\" : #3 \"关闭\"} #1{meteor.get_module_info(\"kill-aura\")}", 0);
         WATERMARK = addPreset("水印", "{meteor.name} #1{meteor.version}");
         BARITONE = addPreset("Baritone", "Baritone: #1{baritone.process_name}");
     }

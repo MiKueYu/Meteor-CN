@@ -56,7 +56,7 @@ public class AutoTool extends Module {
     );
 
     private final Setting<Boolean> antiBreak = sgGeneral.add(new BoolSetting.Builder()
-        .name("anti-break")
+        .name("防止损坏")
         .description("Stops you from breaking your tool.")
         .defaultValue(false)
         .build()
@@ -80,7 +80,7 @@ public class AutoTool extends Module {
     );
 
     private final Setting<Integer> switchDelay = sgGeneral.add((new IntSetting.Builder()
-        .name("switch-delay")
+        .name("切换延迟")
         .description("Delay in ticks before switching tools.")
         .defaultValue(0)
         .build()

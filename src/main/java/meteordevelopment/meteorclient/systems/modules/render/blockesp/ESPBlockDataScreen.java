@@ -32,7 +32,7 @@ public class ESPBlockDataScreen extends WindowScreen {
         SettingGroup sgTracer = settings.createGroup("Tracer");
 
         sgGeneral.add(new EnumSetting.Builder<ShapeMode>()
-            .name("shape-mode")
+            .name("形状模式")
             .description("How the shape is rendered.")
             .defaultValue(ShapeMode.Lines)
             .onModuleActivated(shapeModeSetting -> shapeModeSetting.set(blockData.shapeMode))
@@ -44,7 +44,7 @@ public class ESPBlockDataScreen extends WindowScreen {
         );
 
         sgGeneral.add(new ColorSetting.Builder()
-            .name("line-color")
+            .name("线条颜色")
             .description("Color of lines.")
             .defaultValue(new SettingColor(0, 255, 200))
             .onModuleActivated(settingColorSetting -> settingColorSetting.set(blockData.lineColor))
@@ -56,7 +56,7 @@ public class ESPBlockDataScreen extends WindowScreen {
         );
 
         sgGeneral.add(new ColorSetting.Builder()
-            .name("side-color")
+            .name("侧面颜色")
             .description("Color of sides.")
             .defaultValue(new SettingColor(0, 255, 200, 25))
             .onModuleActivated(settingColorSetting -> settingColorSetting.set(blockData.sideColor))

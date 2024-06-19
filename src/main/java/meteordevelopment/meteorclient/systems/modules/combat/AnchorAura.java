@@ -171,7 +171,7 @@ public class AnchorAura extends Module {
     // Render
 
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("外形模式")
+        .name("形状模式")
         .description("形状的渲染方式.")
         .defaultValue(ShapeMode.Both)
         .build()

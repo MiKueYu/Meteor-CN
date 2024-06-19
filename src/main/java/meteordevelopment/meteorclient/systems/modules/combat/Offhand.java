@@ -24,52 +24,52 @@ import static meteordevelopment.orbit.EventPriority.HIGHEST;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
 
 public class Offhand extends Module {
-    private final SettingGroup sgCombat = settings.createGroup("Combat");
-    private final SettingGroup sgTotem = settings.createGroup("Totem");
+    private final SettingGroup sgCombat = settings.createGroup("战斗");
+    private final SettingGroup sgTotem = settings.createGroup("图腾");
 
     //Combat
 
     private final Setting<Integer> delayTicks = sgCombat.add(new IntSetting.Builder()
-        .name("item-switch-delay")
-        .description("The delay in ticks between slot movements.")
+        .name("物品切换延迟")
+        .description("物品栏切换之间的延迟(以游戏刻为单位).")
         .defaultValue(0)
         .min(0)
         .sliderMax(20)
         .build()
     );
     private final Setting<Item> preferreditem = sgCombat.add(new EnumSetting.Builder<Item>()
-        .name("item")
-        .description("Which item to hold in your offhand.")
+        .name("物品")
+        .description("副手应持有哪件物品.")
         .defaultValue(Item.Crystal)
         .build()
     );
 
     private final Setting<Boolean> hotbar = sgCombat.add(new BoolSetting.Builder()
-        .name("hotbar")
-        .description("Whether to use items from your hotbar.")
+        .name("物品栏")
+        .description("是否使用物品栏中的物品.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> rightgapple = sgCombat.add(new BoolSetting.Builder()
-        .name("right-gapple")
-        .description("Will switch to a gapple when holding right click.(DO NOT USE WITH POTION ON)")
+        .name("右键金苹果")
+        .description("按住右键时将切换到金苹果,(请勿与药水一起使用)")
         .defaultValue(false)
         .build()
     );
 
 
     private final Setting<Boolean> SwordGap = sgCombat.add(new BoolSetting.Builder()
-        .name("sword-gapple")
-        .description("Will switch to a gapple when holding a sword and right click.")
+        .name("剑切金苹果")
+        .description("拿着剑并右键单击时会切换到金苹果.")
         .defaultValue(false)
         .visible(rightgapple::get)
         .build()
     );
 
     private final Setting<Boolean> alwaysSwordGap = sgCombat.add(new BoolSetting.Builder()
-        .name("always-gap-on-sword")
-        .description("Holds an Enchanted Golden Apple when you are holding a sword.")
+        .name("剑总是金苹果")
+        .description("拿着剑时总是持有附魔金苹果.")
         .defaultValue(false)
         .visible(() -> !rightgapple.get())
         .build()
@@ -77,15 +77,15 @@ public class Offhand extends Module {
 
 
     private final Setting<Boolean> alwaysPot = sgCombat.add(new BoolSetting.Builder()
-        .name("always-pot-on-sword")
-        .description("Will switch to a potion when holding a sword")
+        .name("剑总是药水")
+        .description("拿着剑时会切换到药水")
         .defaultValue(false)
         .visible(() -> !rightgapple.get() && !alwaysSwordGap.get())
         .build()
     );
     private final Setting<Boolean> potionClick = sgCombat.add(new BoolSetting.Builder()
-        .name("sword-pot")
-        .description("Will switch to a potion when holding a sword and right click.")
+        .name("剑切药水")
+        .description("拿着剑并右键单击时会切换到药水.")
         .defaultValue(false)
         .visible(() -> !rightgapple.get() && !alwaysPot.get() && !alwaysSwordGap.get() )
         .build()
@@ -94,8 +94,8 @@ public class Offhand extends Module {
     //Totem
 
     private final Setting<Double> minHealth = sgTotem.add(new DoubleSetting.Builder()
-        .name("min-health")
-        .description("Will hold a totem when below this amount of health.")
+        .name("最低生命值")
+        .description("当生命值低于此值时会持有图腾.")
         .defaultValue(10)
         .range(0,36)
         .sliderRange(0,36)
@@ -103,22 +103,22 @@ public class Offhand extends Module {
     );
 
     private final Setting<Boolean> elytra = sgTotem.add(new BoolSetting.Builder()
-        .name("elytra")
-        .description("Will always hold a totem while flying with an elytra.")
+        .name("鞘翅")
+        .description("带着鞘翅飞行时总是持有图腾.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> falling = sgTotem.add(new BoolSetting.Builder()
-        .name("falling")
-        .description("Will hold a totem if fall damage could kill you.")
+        .name("坠落")
+        .description("如果坠落伤害会杀死你,将持有图腾.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> explosion = sgTotem.add(new BoolSetting.Builder()
-        .name("explosion")
-        .description("Will hold a totem when explosion damage could kill you.")
+        .name("爆炸")
+        .description("当爆炸伤害可能杀死你时会持有图腾.")
         .defaultValue(true)
         .build()
     );
@@ -133,7 +133,7 @@ public class Offhand extends Module {
     private int totems, ticks;
 
     public Offhand() {
-        super(Categories.Combat, "offhand", "Allows you to hold specified items in your offhand.");
+        super(Categories.Combat, "副手", "允许您在副手持有指定物品.");
     }
 
     @Override
@@ -217,7 +217,7 @@ public class Offhand extends Module {
                     // No offhand item
                     if (!item.found()) {
                         if (!sentMessage) {
-                            warning("Chosen item not found.");
+                            warning("没有找到选择的物品.");
                             sentMessage = true;
                         }
                     }

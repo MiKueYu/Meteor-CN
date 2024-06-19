@@ -27,7 +27,7 @@ public class Collisions extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
-        .name("blocks")
+        .name("方块")
         .description("What blocks should be added collision box.")
         .filter(this::blockFilter)
         .build()

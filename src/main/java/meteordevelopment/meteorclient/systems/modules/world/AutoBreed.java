@@ -25,7 +25,7 @@ public class AutoBreed extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Set<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
-        .name("entities")
+        .name("实体")
         .description("Entities to breed.")
         .defaultValue(EntityType.HORSE, EntityType.DONKEY, EntityType.COW,
             EntityType.MOOSHROOM, EntityType.SHEEP, EntityType.PIG, EntityType.CHICKEN, EntityType.WOLF,
@@ -36,7 +36,7 @@ public class AutoBreed extends Module {
     );
 
     private final Setting<Double> range = sgGeneral.add(new DoubleSetting.Builder()
-        .name("range")
+        .name("范围")
         .description("How far away the animals can be to be bred.")
         .min(0)
         .defaultValue(4.5)

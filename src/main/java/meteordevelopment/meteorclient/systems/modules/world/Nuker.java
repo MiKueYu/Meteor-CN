@@ -35,7 +35,7 @@ import java.util.List;
 public class Nuker extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgWhitelist = settings.createGroup("Whitelist");
-    private final SettingGroup sgRender = settings.createGroup("Render");
+    private final SettingGroup sgRender = settings.createGroup("渲染");
 
     // General
 
@@ -54,7 +54,7 @@ public class Nuker extends Module {
     );
 
     private final Setting<Double> range = sgGeneral.add(new DoubleSetting.Builder()
-            .name("range")
+            .name("范围")
             .description("The break range.")
             .defaultValue(4)
             .min(0)
@@ -117,7 +117,7 @@ public class Nuker extends Module {
     );
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
-            .name("delay")
+            .name("延迟")
             .description("Delay in ticks between breaking blocks.")
             .defaultValue(0)
             .build()
@@ -154,7 +154,7 @@ public class Nuker extends Module {
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-            .name("rotate")
+            .name("旋转")
             .description("Rotates server-side to the block being mined.")
             .defaultValue(true)
             .build()
@@ -200,14 +200,14 @@ public class Nuker extends Module {
     );
 
     private final Setting<SettingColor> sideColorBox = sgRender.add(new ColorSetting.Builder()
-            .name("side-color")
+            .name("侧面颜色")
             .description("The side color of the bounding box.")
             .defaultValue(new SettingColor(16,106,144, 100))
             .build()
     );
 
     private final Setting<SettingColor> lineColorBox = sgRender.add(new ColorSetting.Builder()
-            .name("line-color")
+            .name("线条颜色")
             .description("The line color of the bounding box.")
             .defaultValue(new SettingColor(16,106,144, 255))
             .build()
@@ -229,16 +229,16 @@ public class Nuker extends Module {
     );
 
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
-            .name("side-color")
-            .description("The side color of the target block rendering.")
+            .name("侧面颜色")
+            .description("目标方块渲染的侧面颜色.")
             .defaultValue(new SettingColor(255, 0, 0, 80))
             .visible(enableRenderBreaking::get)
             .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
-            .name("line-color")
-            .description("The line color of the target block rendering.")
+            .name("线条颜色")
+            .description("目标方块渲染的线条颜色.")
             .defaultValue(new SettingColor(255, 0, 0, 255))
             .visible(enableRenderBreaking::get)
             .build()

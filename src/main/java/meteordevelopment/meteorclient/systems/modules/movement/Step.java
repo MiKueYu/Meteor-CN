@@ -23,7 +23,7 @@ public class Step extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<Double> height = sgGeneral.add(new DoubleSetting.Builder()
-        .name("height")
+        .name("高度")
         .description("Step height.")
         .defaultValue(1)
         .min(0)

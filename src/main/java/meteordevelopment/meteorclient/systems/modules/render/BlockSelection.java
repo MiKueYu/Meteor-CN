@@ -37,21 +37,21 @@ public class BlockSelection extends Module {
     );
 
     private final Setting<ShapeMode> shapeMode = sgGeneral.add(new EnumSetting.Builder<ShapeMode>()
-        .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .name("形状模式")
+        .description("形状的渲染方式.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
 
     private final Setting<SettingColor> sideColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("side-color")
+        .name("侧面颜色")
         .description("The side color.")
         .defaultValue(new SettingColor(255, 255, 255, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("line-color")
+        .name("线条颜色")
         .description("The line color.")
         .defaultValue(new SettingColor(255, 255, 255, 255))
         .build()

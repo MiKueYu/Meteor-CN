@@ -25,10 +25,10 @@ import net.minecraft.util.math.Direction;
 
 public class InstantRebreak extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgRender = settings.createGroup("Render");
+    private final SettingGroup sgRender = settings.createGroup("渲染");
 
     private final Setting<Integer> tickDelay = sgGeneral.add(new IntSetting.Builder()
-        .name("delay")
+        .name("延迟")
         .description("The delay between break attempts.")
         .defaultValue(0)
         .min(0)
@@ -44,7 +44,7 @@ public class InstantRebreak extends Module {
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
+        .name("旋转")
         .description("Faces the block being mined server side.")
         .defaultValue(true)
         .build()
@@ -53,29 +53,29 @@ public class InstantRebreak extends Module {
     // Render
 
     private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
-        .name("render")
+        .name("渲染")
         .description("Renders an overlay on the block being broken.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .name("形状模式")
+        .description("形状的渲染方式.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
 
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
-        .name("side-color")
+        .name("侧面颜色")
         .description("The color of the sides of the blocks being rendered.")
         .defaultValue(new SettingColor(204, 0, 0, 10))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
-        .name("line-color")
-        .description("The color of the lines of the blocks being rendered.")
+        .name("线条颜色")
+        .description("要放置的位置的线颜色.")
         .defaultValue(new SettingColor(204, 0, 0, 255))
         .build()
     );

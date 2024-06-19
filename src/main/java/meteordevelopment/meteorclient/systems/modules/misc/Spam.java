@@ -30,7 +30,7 @@ public class Spam extends Module {
     );
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
-        .name("delay")
+        .name("延迟")
         .description("The delay between specified messages in ticks.")
         .defaultValue(20)
         .min(0)

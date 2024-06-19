@@ -113,7 +113,7 @@ public class Velocity extends Module {
     );
 
     public final Setting<Boolean> blocks = sgGeneral.add(new BoolSetting.Builder()
-        .name("blocks")
+        .name("方块")
         .description("Prevents you from being pushed out of blocks.")
         .defaultValue(true)
         .build()

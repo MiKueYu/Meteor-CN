@@ -31,12 +31,12 @@ import net.minecraft.util.math.Direction;
 
 public class AutoCity extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgRender = settings.createGroup("Render");
+    private final SettingGroup sgRender = settings.createGroup("渲染");
 
 
     private final Setting<Double> targetRange = sgGeneral.add(new DoubleSetting.Builder()
-        .name("target-range")
-        .description("The radius in which players get targeted.")
+        .name("目标范围")
+        .description("玩家被锁定时的半径.")
         .defaultValue(5.5)
         .min(0)
         .sliderMax(7)
@@ -44,8 +44,8 @@ public class AutoCity extends Module {
     );
 
     private final Setting<Double> breakRange = sgGeneral.add(new DoubleSetting.Builder()
-        .name("break-range")
-        .description("How close a block must be to you to be considered.")
+        .name("破坏范围")
+        .description("一个方块必须多靠近你才能被考虑.")
         .defaultValue(4.5)
         .min(0)
         .sliderMax(6)
@@ -53,22 +53,22 @@ public class AutoCity extends Module {
     );
 
     private final Setting<SwitchMode> switchMode = sgGeneral.add(new EnumSetting.Builder<SwitchMode>()
-        .name("switch-mode")
-        .description("How to switch to a pickaxe.")
+        .name("切换模式")
+        .description("如何切换到镐.")
         .defaultValue(SwitchMode.Normal)
         .build()
     );
 
     private final Setting<Boolean> support = sgGeneral.add(new BoolSetting.Builder()
-        .name("support")
-        .description("If there is no block below a city block it will place one before mining.")
+        .name("支持")
+        .description("如果挖掘方块下面没有方块,它会在挖掘之前放置一个.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Double> placeRange = sgGeneral.add(new DoubleSetting.Builder()
-        .name("place-range")
-        .description("How far away to try and place a block.")
+        .name("放置范围")
+        .description("尝试放置方块的距离.")
         .defaultValue(4.5)
         .min(0)
         .sliderMax(6)
@@ -77,15 +77,15 @@ public class AutoCity extends Module {
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
-        .description("Automatically rotates you towards the city block.")
+        .name("旋转")
+        .description("自动旋转到挖掘方块的方向.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> chatInfo = sgGeneral.add(new BoolSetting.Builder()
-        .name("chat-info")
-        .description("Whether the module should send messages in chat.")
+        .name("聊天信息")
+        .description("模块是否应该在聊天中发送消息.")
         .defaultValue(true)
         .build()
     );
@@ -93,38 +93,38 @@ public class AutoCity extends Module {
     // Render
 
     private final Setting<Boolean> swingHand = sgRender.add(new BoolSetting.Builder()
-        .name("swing-hand")
-        .description("Whether to render your hand swinging.")
+        .name("挥动手")
+        .description("是否渲染你的手挥动.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> renderBlock = sgRender.add(new BoolSetting.Builder()
-        .name("render-block")
-        .description("Whether to render the block being broken.")
+        .name("渲染方块")
+        .description("是否渲染被破坏的方块.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .name("形状模式")
+        .description("形状的渲染方式.")
         .defaultValue(ShapeMode.Both)
         .visible(renderBlock::get)
         .build()
     );
 
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
-        .name("side-color")
-        .description("The side color of the rendering.")
+        .name("侧面颜色")
+        .description("渲染的侧面颜色.")
         .defaultValue(new SettingColor(225, 0, 0, 75))
         .visible(() -> renderBlock.get() && shapeMode.get().sides())
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
-        .name("line-color")
-        .description("The line color of the rendering.")
+        .name("线条颜色")
+        .description("渲染的线条颜色.")
         .defaultValue(new SettingColor(225, 0, 0, 255))
         .visible(() -> renderBlock.get() && shapeMode.get().lines())
         .build()
@@ -136,21 +136,21 @@ public class AutoCity extends Module {
     private float progress;
 
     public AutoCity() {
-        super(Categories.Combat, "auto-city", "Automatically mine blocks next to someone's feet.");
+        super(Categories.Combat, "自动挖掘", "自动挖掘某人脚边的方块.");
     }
 
     @Override
     public void onActivate() {
         target = TargetUtils.getPlayerTarget(targetRange.get(), SortPriority.ClosestAngle);
         if (TargetUtils.isBadTarget(target, targetRange.get())) {
-            if (chatInfo.get()) error("Couldn't find a target, disabling.");
+            if (chatInfo.get()) error("找不到目标,禁用.");
             toggle();
             return;
         }
 
         targetPos = EntityUtils.getCityBlock(target);
         if (targetPos == null || PlayerUtils.squaredDistanceTo(targetPos) > Math.pow(breakRange.get(), 2)) {
-            if (chatInfo.get()) error("Couldn't find a good block, disabling.");
+            if (chatInfo.get()) error("找不到好的方块,禁用.");
             toggle();
             return;
         }
@@ -164,7 +164,7 @@ public class AutoCity extends Module {
 
         pick = InvUtils.find(itemStack -> itemStack.getItem() == Items.DIAMOND_PICKAXE || itemStack.getItem() == Items.NETHERITE_PICKAXE);
         if (!pick.isHotbar()) {
-            error("No pickaxe found... disabling.");
+            error("找不到镐... 禁用.");
             toggle();
             return;
         }
@@ -187,7 +187,7 @@ public class AutoCity extends Module {
         }
 
         if (PlayerUtils.squaredDistanceTo(targetPos) > Math.pow(breakRange.get(), 2)) {
-            if (chatInfo.get()) error("Couldn't find a target, disabling.");
+            if (chatInfo.get()) error("找不到目标,禁用.");
             toggle();
             return;
         }
@@ -195,7 +195,7 @@ public class AutoCity extends Module {
         if (progress < 1.0f) {
             pick = InvUtils.find(itemStack -> itemStack.getItem() == Items.DIAMOND_PICKAXE || itemStack.getItem() == Items.NETHERITE_PICKAXE);
             if (!pick.isHotbar()) {
-                error("No pickaxe found... disabling.");
+                error("找不到镐... 禁用.");
                 toggle();
                 return;
             }

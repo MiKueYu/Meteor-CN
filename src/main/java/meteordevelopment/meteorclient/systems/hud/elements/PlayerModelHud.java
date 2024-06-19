@@ -75,7 +75,7 @@ public class PlayerModelHud extends HudElement {
 
     private final Setting<CenterOrientation> centerOrientation = sgGeneral.add(new EnumSetting.Builder<CenterOrientation>()
         .name("中心方向")
-        .description("HUD 模型正对前方时，玩家面对的方向.")
+        .description("HUD 模型正对前方时,玩家面对的方向.")
         .defaultValue(CenterOrientation.South)
         .build()
     );

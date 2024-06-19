@@ -72,8 +72,8 @@ public class ESP extends Module {
     );
 
     public final Setting<ShapeMode> shapeMode = sgGeneral.add(new EnumSetting.Builder<ShapeMode>()
-        .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .name("形状模式")
+        .description("形状的渲染方式.")
         .visible(() -> mode.get() != Mode.Glow)
         .defaultValue(ShapeMode.Both)
         .build()
@@ -99,7 +99,7 @@ public class ESP extends Module {
     );
 
     private final Setting<Set<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
-        .name("entities")
+        .name("实体")
         .description("Select specific entities.")
         .defaultValue(EntityType.PLAYER)
         .build()

@@ -21,8 +21,8 @@ public class AutoWeb extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Double> range = sgGeneral.add(new DoubleSetting.Builder()
-        .name("target-range")
-        .description("The maximum distance to target players.")
+        .name("目标范围")
+        .description("锁定玩家的最大距离.")
         .defaultValue(4)
         .range(0, 5)
         .sliderMax(5)
@@ -30,22 +30,22 @@ public class AutoWeb extends Module {
     );
 
     private final Setting<SortPriority> priority = sgGeneral.add(new EnumSetting.Builder<SortPriority>()
-        .name("target-priority")
-        .description("How to filter targets within range.")
+        .name("目标优先级")
+        .description("如何过滤范围内的目标.")
         .defaultValue(SortPriority.LowestDistance)
         .build()
     );
 
     private final Setting<Boolean> doubles = sgGeneral.add(new BoolSetting.Builder()
-        .name("doubles")
-        .description("Places webs in the target's upper hitbox as well as the lower hitbox.")
+        .name("双重")
+        .description("在目标的上半部分和下半部分都放置蜘蛛网.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
-        .description("Rotates towards the webs when placing.")
+        .name("旋转")
+        .description("放置蜘蛛网时朝向蜘蛛网.")
         .defaultValue(true)
         .build()
     );
@@ -53,7 +53,7 @@ public class AutoWeb extends Module {
     private PlayerEntity target = null;
 
     public AutoWeb() {
-        super(Categories.Combat, "auto-web", "Automatically places webs on other players.");
+        super(Categories.Combat, "自动蜘蛛网", "自动在其他玩家身上放置蜘蛛网.");
     }
 
     @EventHandler

@@ -211,7 +211,7 @@ public class InventoryTweaks extends Module {
     );
 
     private final Setting<Integer> autoStealDelay = sgAutoSteal.add(new IntSetting.Builder()
-        .name("delay")
+        .name("延迟")
         .description("The minimum delay between stealing the next stack in milliseconds.")
         .defaultValue(20)
         .sliderMax(1000)

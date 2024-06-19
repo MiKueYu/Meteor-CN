@@ -22,35 +22,35 @@ public class Hitboxes extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Set<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
-        .name("entities")
-        .description("Which entities to target.")
+        .name("实体")
+        .description("瞄准哪些实体.")
         .defaultValue(EntityType.PLAYER)
         .build()
     );
 
     private final Setting<Double> value = sgGeneral.add(new DoubleSetting.Builder()
-        .name("expand")
-        .description("How much to expand the hitbox of the entity.")
+        .name("扩大")
+        .description("实体碰撞箱范围的扩大程度.")
         .defaultValue(0.5)
         .build()
     );
 
     private final Setting<Boolean> ignoreFriends = sgGeneral.add(new BoolSetting.Builder()
-        .name("ignore-friends")
-        .description("Doesn't expand the hitboxes of friends.")
+        .name("忽略好友")
+        .description("不扩大好友的碰撞箱.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> onlyOnWeapon = sgGeneral.add(new BoolSetting.Builder()
-        .name("only-on-weapon")
-        .description("Only modifies hitbox when holding a weapon in hand.")
+        .name("仅限武器")
+        .description("只在手持武器时修改碰撞箱.")
         .defaultValue(false)
         .build()
     );
 
     public Hitboxes() {
-        super(Categories.Combat, "hitboxes", "Expands an entity's hitboxes.");
+        super(Categories.Combat, "碰撞箱", "扩大实体的碰撞箱.");
     }
 
     public double getEntityValue(Entity entity) {

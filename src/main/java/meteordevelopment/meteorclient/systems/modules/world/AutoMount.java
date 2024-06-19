@@ -42,14 +42,14 @@ public class AutoMount extends Module {
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
+        .name("旋转")
         .description("Faces the entity you mount.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Set<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
-        .name("entities")
+        .name("实体")
         .description("Rideable entities.")
         .filter(EntityUtils::isRideable)
         .build()

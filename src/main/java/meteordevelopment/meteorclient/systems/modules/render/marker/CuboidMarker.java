@@ -20,7 +20,7 @@ public class CuboidMarker extends BaseMarker {
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgRender = settings.createGroup("Render");
+    private final SettingGroup sgRender = settings.createGroup("渲染");
 
     // General
 
@@ -46,22 +46,22 @@ public class CuboidMarker extends BaseMarker {
     );
 
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .name("形状模式")
+        .description("形状的渲染方式.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
 
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
-        .name("side-color")
+        .name("侧面颜色")
         .description("The color of the sides of the blocks being rendered.")
         .defaultValue(new SettingColor(0, 100, 255, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
-        .name("line-color")
-        .description("The color of the lines of the blocks being rendered.")
+        .name("线条颜色")
+        .description("要放置的位置的线颜色.")
         .defaultValue(new SettingColor(0, 100, 255, 255))
         .build()
     );

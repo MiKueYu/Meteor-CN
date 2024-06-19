@@ -31,7 +31,7 @@ public class AntiAFK extends Module {
     );
 
     private final Setting<Boolean> swing = sgActions.add(new BoolSetting.Builder()
-        .name("swing")
+        .name("挥手")
         .description("Swings your hand.")
         .defaultValue(false)
         .build()
@@ -122,7 +122,7 @@ public class AntiAFK extends Module {
     );
 
     private final Setting<Integer> delay = sgMessages.add(new IntSetting.Builder()
-        .name("delay")
+        .name("延迟")
         .description("The delay between specified messages in seconds.")
         .defaultValue(15)
         .min(0)

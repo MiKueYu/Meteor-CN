@@ -34,7 +34,7 @@ public class AutoEat extends Module {
     private static final Class<? extends Module>[] AURAS = new Class[]{KillAura.class, CrystalAura.class, AnchorAura.class, BedAura.class};
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgThreshold = settings.createGroup("Threshold");
+    private final SettingGroup sgThreshold = settings.createGroup("阈值");
 
     // General
 

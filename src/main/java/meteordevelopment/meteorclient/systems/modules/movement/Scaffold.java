@@ -32,10 +32,10 @@ import java.util.List;
 
 public class Scaffold extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgRender = settings.createGroup("Render");
+    private final SettingGroup sgRender = settings.createGroup("渲染");
 
     private final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
-        .name("blocks")
+        .name("方块")
         .description("Selected blocks.")
         .build()
     );
@@ -80,21 +80,21 @@ public class Scaffold extends Module {
     );
 
     private final Setting<Boolean> renderSwing = sgGeneral.add(new BoolSetting.Builder()
-        .name("swing")
+        .name("挥手")
         .description("Renders your client-side swing.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> autoSwitch = sgGeneral.add(new BoolSetting.Builder()
-        .name("auto-switch")
+        .name("自动切换")
         .description("Automatically swaps to a block before placing.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
+        .name("旋转")
         .description("Rotates towards the blocks being placed.")
         .defaultValue(true)
         .build()
@@ -149,31 +149,31 @@ public class Scaffold extends Module {
     // Render
 
     private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
-        .name("render")
+        .name("渲染")
         .description("Whether to render blocks that have been placed.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .name("形状模式")
+        .description("形状的渲染方式.")
         .defaultValue(ShapeMode.Both)
         .visible(render::get)
         .build()
     );
 
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
-        .name("side-color")
-        .description("The side color of the target block rendering.")
+        .name("侧面颜色")
+        .description("目标方块渲染的侧面颜色.")
         .defaultValue(new SettingColor(197, 137, 232, 10))
         .visible(render::get)
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
-        .name("line-color")
-        .description("The line color of the target block rendering.")
+        .name("线条颜色")
+        .description("目标方块渲染的线条颜色.")
         .defaultValue(new SettingColor(197, 137, 232))
         .visible(render::get)
         .build()

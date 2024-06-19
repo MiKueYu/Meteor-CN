@@ -91,7 +91,7 @@ public class PlayerRadarHud extends HudElement {
 
     private final Setting<Boolean> customScale = sgScale.add(new BoolSetting.Builder()
         .name("自定义比例")
-        .description("应用自定义文本缩放比例，而不是全局缩放比例.")
+        .description("应用自定义文本缩放比例,而不是全局缩放比例.")
         .defaultValue(false)
         .build()
     );

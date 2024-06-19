@@ -28,29 +28,29 @@ public class AntiBed extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> placeStringTop = sgGeneral.add(new BoolSetting.Builder()
-        .name("place-string-top")
-        .description("Places string above you.")
+        .name("在顶部放置线")
+        .description("在你上方放置线.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> placeStringMiddle = sgGeneral.add(new BoolSetting.Builder()
-        .name("place-string-middle")
-        .description("Places string in your upper hitbox.")
+        .name("在中间放置线")
+        .description("在你上方的碰撞箱放置线.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> placeStringBottom = sgGeneral.add(new BoolSetting.Builder()
-        .name("place-string-bottom")
-        .description("Places string at your feet.")
+        .name("在脚下放置线")
+        .description("在你脚下放置线.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> onlyInHole = sgGeneral.add(new BoolSetting.Builder()
-        .name("only-in-hole")
-        .description("Only functions when you are standing in a hole.")
+        .name("仅在洞里")
+        .description("仅在你站在洞里时起作用.")
         .defaultValue(true)
         .build()
     );
@@ -58,7 +58,7 @@ public class AntiBed extends Module {
     private boolean breaking;
 
     public AntiBed() {
-        super(Categories.Combat, "anti-bed", "Places string to prevent beds being placed on you.");
+        super(Categories.Combat, "反床", "放置线以防止在你的身边放置床.");
     }
 
     @EventHandler

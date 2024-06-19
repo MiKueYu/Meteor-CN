@@ -38,7 +38,7 @@ public class BlockESP extends Module {
     // General
 
     private final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
-        .name("blocks")
+        .name("方块")
         .description("Blocks to search for.")
         .onChanged(blocks1 -> {
             if (isActive() && Utils.canUpdate()) onActivate();

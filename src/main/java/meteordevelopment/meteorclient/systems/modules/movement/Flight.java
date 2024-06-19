@@ -66,7 +66,7 @@ public class Flight extends Module {
     );
 
     private final Setting<Integer> delay = sgAntiKick.add(new IntSetting.Builder()
-        .name("delay")
+        .name("延迟")
         .description("The amount of delay, in ticks, between flying down a bit and return to original position")
         .defaultValue(20)
         .min(1)

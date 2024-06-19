@@ -25,7 +25,7 @@ public class AutoReplenish extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Integer> threshold = sgGeneral.add(new IntSetting.Builder()
-        .name("threshold")
+        .name("阈值")
         .description("The threshold of items left this actives at.")
         .defaultValue(8)
         .min(1)
@@ -34,7 +34,7 @@ public class AutoReplenish extends Module {
     );
 
     private final Setting<Integer> tickDelay = sgGeneral.add(new IntSetting.Builder()
-        .name("delay")
+        .name("延迟")
         .description("The tick delay to replenish your hotbar.")
         .defaultValue(1)
         .min(0)

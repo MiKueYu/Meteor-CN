@@ -36,7 +36,7 @@ public class LogoutSpots extends Module {
     private static final Color RED = new Color(225, 25, 25);
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgRender = settings.createGroup("Render");
+    private final SettingGroup sgRender = settings.createGroup("渲染");
 
     // General
 
@@ -58,21 +58,21 @@ public class LogoutSpots extends Module {
     // Render
 
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .name("形状模式")
+        .description("形状的渲染方式.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
 
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
-        .name("side-color")
+        .name("侧面颜色")
         .description("The side color.")
         .defaultValue(new SettingColor(255, 0, 255, 55))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
-        .name("line-color")
+        .name("线条颜色")
         .description("The line color.")
         .defaultValue(new SettingColor(255, 0, 255))
         .build()
