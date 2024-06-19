@@ -38,8 +38,8 @@ public class AutoArmor extends Module {
     );
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
-        .name("换装延迟")
-        .description("更换装备的延迟.")
+        .name("换装间隔")
+        .description("更换装备的间隔.")
         .defaultValue(1)
         .min(0)
         .sliderMax(5)

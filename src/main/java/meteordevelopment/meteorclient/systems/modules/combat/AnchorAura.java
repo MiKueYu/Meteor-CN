@@ -85,8 +85,8 @@ public class AnchorAura extends Module {
     );
 
     private final Setting<Integer> placeDelay = sgPlace.add(new IntSetting.Builder()
-        .name("放置延迟")
-        .description("放置锚点之间的tick延迟.")
+        .name("放置间隔")
+        .description("放置锚点之间的tick间隔.")
         .defaultValue(2)
         .range(0, 10)
         .visible(place::get)
@@ -122,8 +122,8 @@ public class AnchorAura extends Module {
     // Break
 
     private final Setting<Integer> breakDelay = sgBreak.add(new IntSetting.Builder()
-        .name("破坏延迟")
-        .description("破坏锚点之间的tick延迟.")
+        .name("破坏间隔")
+        .description("破坏锚点之间的tick间隔.")
         .defaultValue(10)
         .range(0, 10)
         .build()

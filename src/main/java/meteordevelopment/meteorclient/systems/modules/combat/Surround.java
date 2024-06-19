@@ -54,8 +54,8 @@ public class Surround extends Module {
     );
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
-        .name("延迟")
-        .description("方块放置之间的延迟(以tick为单位).")
+        .name("间隔")
+        .description("方块放置之间的间隔(以tick为单位).")
         .min(0)
         .defaultValue(0)
         .build()

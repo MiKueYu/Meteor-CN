@@ -56,8 +56,8 @@ public class AutoTrap extends Module {
     );
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
-        .name("放置延迟")
-        .description("放置方块之间的延迟,以tick为单位.")
+        .name("放置间隔")
+        .description("放置方块之间的间隔,以tick为单位.")
         .defaultValue(1)
         .build()
     );

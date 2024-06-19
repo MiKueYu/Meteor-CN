@@ -201,20 +201,20 @@ public class KillAura extends Module {
 
     private final Setting<Boolean> tpsSync = sgTiming.add(new BoolSetting.Builder()
         .name("TPS同步")
-        .description("尝试将攻击延迟与服务器的TPS同步。")
+        .description("尝试将攻击间隔与服务器的TPS同步。")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> customDelay = sgTiming.add(new BoolSetting.Builder()
-        .name("自定义延迟")
-        .description("使用自定义延迟而不是原版冷却时间.")
+        .name("自定义间隔")
+        .description("使用自定义间隔而不是原版冷却时间.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Integer> hitDelay = sgTiming.add(new IntSetting.Builder()
-        .name("攻击延迟")
+        .name("攻击间隔")
         .description("每tick攻击实体的次数.")
         .defaultValue(11)
         .min(0)
@@ -224,7 +224,7 @@ public class KillAura extends Module {
     );
 
     private final Setting<Integer> switchDelay = sgTiming.add(new IntSetting.Builder()
-        .name("切换延迟")
+        .name("切换间隔")
         .description("切换物品栏后,需要等待多少tick才能攻击实体.")
         .defaultValue(0)
         .min(0)

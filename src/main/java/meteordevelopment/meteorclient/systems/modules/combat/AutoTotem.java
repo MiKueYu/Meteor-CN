@@ -31,7 +31,7 @@ public class AutoTotem extends Module {
     );
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
-        .name("延迟")
+        .name("间隔")
         .description("槽位移动之间的tick.")
         .defaultValue(0)
         .min(0)

@@ -162,8 +162,8 @@ public class CrystalAura extends Module {
     );
 
     private final Setting<Integer> switchDelay = sgSwitch.add(new IntSetting.Builder()
-        .name("切换延迟")
-        .description("切换快捷栏后,等待破坏水晶的延迟(以tick为单位).")
+        .name("切换间隔")
+        .description("切换快捷栏后,等待破坏水晶的间隔(以tick为单位).")
         .defaultValue(0)
         .min(0)
         .build()
@@ -201,7 +201,7 @@ public class CrystalAura extends Module {
     );
 
     public final Setting<Integer> placeDelay = sgPlace.add(new IntSetting.Builder()
-        .name("放置延迟")
+        .name("放置间隔")
         .description("水晶爆炸后,需要等待多少tick才能放置水晶.")
         .defaultValue(0)
         .min(0)
@@ -242,7 +242,7 @@ public class CrystalAura extends Module {
     );
 
     private final Setting<Integer> supportDelay = sgPlace.add(new IntSetting.Builder()
-        .name("支撑延迟")
+        .name("支撑间隔")
         .description("放置支撑方块后,需要等待多少tick.")
         .defaultValue(1)
         .min(0)
@@ -374,7 +374,7 @@ public class CrystalAura extends Module {
 
     private final Setting<Boolean> fastBreak = sgBreak.add(new BoolSetting.Builder()
         .name("快速破坏")
-        .description("忽略破坏延迟,在水晶生成后立即尝试破坏.")
+        .description("忽略破坏间隔,在水晶生成后立即尝试破坏.")
         .defaultValue(true)
         .build()
     );

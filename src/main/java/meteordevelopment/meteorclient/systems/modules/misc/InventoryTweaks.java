@@ -99,7 +99,7 @@ public class InventoryTweaks extends Module {
 
     private final Setting<Integer> sortingDelay = sgSorting.add(new IntSetting.Builder()
         .name("排序间隔")
-        .description("排序时移动物品之间的tick延迟.")
+        .description("排序时移动物品之间的tick间隔.")
         .visible(sortingEnabled::get)
         .defaultValue(1)
         .min(0)
@@ -211,8 +211,8 @@ public class InventoryTweaks extends Module {
     );
 
     private final Setting<Integer> autoStealDelay = sgAutoSteal.add(new IntSetting.Builder()
-        .name("延迟")
-        .description("窃取下一个物品之间的最小延迟(以毫秒为单位).")
+        .name("间隔")
+        .description("窃取下一个物品之间的最小间隔(以毫秒为单位).")
         .defaultValue(20)
         .sliderMax(1000)
         .build()
@@ -220,7 +220,7 @@ public class InventoryTweaks extends Module {
 
     private final Setting<Integer> autoStealInitDelay = sgAutoSteal.add(new IntSetting.Builder()
         .name("初始延迟")
-        .description("窃取之前的初始延迟(以毫秒为单位).0使用正常延迟代替.")
+        .description("窃取之前的初始延迟(以毫秒为单位).0使用正常间隔代替.")
         .defaultValue(50)
         .sliderMax(1000)
         .build()
@@ -228,7 +228,7 @@ public class InventoryTweaks extends Module {
 
     private final Setting<Integer> autoStealRandomDelay = sgAutoSteal.add(new IntSetting.Builder()
         .name("随机")
-        .description("随机添加最多指定时间(以毫秒为单位)的延迟.")
+        .description("随机添加最多指定时间(以毫秒为单位)的间隔.")
         .min(0)
         .sliderMax(1000)
         .defaultValue(50)

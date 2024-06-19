@@ -30,8 +30,8 @@ public class Offhand extends Module {
     //Combat
 
     private final Setting<Integer> delayTicks = sgCombat.add(new IntSetting.Builder()
-        .name("物品切换延迟")
-        .description("物品栏切换之间的延迟(以游戏刻为单位).")
+        .name("物品切换间隔")
+        .description("物品栏切换之间的间隔(以游戏刻为单位).")
         .defaultValue(0)
         .min(0)
         .sliderMax(20)

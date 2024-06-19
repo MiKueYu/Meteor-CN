@@ -56,8 +56,8 @@ public class AutoAnvil extends Module {
     );
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
-        .name("延迟")
-        .description("放置铁砧之间的延迟.")
+        .name("间隔")
+        .description("放置铁砧之间的间隔.")
         .defaultValue(10)
         .min(0)
         .sliderMax(50)

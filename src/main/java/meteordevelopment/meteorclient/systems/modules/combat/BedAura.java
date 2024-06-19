@@ -42,8 +42,8 @@ public class BedAura extends Module {
     // General
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
-        .name("延迟")
-        .description("放置床之间的延迟(以tick为单位).")
+        .name("间隔")
+        .description("放置床之间的间隔(以tick为单位).")
         .defaultValue(9)
         .min(0)
         .sliderMax(20)

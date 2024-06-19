@@ -65,7 +65,7 @@ public class SelfTrap extends Module {
     );
 
     private final Setting<Integer> delaySetting = sgGeneral.add(new IntSetting.Builder()
-        .name("放置延迟")
+        .name("放置间隔")
         .description("方块放置之间有多少个tick.")
         .defaultValue(1)
         .build()
