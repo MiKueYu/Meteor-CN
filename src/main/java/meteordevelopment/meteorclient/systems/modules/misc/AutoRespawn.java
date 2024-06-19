@@ -16,7 +16,7 @@ import net.minecraft.client.gui.screen.DeathScreen;
 
 public class AutoRespawn extends Module {
     public AutoRespawn() {
-        super(Categories.Player, "auto-respawn", "Automatically respawns after death.");
+        super(Categories.Player, "自动重生", "死亡后自动重生.");
     }
 
     @EventHandler(priority = EventPriority.HIGH)
