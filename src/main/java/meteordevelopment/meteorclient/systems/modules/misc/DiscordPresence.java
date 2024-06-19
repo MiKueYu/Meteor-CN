@@ -45,14 +45,14 @@ public class DiscordPresence extends Module {
         Sequential
     }
 
-    private final SettingGroup sgLine1 = settings.createGroup("Line 1");
-    private final SettingGroup sgLine2 = settings.createGroup("Line 2");
+    private final SettingGroup sgLine1 = settings.createGroup("第一行");
+    private final SettingGroup sgLine2 = settings.createGroup("第二行");
 
     // Line 1
 
     private final Setting<List<String>> line1Strings = sgLine1.add(new StringListSetting.Builder()
-        .name("line-1-messages")
-        .description("Messages used for the first line.")
+        .name("第一行消息")
+        .description("用于第一行的消息.")
         .defaultValue("{player}", "{server}")
         .onChanged(strings -> recompileLine1())
         .renderer(StarscriptTextBoxRenderer.class)
@@ -60,8 +60,8 @@ public class DiscordPresence extends Module {
     );
 
     private final Setting<Integer> line1UpdateDelay = sgLine1.add(new IntSetting.Builder()
-        .name("line-1-update-delay")
-        .description("How fast to update the first line in ticks.")
+        .name("第一行更新频率")
+        .description("更新第一行的速度(以tick为单位).")
         .defaultValue(200)
         .min(10)
         .sliderRange(10, 200)
@@ -69,8 +69,8 @@ public class DiscordPresence extends Module {
     );
 
     private final Setting<SelectMode> line1SelectMode = sgLine1.add(new EnumSetting.Builder<SelectMode>()
-        .name("line-1-select-mode")
-        .description("How to select messages for the first line.")
+        .name("第一行选择模式")
+        .description("如何选择第一行的消息.")
         .defaultValue(SelectMode.Sequential)
         .build()
     );
@@ -78,17 +78,17 @@ public class DiscordPresence extends Module {
     // Line 2
 
     private final Setting<List<String>> line2Strings = sgLine2.add(new StringListSetting.Builder()
-        .name("line-2-messages")
-        .description("Messages used for the second line.")
-        .defaultValue("Meteor on Crack!", "{round(server.tps, 1)} TPS", "Playing on {server.difficulty} difficulty.", "{server.player_count} Players online")
+        .name("第二行消息")
+        .description("用于第二行的消息.")
+        .defaultValue("Meteor on Crack!", "{round(server.tps, 1)} TPS", "在{server.difficulty}难度下玩.", "{server.player_count} 玩家在线")
         .onChanged(strings -> recompileLine2())
         .renderer(StarscriptTextBoxRenderer.class)
         .build()
     );
 
     private final Setting<Integer> line2UpdateDelay = sgLine2.add(new IntSetting.Builder()
-        .name("line-2-update-delay")
-        .description("How fast to update the second line in ticks.")
+        .name("第二行更新频率")
+        .description("更新第二行的速度(以刻度为单位).")
         .defaultValue(60)
         .min(10)
         .sliderRange(10, 200)
@@ -96,8 +96,8 @@ public class DiscordPresence extends Module {
     );
 
     private final Setting<SelectMode> line2SelectMode = sgLine2.add(new EnumSetting.Builder<SelectMode>()
-        .name("line-2-select-mode")
-        .description("How to select messages for the second line.")
+        .name("第二行选择模式")
+        .description("如何选择第二行的消息.")
         .defaultValue(SelectMode.Sequential)
         .build()
     );
@@ -116,12 +116,12 @@ public class DiscordPresence extends Module {
     public static final List<Pair<String, String>> customStates = new ArrayList<>();
 
     static {
-        registerCustomState("com.terraformersmc.modmenu.gui", "Browsing mods");
-        registerCustomState("me.jellysquid.mods.sodium.client", "Changing options");
+        registerCustomState("com.terraformersmc.modmenu.gui", "浏览模组");
+        registerCustomState("me.jellysquid.mods.sodium.client", "更改选项");
     }
 
     public DiscordPresence() {
-        super(Categories.Misc, "discord-presence", "Displays Meteor as your presence on Discord.");
+        super(Categories.Misc, "discord-显示", "将Meteor显示为您在Discord上的存在.");
 
         runInMainMenu = true;
     }
@@ -150,7 +150,7 @@ public class DiscordPresence extends Module {
         rpc.setStart(System.currentTimeMillis() / 1000L);
 
         String largeText = "%s %s".formatted(MeteorClient.NAME, MeteorClient.VERSION);
-        if (!MeteorClient.DEV_BUILD.isEmpty()) largeText += " Dev Build: " + MeteorClient.DEV_BUILD;
+        if (!MeteorClient.DEV_BUILD.isEmpty()) largeText += " 开发版: " + MeteorClient.DEV_BUILD;
         rpc.setLargeImage("meteor_client", largeText);
 
         currentSmallImage = SmallImage.Snail;
@@ -244,18 +244,18 @@ public class DiscordPresence extends Module {
             if (!lastWasInMainMenu) {
                 rpc.setDetails(MeteorClient.NAME + " " + (MeteorClient.DEV_BUILD.isEmpty() ? MeteorClient.VERSION : MeteorClient.VERSION + " " + MeteorClient.DEV_BUILD));
 
-                if (mc.currentScreen instanceof TitleScreen) rpc.setState("Looking at title screen");
-                else if (mc.currentScreen instanceof SelectWorldScreen) rpc.setState("Selecting world");
+                if (mc.currentScreen instanceof TitleScreen) rpc.setState("看着标题画面");
+                else if (mc.currentScreen instanceof SelectWorldScreen) rpc.setState("选择世界");
                 else if (mc.currentScreen instanceof CreateWorldScreen || mc.currentScreen instanceof EditGameRulesScreen) rpc.setState("Creating world");
-                else if (mc.currentScreen instanceof EditWorldScreen) rpc.setState("Editing world");
-                else if (mc.currentScreen instanceof LevelLoadingScreen) rpc.setState("Loading world");
-                else if (mc.currentScreen instanceof MultiplayerScreen) rpc.setState("Selecting server");
-                else if (mc.currentScreen instanceof AddServerScreen) rpc.setState("Adding server");
+                else if (mc.currentScreen instanceof EditWorldScreen) rpc.setState("编辑世界");
+                else if (mc.currentScreen instanceof LevelLoadingScreen) rpc.setState("加载世界");
+                else if (mc.currentScreen instanceof MultiplayerScreen) rpc.setState("选择服务器");
+                else if (mc.currentScreen instanceof AddServerScreen) rpc.setState("添加服务器");
                 else if (mc.currentScreen instanceof ConnectScreen || mc.currentScreen instanceof DirectConnectScreen) rpc.setState("Connecting to server");
-                else if (mc.currentScreen instanceof WidgetScreen) rpc.setState("Browsing Meteor's GUI");
+                else if (mc.currentScreen instanceof WidgetScreen) rpc.setState("浏览Meteor的GUI");
                 else if (mc.currentScreen instanceof OptionsScreen || mc.currentScreen instanceof SkinOptionsScreen || mc.currentScreen instanceof SoundOptionsScreen || mc.currentScreen instanceof VideoOptionsScreen || mc.currentScreen instanceof ControlsOptionsScreen || mc.currentScreen instanceof LanguageOptionsScreen || mc.currentScreen instanceof ChatOptionsScreen || mc.currentScreen instanceof PackScreen || mc.currentScreen instanceof AccessibilityOptionsScreen) rpc.setState("Changing options");
-                else if (mc.currentScreen instanceof CreditsScreen) rpc.setState("Reading credits");
-                else if (mc.currentScreen instanceof RealmsScreen) rpc.setState("Browsing Realms");
+                else if (mc.currentScreen instanceof CreditsScreen) rpc.setState("阅读制作人名单");
+                else if (mc.currentScreen instanceof RealmsScreen) rpc.setState("浏览Realms");
                 else {
                     boolean setState = false;
                     if (mc.currentScreen != null) {
@@ -268,7 +268,7 @@ public class DiscordPresence extends Module {
                             }
                         }
                     }
-                    if (!setState) rpc.setState("In main menu");
+                    if (!setState) rpc.setState("在主菜单中");
                 }
 
                 update = true;
@@ -288,7 +288,7 @@ public class DiscordPresence extends Module {
 
     @Override
     public WWidget getWidget(GuiTheme theme) {
-        WButton help = theme.button("Open documentation.");
+        WButton help = theme.button("打开文档.");
         help.action = () -> Util.getOperatingSystem().open("https://github.com/MeteorDevelopment/meteor-client/wiki/Starscript");
 
         return help;

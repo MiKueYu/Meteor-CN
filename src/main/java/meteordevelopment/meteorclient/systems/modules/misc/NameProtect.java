@@ -16,31 +16,31 @@ public class NameProtect extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> nameProtect = sgGeneral.add(new BoolSetting.Builder()
-        .name("name-protect")
-        .description("Hides your name client-side.")
+        .name("名称保护")
+        .description("在客户端隐藏您的名称.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<String> name = sgGeneral.add(new StringSetting.Builder()
-        .name("name")
-        .description("Name to be replaced with.")
+        .name("名称")
+        .description("名称要替换为.")
         .defaultValue("seasnail")
         .visible(nameProtect::get)
         .build()
     );
 
     private final Setting<Boolean> skinProtect = sgGeneral.add(new BoolSetting.Builder()
-        .name("skin-protect")
-        .description("Make players become Steves.")
+        .name("皮肤保护")
+        .description("让玩家变成史蒂夫.")
         .defaultValue(true)
         .build()
     );
 
-    private String username = "If you see this, something is wrong.";
+    private String username = "如果您看到此内容，则表示有问题.";
 
     public NameProtect() {
-        super(Categories.Player, "name-protect", "Hide player names and skins.");
+        super(Categories.Player, "名称保护", "隐藏玩家名称和皮肤.");
     }
 
     @Override

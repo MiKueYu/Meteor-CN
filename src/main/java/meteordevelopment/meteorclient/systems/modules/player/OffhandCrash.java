@@ -25,15 +25,15 @@ public class OffhandCrash extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> doCrash = sgGeneral.add(new BoolSetting.Builder()
-        .name("do-crash")
-        .description("Sends X number of offhand swap sound packets to the server per tick.")
+        .name("崩溃")
+        .description("每个tick向服务器发送X数量的副手交换声音数据包.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Integer> speed = sgGeneral.add(new IntSetting.Builder()
-        .name("speed")
-        .description("The amount of swaps per tick.")
+        .name("速度")
+        .description("以tick为单位的切换数量.")
         .defaultValue(2000)
         .min(1)
         .sliderRange(1, 10000)
@@ -42,14 +42,14 @@ public class OffhandCrash extends Module {
     );
 
     private final Setting<Boolean> antiCrash = sgGeneral.add(new BoolSetting.Builder()
-        .name("anti-crash")
-        .description("Attempts to prevent you from crashing yourself.")
+        .name("防崩溃")
+        .description("试图防止你自己崩溃.")
         .defaultValue(true)
         .build()
     );
 
     public OffhandCrash() {
-        super(Categories.Misc, "offhand-crash", "An exploit that can crash other players by swapping back and forth between your main hand and offhand.");
+        super(Categories.Misc, "副手崩溃", "通过在主手和副手之间来回切换可能导致其他玩家崩溃的漏洞.");
     }
 
     @EventHandler

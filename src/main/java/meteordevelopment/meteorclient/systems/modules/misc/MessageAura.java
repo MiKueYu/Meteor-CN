@@ -21,21 +21,21 @@ public class MessageAura extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<String> message = sgGeneral.add(new StringSetting.Builder()
-        .name("message")
-        .description("The specified message sent to the player.")
+        .name("消息")
+        .description("发送给玩家的指定消息.")
         .defaultValue("Meteor on Crack!")
         .build()
     );
 
     private final Setting<Boolean> ignoreFriends = sgGeneral.add(new BoolSetting.Builder()
-        .name("ignore-friends")
-        .description("Will not send any messages to people friended.")
+        .name("忽略好友")
+        .description("不会向好友发送任何消息.")
         .defaultValue(false)
         .build()
     );
 
     public MessageAura() {
-        super(Categories.Misc, "message-aura", "Sends a specified message to any player that enters render distance.");
+        super(Categories.Misc, "消息光环", "向任何进入渲染距离的玩家发送指定消息.");
     }
 
     @EventHandler

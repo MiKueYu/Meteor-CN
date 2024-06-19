@@ -41,29 +41,29 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class InventoryTweaks extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgSorting = settings.createGroup("Sorting");
-    private final SettingGroup sgAutoDrop = settings.createGroup("Auto Drop");
-    private final SettingGroup sgStealDump = settings.createGroup("Steal and Dump");
-    private final SettingGroup sgAutoSteal = settings.createGroup("Auto Steal");
+    private final SettingGroup sgSorting = settings.createGroup("排序");
+    private final SettingGroup sgAutoDrop = settings.createGroup("自动转储");
+    private final SettingGroup sgStealDump = settings.createGroup("拿取和转储");
+    private final SettingGroup sgAutoSteal = settings.createGroup("自动拿取");
 
     // General
 
     private final Setting<Boolean> mouseDragItemMove = sgGeneral.add(new BoolSetting.Builder()
-        .name("mouse-drag-item-move")
-        .description("Moving mouse over items while holding shift will transfer it to the other container.")
+        .name("鼠标拖动物品移动")
+        .description("按住Shift的同时将鼠标移到物品上会将其转移到另一个容器.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<List<Item>> antiDropItems = sgGeneral.add(new ItemListSetting.Builder()
-        .name("anti-drop-items")
-        .description("Items to prevent dropping. Doesn't work in creative inventory screen.")
+        .name("防丢弃物品")
+        .description("防止丢弃物品.在创造模式的物品栏界面不起作用.")
         .build()
     );
 
     private final Setting<Boolean> xCarry = sgGeneral.add(new BoolSetting.Builder()
-        .name("xcarry")
-        .description("Allows you to store four extra item stacks in your crafting grid.")
+        .name("额外携带")
+        .description("允许您在背包合成中存储四个额外的物品堆.")
         .defaultValue(true)
         .onChanged(v -> {
             if (v || !Utils.canUpdate()) return;
@@ -74,8 +74,8 @@ public class InventoryTweaks extends Module {
     );
 
     private final Setting<Boolean> armorStorage = sgGeneral.add(new BoolSetting.Builder()
-        .name("armor-storage")
-        .description("Allows you to put normal items in your armor slots.")
+        .name("盔甲储存")
+        .description("允许您将物品放入盔甲槽中.")
         .defaultValue(true)
         .build()
     );
@@ -83,23 +83,23 @@ public class InventoryTweaks extends Module {
     // Sorting
 
     private final Setting<Boolean> sortingEnabled = sgSorting.add(new BoolSetting.Builder()
-        .name("sorting-enabled")
-        .description("Automatically sorts stacks in inventory.")
+        .name("启用排序")
+        .description("自动对库存中的物品进行排序.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Keybind> sortingKey = sgSorting.add(new KeybindSetting.Builder()
-        .name("sorting-key")
-        .description("Key to trigger the sort.")
+        .name("排序键")
+        .description("触发排序的键.")
         .visible(sortingEnabled::get)
         .defaultValue(Keybind.fromButton(GLFW.GLFW_MOUSE_BUTTON_MIDDLE))
         .build()
     );
 
     private final Setting<Integer> sortingDelay = sgSorting.add(new IntSetting.Builder()
-        .name("sorting-delay")
-        .description("Delay in ticks between moving items when sorting.")
+        .name("排序间隔")
+        .description("排序时移动物品之间的tick延迟.")
         .visible(sortingEnabled::get)
         .defaultValue(1)
         .min(0)
@@ -109,28 +109,28 @@ public class InventoryTweaks extends Module {
     // Auto Drop
 
     private final Setting<List<Item>> autoDropItems = sgAutoDrop.add(new ItemListSetting.Builder()
-        .name("auto-drop-items")
-        .description("Items to drop.")
+        .name("自动丢弃物品")
+        .description("要丢弃的物品.")
         .build()
     );
 
     private final Setting<Boolean> autoDropExcludeEquipped = sgAutoDrop.add(new BoolSetting.Builder()
-        .name("exclude-equipped")
-        .description("Whether or not to drop items equipped in armor slots.")
+        .name("排除装备")
+        .description("是否丢弃装备在盔甲槽中的物品.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> autoDropExcludeHotbar = sgAutoDrop.add(new BoolSetting.Builder()
-        .name("exclude-hotbar")
-        .description("Whether or not to drop items from your hotbar.")
+        .name("排除物品栏")
+        .description("是否从物品栏中转储物品.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> autoDropOnlyFullStacks = sgAutoDrop.add(new BoolSetting.Builder()
-        .name("only-full-stacks")
-        .description("Only drops the items if the stack is full.")
+        .name("仅满堆")
+        .description("仅当物品已满时才丢弃物品.")
         .defaultValue(false)
         .build()
     );
@@ -138,73 +138,73 @@ public class InventoryTweaks extends Module {
     // Steal & Dump
 
     public final Setting<List<ScreenHandlerType<?>>> stealScreens = sgStealDump.add(new ScreenHandlerListSetting.Builder()
-        .name("steal-screens")
-        .description("Select the screens to display buttons and auto steal.")
+        .name("窃取界面")
+        .description("选择显示按钮和自动窃取的屏幕.")
         .defaultValue(List.of(ScreenHandlerType.GENERIC_9X3, ScreenHandlerType.GENERIC_9X6))
         .build()
     );
 
     private final Setting<Boolean> buttons = sgStealDump.add(new BoolSetting.Builder()
-        .name("inventory-buttons")
-        .description("Shows steal and dump buttons in container guis.")
+        .name("库存按钮")
+        .description("在容器GUI中显示窃取和转储按钮.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> stealDrop = sgStealDump.add(new BoolSetting.Builder()
-        .name("steal-drop")
-        .description("Drop items to the ground instead of stealing them.")
+        .name("窃取丢弃")
+        .description("将物品丢到地上而不是偷走它们.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> dropBackwards = sgStealDump.add(new BoolSetting.Builder()
-        .name("drop-backwards")
-        .description("Drop items behind you.")
+        .name("向后丢弃")
+        .description("将物品丢在身后.")
         .defaultValue(false)
         .visible(stealDrop::get)
         .build()
     );
 
     private final Setting<ListMode> dumpFilter = sgStealDump.add(new EnumSetting.Builder<ListMode>()
-        .name("dump-filter")
-        .description("Dump mode.")
+        .name("转储过滤")
+        .description("转储模式.")
         .defaultValue(ListMode.None)
         .build()
     );
 
     private final Setting<List<Item>> dumpItems = sgStealDump.add(new ItemListSetting.Builder()
-        .name("dump-items")
-        .description("Items to dump.")
+        .name("转储物品")
+        .description("要转储的物品.")
         .build()
     );
 
     private final Setting<ListMode> stealFilter = sgStealDump.add(new EnumSetting.Builder<ListMode>()
-        .name("steal-filter")
-        .description("Steal mode.")
+        .name("窃取过滤")
+        .description("偷窃模式.")
         .defaultValue(ListMode.None)
         .build()
     );
 
     private final Setting<List<Item>> stealItems = sgStealDump.add(new ItemListSetting.Builder()
-        .name("steal-items")
-        .description("Items to steal.")
+        .name("偷窃物品")
+        .description("要偷的物品.")
         .build()
     );
 
     // Auto Steal
 
     private final Setting<Boolean> autoSteal = sgAutoSteal.add(new BoolSetting.Builder()
-        .name("auto-steal")
-        .description("Automatically removes all possible items when you open a container.")
+        .name("自动偷窃")
+        .description("打开容器时自动偷窃所有可能的物品.")
         .defaultValue(false)
         .onChanged(val -> checkAutoStealSettings())
         .build()
     );
 
     private final Setting<Boolean> autoDump = sgAutoSteal.add(new BoolSetting.Builder()
-        .name("auto-dump")
-        .description("Automatically dumps all possible items when you open a container.")
+        .name("自动转储")
+        .description("打开容器时自动转储所有可能的物品.")
         .defaultValue(false)
         .onChanged(val -> checkAutoStealSettings())
         .build()
@@ -212,23 +212,23 @@ public class InventoryTweaks extends Module {
 
     private final Setting<Integer> autoStealDelay = sgAutoSteal.add(new IntSetting.Builder()
         .name("延迟")
-        .description("The minimum delay between stealing the next stack in milliseconds.")
+        .description("窃取下一个物品之间的最小延迟(以毫秒为单位).")
         .defaultValue(20)
         .sliderMax(1000)
         .build()
     );
 
     private final Setting<Integer> autoStealInitDelay = sgAutoSteal.add(new IntSetting.Builder()
-        .name("initial-delay")
-        .description("The initial delay before stealing in milliseconds. 0 to use normal delay instead.")
+        .name("初始延迟")
+        .description("窃取之前的初始延迟(以毫秒为单位).0使用正常延迟代替.")
         .defaultValue(50)
         .sliderMax(1000)
         .build()
     );
 
     private final Setting<Integer> autoStealRandomDelay = sgAutoSteal.add(new IntSetting.Builder()
-        .name("random")
-        .description("Randomly adds a delay of up to the specified time in milliseconds.")
+        .name("随机")
+        .description("随机添加最多指定时间(以毫秒为单位)的延迟.")
         .min(0)
         .sliderMax(1000)
         .defaultValue(50)
@@ -239,7 +239,7 @@ public class InventoryTweaks extends Module {
     private boolean invOpened;
 
     public InventoryTweaks() {
-        super(Categories.Misc, "inventory-tweaks", "Various inventory related utilities.");
+        super(Categories.Misc, "库存调整", "各种库存相关实用程序.");
     }
 
     @Override
@@ -349,7 +349,7 @@ public class InventoryTweaks extends Module {
 
     private void checkAutoStealSettings() {
         if (autoSteal.get() && autoDump.get()) {
-            error("You can't enable Auto Steal and Auto Dump at the same time!");
+            error("您不能同时启用自动窃取和自动转储!");
             autoDump.set(false);
         }
     }
