@@ -36,27 +36,27 @@ public class Scaffold extends Module {
 
     private final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
         .name("方块")
-        .description("Selected blocks.")
+        .description("选择的方块.")
         .build()
     );
 
     private final Setting<ListMode> blocksFilter = sgGeneral.add(new EnumSetting.Builder<ListMode>()
-        .name("blocks-filter")
-        .description("How to use the block list setting")
+        .name("方块过滤")
+        .description("如何使用方块列表设置.")
         .defaultValue(ListMode.Blacklist)
         .build()
     );
 
     private final Setting<Boolean> fastTower = sgGeneral.add(new BoolSetting.Builder()
-        .name("fast-tower")
-        .description("Whether or not to scaffold upwards faster.")
+        .name("快塔")
+        .description("是否更快地向上搭建.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Double> towerSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("tower-speed")
-        .description("The speed at which to tower.")
+        .name("塔速")
+        .description("塔的速度.")
         .defaultValue(0.5)
         .min(0)
         .sliderMax(1)
@@ -65,51 +65,51 @@ public class Scaffold extends Module {
     );
 
     private final Setting<Boolean> whileMoving = sgGeneral.add(new BoolSetting.Builder()
-        .name("while-moving")
-        .description("Allows you to tower while moving.")
+        .name("移动时")
+        .description("允许您在移动时塔楼.")
         .defaultValue(false)
         .visible(fastTower::get)
         .build()
     );
 
     private final Setting<Boolean> onlyOnClick = sgGeneral.add(new BoolSetting.Builder()
-        .name("only-on-click")
-        .description("Only places blocks when holding right click.")
+        .name("仅在点击时")
+        .description("仅在按住右键时放置方块.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> renderSwing = sgGeneral.add(new BoolSetting.Builder()
         .name("挥手")
-        .description("Renders your client-side swing.")
+        .description("渲染您的客户端摆动.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> autoSwitch = sgGeneral.add(new BoolSetting.Builder()
         .name("自动切换")
-        .description("Automatically swaps to a block before placing.")
+        .description("放置前自动切换到方块.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
         .name("旋转")
-        .description("Rotates towards the blocks being placed.")
+        .description("朝正在放置的方块旋转.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> airPlace = sgGeneral.add(new BoolSetting.Builder()
-        .name("air-place")
-        .description("Allow air place. This also allows you to modify scaffold radius.")
+        .name("空中放置")
+        .description("允许空中放置.这也允许你修改自动搭路半径.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Double> aheadDistance = sgGeneral.add(new DoubleSetting.Builder()
-        .name("ahead-distance")
-        .description("How far ahead to place blocks.")
+        .name("前方距离")
+        .description("提前多远放置方块.")
         .defaultValue(0)
         .min(0)
         .sliderMax(1)
@@ -118,8 +118,8 @@ public class Scaffold extends Module {
     );
 
     private final Setting<Double> placeRange = sgGeneral.add(new DoubleSetting.Builder()
-        .name("closest-block-range")
-        .description("How far can scaffold place blocks when you are in air.")
+        .name("最近的方块范围")
+        .description("当你在空中时，脚手架可以放置方块多远.")
         .defaultValue(4)
         .min(0)
         .sliderMax(8)
@@ -128,8 +128,8 @@ public class Scaffold extends Module {
     );
 
     private final Setting<Double> radius = sgGeneral.add(new DoubleSetting.Builder()
-        .name("radius")
-        .description("Scaffold radius.")
+        .name("半径")
+        .description("脚手架半径.")
         .defaultValue(0)
         .min(0)
         .max(6)
@@ -138,8 +138,8 @@ public class Scaffold extends Module {
     );
 
     private final Setting<Integer> blocksPerTick = sgGeneral.add(new IntSetting.Builder()
-        .name("blocks-per-tick")
-        .description("How many blocks to place in one tick.")
+        .name("每tick方块")
+        .description("一tick内放置多少个方块.")
         .defaultValue(3)
         .min(1)
         .visible(airPlace::get)
@@ -150,7 +150,7 @@ public class Scaffold extends Module {
 
     private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
         .name("渲染")
-        .description("Whether to render blocks that have been placed.")
+        .description("是否渲染已经放置的方块.")
         .defaultValue(true)
         .build()
     );
@@ -182,7 +182,7 @@ public class Scaffold extends Module {
     private final BlockPos.Mutable bp = new BlockPos.Mutable();
 
     public Scaffold() {
-        super(Categories.Movement, "scaffold", "Automatically places blocks under you.");
+        super(Categories.Movement, "自动搭路", "自动将方块放置在您下方.");
     }
 
 

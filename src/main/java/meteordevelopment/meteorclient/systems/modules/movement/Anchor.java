@@ -21,8 +21,8 @@ public class Anchor extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Integer> maxHeight = sgGeneral.add(new IntSetting.Builder()
-        .name("max-height")
-        .description("The maximum height Anchor will work at.")
+        .name("最大高度")
+        .description("锚点工作的最大高度.")
         .defaultValue(10)
         .range(0, 255)
         .sliderMax(20)
@@ -30,8 +30,8 @@ public class Anchor extends Module {
     );
 
     private final Setting<Integer> minPitch = sgGeneral.add(new IntSetting.Builder()
-        .name("min-pitch")
-        .description("The minimum pitch at which anchor will work.")
+        .name("最小间距")
+        .description("锚点起作用的最小节距.")
         .defaultValue(0)
         .range(-90, 90)
         .sliderRange(-90, 90)
@@ -39,22 +39,22 @@ public class Anchor extends Module {
     );
 
     private final Setting<Boolean> cancelMove = sgGeneral.add(new BoolSetting.Builder()
-        .name("cancel-jump-in-hole")
-        .description("Prevents you from jumping when Anchor is active and Min Pitch is met.")
+        .name("取消进洞跳跃")
+        .description("当锚点处于活动状态并且满足最小间距时,防止您跳跃.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> pull = sgGeneral.add(new BoolSetting.Builder()
-        .name("pull")
-        .description("The pull strength of Anchor.")
+        .name("拉力")
+        .description("锚点的拉力.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Double> pullSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("pull-speed")
-        .description("How fast to pull towards the hole in blocks per second.")
+        .name("拉速")
+        .description("每秒拉向洞的速度有多快(以块为单位).")
         .defaultValue(0.3)
         .min(0)
         .sliderMax(5)
@@ -72,7 +72,7 @@ public class Anchor extends Module {
     public double deltaX, deltaZ;
 
     public Anchor() {
-        super(Categories.Movement, "anchor", "Helps you get into holes by stopping your movement completely over a hole.");
+        super(Categories.Movement, "锚点", "通过在洞上完全停止移动来帮助您进入洞.");
     }
 
     @Override

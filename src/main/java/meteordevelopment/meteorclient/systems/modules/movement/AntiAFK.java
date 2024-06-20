@@ -18,35 +18,35 @@ import java.util.List;
 import java.util.Random;
 
 public class AntiAFK extends Module {
-    private final SettingGroup sgActions = settings.createGroup("Actions");
-    private final SettingGroup sgMessages = settings.createGroup("Messages");
+    private final SettingGroup sgActions = settings.createGroup("动作");
+    private final SettingGroup sgMessages = settings.createGroup("消息");
 
     // Actions
 
     private final Setting<Boolean> jump = sgActions.add(new BoolSetting.Builder()
-        .name("jump")
-        .description("Jump randomly.")
+        .name("跳跃")
+        .description("随机跳跃.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> swing = sgActions.add(new BoolSetting.Builder()
         .name("挥手")
-        .description("Swings your hand.")
+        .description("挥动你的手.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> sneak = sgActions.add(new BoolSetting.Builder()
-        .name("sneak")
-        .description("Sneaks and unsneaks quickly.")
+        .name("潜行")
+        .description("快速潜行和解除潜行.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Integer> sneakTime = sgActions.add(new IntSetting.Builder()
-        .name("sneak-time")
-        .description("How many ticks to stay sneaked.")
+        .name("潜行时间")
+        .description("保持潜行多少tick.")
         .defaultValue(5)
         .min(1)
         .sliderMin(1)
@@ -55,8 +55,8 @@ public class AntiAFK extends Module {
     );
 
     private final Setting<Boolean> strafe = sgActions.add(new BoolSetting.Builder()
-        .name("strafe")
-        .description("Strafe right and left.")
+        .name("扫射")
+        .description("左右扫射.")
         .defaultValue(false)
         .onChanged(aBoolean -> {
             strafeTimer = 0;
@@ -71,31 +71,31 @@ public class AntiAFK extends Module {
     );
 
     private final Setting<Boolean> spin = sgActions.add(new BoolSetting.Builder()
-        .name("spin")
-        .description("Spins the player in place.")
+        .name("旋转")
+        .description("让玩家原地旋转.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<SpinMode> spinMode = sgActions.add(new EnumSetting.Builder<SpinMode>()
-        .name("spin-mode")
-        .description("The method of rotating.")
+        .name("旋转模式")
+        .description("旋转的方法.")
         .defaultValue(SpinMode.Server)
         .visible(spin::get)
         .build()
     );
 
     private final Setting<Integer> spinSpeed = sgActions.add(new IntSetting.Builder()
-        .name("speed")
-        .description("The speed to spin you.")
+        .name("速度")
+        .description("让你旋转的速度.")
         .defaultValue(7)
         .visible(spin::get)
         .build()
     );
 
     private final Setting<Integer> pitch = sgActions.add(new IntSetting.Builder()
-        .name("pitch")
-        .description("The pitch to send to the server.")
+        .name("俯仰角")
+        .description("发送到服务器的俯仰角.")
         .defaultValue(0)
         .range(-90, 90)
         .sliderRange(-90, 90)
@@ -107,15 +107,15 @@ public class AntiAFK extends Module {
     // Messages
 
     private final Setting<Boolean> sendMessages = sgMessages.add(new BoolSetting.Builder()
-        .name("send-messages")
-        .description("Sends messages to prevent getting kicked for AFK.")
+        .name("发送消息")
+        .description("发送消息以防止因AFK而被踢出.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> randomMessage = sgMessages.add(new BoolSetting.Builder()
-        .name("random")
-        .description("Selects a random message from your message list.")
+        .name("随机")
+        .description("从消息列表中随机选择一条消息.")
         .defaultValue(false)
         .visible(sendMessages::get)
         .build()
@@ -123,7 +123,7 @@ public class AntiAFK extends Module {
 
     private final Setting<Integer> delay = sgMessages.add(new IntSetting.Builder()
         .name("延迟")
-        .description("The delay between specified messages in seconds.")
+        .description("指定消息之间的延迟(以秒为单位).")
         .defaultValue(15)
         .min(0)
         .sliderMax(30)
@@ -132,8 +132,8 @@ public class AntiAFK extends Module {
     );
 
     private final Setting<List<String>> messages = sgMessages.add(new StringListSetting.Builder()
-        .name("messages")
-        .description("The messages to choose from.")
+        .name("消息")
+        .description("可供选择的消息.")
         .defaultValue(
             "Meteor on top!",
             "Meteor on crack!"
@@ -143,7 +143,7 @@ public class AntiAFK extends Module {
     );
 
     public AntiAFK() {
-        super(Categories.Player, "anti-afk", "Performs different actions to prevent getting kicked while AFK.");
+        super(Categories.Player, "防AFK", "执行不同的动作以防止在AFK时被踢.");
     }
 
     private final Random random = new Random();
@@ -157,7 +157,7 @@ public class AntiAFK extends Module {
     @Override
     public void onActivate() {
         if (sendMessages.get() && messages.get().isEmpty()) {
-            warning("Message list is empty, disabling messages...");
+            warning("消息列表为空,禁用消息...");
             sendMessages.set(false);
         }
 

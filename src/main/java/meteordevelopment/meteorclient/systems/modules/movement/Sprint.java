@@ -23,29 +23,29 @@ public class Sprint extends Module {
     }
 
     public final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
-        .name("speed-mode")
-        .description("What mode of sprinting.")
+        .name("速度模式")
+        .description("奔跑的模式.")
         .defaultValue(Mode.Strict)
         .build()
     );
 
     public final Setting<Boolean> jumpFix = sgGeneral.add(new BoolSetting.Builder()
-        .name("jump-fix")
-        .description("Whether to correct jumping directions.")
+        .name("跳跃修正")
+        .description("是否修正跳跃方向.")
         .defaultValue(true)
         .visible(() -> mode.get() == Mode.Rage)
         .build()
     );
 
     private final Setting<Boolean> keepSprint = sgGeneral.add(new BoolSetting.Builder()
-        .name("keep-sprint")
-        .description("Whether to keep sprinting after attacking an entity.")
+        .name("保持奔跑")
+        .description("攻击实体后是否继续奔跑.")
         .defaultValue(false)
         .build()
     );
 
     public Sprint() {
-        super(Categories.Movement, "sprint", "Automatically sprints.");
+        super(Categories.Movement, "奔跑", "自动奔跑.");
     }
 
     @Override

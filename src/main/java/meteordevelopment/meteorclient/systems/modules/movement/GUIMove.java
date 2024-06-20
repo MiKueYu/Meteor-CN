@@ -37,15 +37,15 @@ public class GUIMove extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Screens> screens = sgGeneral.add(new EnumSetting.Builder<Screens>()
-        .name("guis")
-        .description("Which GUIs to move in.")
+        .name("界面")
+        .description("可以在其中移动的界面.")
         .defaultValue(Screens.Inventory)
         .build()
     );
 
     private final Setting<Boolean> jump = sgGeneral.add(new BoolSetting.Builder()
-        .name("jump")
-        .description("Allows you to jump while in GUIs.")
+        .name("跳跃")
+        .description("允许您在界面中跳跃.")
         .defaultValue(true)
         .onChanged(aBoolean -> {
             if (isActive() && !aBoolean) set(mc.options.jumpKey, false);
@@ -54,8 +54,8 @@ public class GUIMove extends Module {
     );
 
     private final Setting<Boolean> sneak = sgGeneral.add(new BoolSetting.Builder()
-        .name("sneak")
-        .description("Allows you to sneak while in GUIs.")
+        .name("潜行")
+        .description("允许您在界面中潜行.")
         .defaultValue(true)
         .onChanged(aBoolean -> {
             if (isActive() && !aBoolean) set(mc.options.sneakKey, false);
@@ -64,8 +64,8 @@ public class GUIMove extends Module {
     );
 
     private final Setting<Boolean> sprint = sgGeneral.add(new BoolSetting.Builder()
-        .name("sprint")
-        .description("Allows you to sprint while in GUIs.")
+        .name("奔跑")
+        .description("允许您在界面中奔跑.")
         .defaultValue(true)
         .onChanged(aBoolean -> {
             if (isActive() && !aBoolean) set(mc.options.sprintKey, false);
@@ -74,22 +74,22 @@ public class GUIMove extends Module {
     );
 
     private final Setting<Boolean> arrowsRotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("arrows-rotate")
-        .description("Allows you to use your arrow keys to rotate while in GUIs.")
+        .name("箭头旋转")
+        .description("允许您在界面中使用箭头键进行旋转.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Double> rotateSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("rotate-speed")
-        .description("Rotation speed while in GUIs.")
+        .name("旋转速度")
+        .description("在界面中的旋转速度.")
         .defaultValue(4)
         .min(0)
         .build()
     );
-    
+
     public GUIMove() {
-        super(Categories.Movement, "gui-move", "Allows you to perform various actions while in GUIs.");
+        super(Categories.Movement, "界面移动", "允许您在界面中执行各种操作.");
     }
 
     @Override

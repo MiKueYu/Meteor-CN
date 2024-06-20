@@ -27,16 +27,16 @@ public class Blink extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> renderOriginal = sgGeneral.add(new BoolSetting.Builder()
-        .name("render-original")
-        .description("Renders your player model at the original position.")
+        .name("渲染原本位置")
+        .description("在原始位置渲染玩家模型.")
         .defaultValue(true)
         .build()
     );
 
     @SuppressWarnings("unused")
     private final Setting<Keybind> cancelBlink = sgGeneral.add(new KeybindSetting.Builder()
-        .name("cancel-blink")
-        .description("Cancels sending packets and sends you back to your original position.")
+        .name("取消瞬移")
+        .description("取消发送数据包并将您送回原来的位置.")
         .defaultValue(Keybind.none())
         .action(() -> {
             cancelled = true;
@@ -53,7 +53,7 @@ public class Blink extends Module {
     private int timer = 0;
 
     public Blink() {
-        super(Categories.Movement, "blink", "Allows you to essentially teleport while suspending motion updates.");
+        super(Categories.Movement, "闪现", "允许您在暂停运动更新的同时进行传送.");
     }
 
     @Override

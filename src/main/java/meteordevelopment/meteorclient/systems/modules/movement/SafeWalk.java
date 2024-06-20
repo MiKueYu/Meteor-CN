@@ -12,7 +12,7 @@ import meteordevelopment.orbit.EventHandler;
 
 public class SafeWalk extends Module {
     public SafeWalk() {
-        super(Categories.Movement, "safe-walk", "Prevents you from walking off blocks.");
+        super(Categories.Movement, "安全行走", "防止你从方块上走下来.");
     }
 
     @EventHandler

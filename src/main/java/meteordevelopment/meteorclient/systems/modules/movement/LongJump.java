@@ -24,15 +24,15 @@ public class LongJump extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<JumpMode> jumpMode = sgGeneral.add(new EnumSetting.Builder<JumpMode>()
-        .name("mode")
-        .description("The method of jumping.")
+        .name("模式")
+        .description("跳跃的方法.")
         .defaultValue(JumpMode.Vanilla)
         .build()
     );
 
     private final Setting<Double> vanillaBoostFactor = sgGeneral.add(new DoubleSetting.Builder()
-        .name("vanilla-boost-factor")
-        .description("The amount by which to boost the jump.")
+        .name("原版加速因子")
+        .description("加速跳跃的量.")
         .visible(() -> jumpMode.get() == JumpMode.Vanilla)
         .defaultValue(1.261)
         .min(0)
@@ -41,8 +41,8 @@ public class LongJump extends Module {
     );
 
     private final Setting<Double> burstInitialSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("burst-initial-speed")
-        .description("The initial speed of the runup.")
+        .name("爆发初始速度")
+        .description("跑步的初始速度.")
         .visible(() -> jumpMode.get() == JumpMode.Burst)
         .defaultValue(6)
         .min(0)
@@ -51,8 +51,8 @@ public class LongJump extends Module {
     );
 
     private final Setting<Double> burstBoostFactor = sgGeneral.add(new DoubleSetting.Builder()
-        .name("burst-boost-factor")
-        .description("The amount by which to boost the jump.")
+        .name("爆发加速因子")
+        .description("加速跳跃的量.")
         .visible(() -> jumpMode.get() == JumpMode.Burst)
         .defaultValue(2.149)
         .min(0)
@@ -61,24 +61,24 @@ public class LongJump extends Module {
     );
 
     private final Setting<Boolean> onlyOnGround = sgGeneral.add(new BoolSetting.Builder()
-        .name("only-on-ground")
-        .description("Only performs the jump if you are on the ground.")
+        .name("仅在地面")
+        .description("仅当您在地面上时才进行跳跃.")
         .visible(() -> jumpMode.get() == JumpMode.Burst)
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> onJump = sgGeneral.add(new BoolSetting.Builder()
-        .name("on-jump")
-        .description("Whether the player needs to jump first or not.")
+        .name("跳跃时")
+        .description("玩家是否需要先跳.")
         .visible(() -> jumpMode.get() == JumpMode.Burst)
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Double> glideMultiplier = sgGeneral.add(new DoubleSetting.Builder()
-        .name("glide-multiplier")
-        .description("The amount by to multiply the glide velocity.")
+        .name("滑翔倍数")
+        .description("滑翔速度的量.")
         .visible(() -> jumpMode.get() == JumpMode.Glide)
         .defaultValue(1)
         .min(0)
@@ -88,7 +88,7 @@ public class LongJump extends Module {
 
     public final Setting<Double> timer = sgGeneral.add(new DoubleSetting.Builder()
         .name("timer")
-        .description("Timer override.")
+        .description("timer覆盖.")
         .defaultValue(1)
         .min(0.01)
         .sliderMin(0.01)
@@ -96,22 +96,22 @@ public class LongJump extends Module {
     );
 
     private final Setting<Boolean> autoDisable = sgGeneral.add(new BoolSetting.Builder()
-        .name("auto-disable")
-        .description("Automatically disabled the module after jumping.")
+        .name("自动禁用")
+        .description("跳跃后自动禁用模块.")
         .visible(() -> jumpMode.get() != JumpMode.Vanilla)
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> disableOnRubberband = sgGeneral.add(new BoolSetting.Builder()
-        .name("disable-on-rubberband")
-        .description("Disables the module when you get lagged back.")
+        .name("禁用Rubberband")
+        .description("当您被拉回时禁用模块.")
         .defaultValue(true)
         .build()
     );
 
     public LongJump() {
-        super(Categories.Movement, "long-jump", "Allows you to jump further than normal.");
+        super(Categories.Movement, "远跳", "让你跳得比平时更远.");
     }
 
     private int stage;
@@ -137,7 +137,7 @@ public class LongJump extends Module {
     @EventHandler
     private void onPacketReceive(PacketEvent.Receive event) {
         if (event.packet instanceof PlayerPositionLookS2CPacket && disableOnRubberband.get()) {
-            info("Rubberband detected! Disabling...");
+            info("检测到Rubberband!禁用...");
             toggle();
         }
     }
@@ -168,7 +168,7 @@ public class LongJump extends Module {
                 if (jumping && (mc.player.getY() - (int) mc.player.getY() < 0.01)) {
                     jumping = false;
                     toggle();
-                    info("Disabling after jump.");
+                    info("跳跃后禁用.");
                 }
 
                 if (onlyOnGround.get() && !mc.player.isOnGround() && stage == 0) return;
@@ -237,7 +237,7 @@ public class LongJump extends Module {
                 if (autoDisable.get() && jumped) {
                     jumped = false;
                     toggle();
-                    info("Disabling after jump.");
+                    info("跳跃.");
                 }
                 airTicks = 0;
                 groundTicks += 1;

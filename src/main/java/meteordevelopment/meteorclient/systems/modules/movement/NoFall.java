@@ -44,47 +44,47 @@ public class NoFall extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
-        .name("mode")
-        .description("The way you are saved from fall damage.")
+        .name("模式")
+        .description("从坠落伤害中拯救您的方式.")
         .defaultValue(Mode.Packet)
         .build()
     );
 
     private final Setting<PlacedItem> placedItem = sgGeneral.add(new EnumSetting.Builder<PlacedItem>()
-        .name("placed-item")
-        .description("Which block to place.")
+        .name("放置的物品")
+        .description("放置哪个方块.")
         .defaultValue(PlacedItem.Bucket)
         .visible(() -> mode.get() == Mode.Place)
         .build()
     );
 
     private final Setting<PlaceMode> airPlaceMode = sgGeneral.add(new EnumSetting.Builder<PlaceMode>()
-        .name("air-place-mode")
-        .description("Whether place mode places before you die or before you take damage.")
+        .name("空中放置模式")
+        .description("放置模式地点是在你死前还是在你受到伤害之前.")
         .defaultValue(PlaceMode.BeforeDeath)
         .visible(() -> mode.get() == Mode.AirPlace)
         .build()
     );
 
     private final Setting<Boolean> anchor = sgGeneral.add(new BoolSetting.Builder()
-        .name("anchor")
-        .description("Centers the player and reduces movement when using bucket or air place mode.")
+        .name("锚")
+        .description("使用水桶或空中放置模式时使玩家居中并减少移动.")
         .defaultValue(true)
         .visible(() -> mode.get() != Mode.Packet)
         .build()
     );
 
     private final Setting<Boolean> autoDimension = sgGeneral.add(new BoolSetting.Builder()
-        .name("auto-dimension")
-        .description("Use powder snow bucket in nether.")
+        .name("自动维度")
+        .description("在下界使用细雪桶.")
         .defaultValue(true)
         .visible(() -> mode.get() == Mode.Place)
         .build()
     );
 
     private final Setting<Boolean> antiBounce = sgGeneral.add(new BoolSetting.Builder()
-        .name("anti-bounce")
-        .description("Disables bouncing on slime-block and bed upon landing.")
+        .name("防反弹")
+        .description("禁止着陆时在粘液块和床上弹跳.")
         .defaultValue(true)
         .build()
     );
@@ -95,7 +95,7 @@ public class NoFall extends Module {
     private boolean prePathManagerNoFall;
 
     public NoFall() {
-        super(Categories.Movement, "no-fall", "Attempts to prevent you from taking fall damage.");
+        super(Categories.Movement, "无摔落伤害", "试图防止您受到摔落伤害.");
     }
 
     @Override

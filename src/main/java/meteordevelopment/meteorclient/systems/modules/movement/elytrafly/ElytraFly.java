@@ -38,14 +38,14 @@ import net.minecraft.world.RaycastContext;
 
 public class ElytraFly extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgInventory = settings.createGroup("Inventory");
-    private final SettingGroup sgAutopilot = settings.createGroup("Autopilot");
+    private final SettingGroup sgInventory = settings.createGroup("物品栏");
+    private final SettingGroup sgAutopilot = settings.createGroup("自动驾驶");
 
     // General
 
     public final Setting<ElytraFlightModes> flightMode = sgGeneral.add(new EnumSetting.Builder<ElytraFlightModes>()
-        .name("mode")
-        .description("The mode of flying.")
+        .name("模式")
+        .description("飞行模式.")
         .defaultValue(ElytraFlightModes.Vanilla)
         .onModuleActivated(flightModesSetting -> onModeChanged(flightModesSetting.get()))
         .onChanged(this::onModeChanged)
@@ -53,16 +53,16 @@ public class ElytraFly extends Module {
     );
 
     public final Setting<Boolean> autoTakeOff = sgGeneral.add(new BoolSetting.Builder()
-        .name("auto-take-off")
-        .description("Automatically takes off when you hold jump without needing to double jump.")
+        .name("自动起飞")
+        .description("按住跳跃时自动起飞，无需二段跳.")
         .defaultValue(false)
         .visible(() -> flightMode.get() != ElytraFlightModes.Pitch40 && flightMode.get() != ElytraFlightModes.Bounce)
         .build()
     );
 
     public final Setting<Double> fallMultiplier = sgGeneral.add(new DoubleSetting.Builder()
-        .name("fall-multiplier")
-        .description("Controls how fast will you go down naturally.")
+        .name("下降倍数")
+        .description("控制您自然下降的速度.")
         .defaultValue(0.01)
         .min(0)
         .visible(() -> flightMode.get() != ElytraFlightModes.Pitch40 && flightMode.get() != ElytraFlightModes.Bounce)
@@ -70,8 +70,8 @@ public class ElytraFly extends Module {
     );
 
     public final Setting<Double> horizontalSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("horizontal-speed")
-        .description("How fast you go forward and backward.")
+        .name("水平速度")
+        .description("你前进和后退的速度有多快.")
         .defaultValue(1)
         .min(0)
         .visible(() -> flightMode.get() != ElytraFlightModes.Pitch40 && flightMode.get() != ElytraFlightModes.Bounce)
@@ -79,8 +79,8 @@ public class ElytraFly extends Module {
     );
 
     public final Setting<Double> verticalSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("vertical-speed")
-        .description("How fast you go up and down.")
+        .name("垂直速度")
+        .description("你上下的速度有多快.")
         .defaultValue(1)
         .min(0)
         .visible(() -> flightMode.get() != ElytraFlightModes.Pitch40 && flightMode.get() != ElytraFlightModes.Bounce)
@@ -88,14 +88,14 @@ public class ElytraFly extends Module {
     );
 
     public final Setting<Boolean> acceleration = sgGeneral.add(new BoolSetting.Builder()
-        .name("acceleration")
+        .name("加速")
         .defaultValue(false)
         .visible(() -> flightMode.get() != ElytraFlightModes.Pitch40 && flightMode.get() != ElytraFlightModes.Bounce)
         .build()
     );
 
     public final Setting<Double> accelerationStep = sgGeneral.add(new DoubleSetting.Builder()
-        .name("acceleration-step")
+        .name("加速步")
         .min(0.1)
         .max(5)
         .defaultValue(1)
@@ -104,7 +104,7 @@ public class ElytraFly extends Module {
     );
 
     public final Setting<Double> accelerationMin = sgGeneral.add(new DoubleSetting.Builder()
-        .name("acceleration-start")
+        .name("启动加速")
         .min(0.1)
         .defaultValue(0)
         .visible(() -> flightMode.get() != ElytraFlightModes.Pitch40 && acceleration.get() && flightMode.get() != ElytraFlightModes.Bounce)
@@ -112,39 +112,39 @@ public class ElytraFly extends Module {
     );
 
     public final Setting<Boolean> stopInWater = sgGeneral.add(new BoolSetting.Builder()
-        .name("stop-in-water")
-        .description("Stops flying in water.")
+        .name("停在水里")
+        .description("在水中停止飞行.")
         .defaultValue(true)
         .visible(() -> flightMode.get() != ElytraFlightModes.Bounce)
         .build()
     );
 
     public final Setting<Boolean> dontGoIntoUnloadedChunks = sgGeneral.add(new BoolSetting.Builder()
-        .name("no-unloaded-chunks")
-        .description("Stops you from going into unloaded chunks.")
+        .name("未加载区块")
+        .description("阻止你进入未加载的区块.")
         .defaultValue(true)
         .build()
     );
 
     public final Setting<Boolean> autoHover = sgGeneral.add(new BoolSetting.Builder()
-        .name("auto-hover")
-        .description("Automatically hover .3 blocks off ground when holding shift.")
+        .name("自动悬停")
+        .description("按住Shift键时自动悬停在距地面0.3格的位置.")
         .defaultValue(false)
         .visible(() -> flightMode.get() != ElytraFlightModes.Bounce)
         .build()
     );
 
     public final Setting<Boolean> noCrash = sgGeneral.add(new BoolSetting.Builder()
-        .name("no-crash")
-        .description("Stops you from going into walls.")
+        .name("无撞墙")
+        .description("阻止你撞墙.")
         .defaultValue(false)
         .visible(() -> flightMode.get() != ElytraFlightModes.Bounce)
         .build()
     );
 
     public final Setting<Integer> crashLookAhead = sgGeneral.add(new IntSetting.Builder()
-        .name("crash-look-ahead")
-        .description("Distance to look ahead when flying.")
+        .name("墙预测")
+        .description("飞行时向前看的距离.")
         .defaultValue(5)
         .range(1, 15)
         .sliderMin(1)
@@ -153,16 +153,16 @@ public class ElytraFly extends Module {
     );
 
     private final Setting<Boolean> instaDrop = sgGeneral.add(new BoolSetting.Builder()
-        .name("insta-drop")
-        .description("Makes you drop out of flight instantly.")
+        .name("瞬间下降")
+        .description("让你立刻退出飞行.")
         .defaultValue(false)
         .visible(() -> flightMode.get() != ElytraFlightModes.Bounce)
         .build()
     );
 
     public final Setting<Double> pitch40lowerBounds = sgGeneral.add(new DoubleSetting.Builder()
-        .name("pitch40-lower-bounds")
-        .description("The bottom height boundary for pitch40.")
+        .name("Pitch40 下限")
+        .description("间距 40 的底部高度边界.")
         .defaultValue(80)
         .min(-128)
         .sliderMax(360)
@@ -171,8 +171,8 @@ public class ElytraFly extends Module {
     );
 
     public final Setting<Double> pitch40upperBounds = sgGeneral.add(new DoubleSetting.Builder()
-        .name("pitch40-upper-bounds")
-        .description("The upper height boundary for pitch40.")
+        .name("Pitch40 上限")
+        .description("间距 40 的高度上限.")
         .defaultValue(120)
         .min(-128)
         .sliderMax(360)
@@ -181,8 +181,8 @@ public class ElytraFly extends Module {
     );
 
     public final Setting<Double> pitch40rotationSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("pitch40-rotate-speed")
-        .description("The speed for pitch rotation (degrees per tick)")
+        .name("节距40转速")
+        .description("俯仰旋转速度(度/刻度)")
         .defaultValue(4)
         .min(1)
         .sliderMax(6)
@@ -191,24 +191,24 @@ public class ElytraFly extends Module {
     );
 
     public final Setting<Boolean> autoJump = sgGeneral.add(new BoolSetting.Builder()
-        .name("auto-jump")
-        .description("Automatically jumps for you.")
+        .name("自动跳跃")
+        .description("自动为你跳跃.")
         .defaultValue(true)
         .visible(() -> flightMode.get() == ElytraFlightModes.Bounce)
         .build()
     );
 
     public final Setting<Rotation.LockMode> yawLockMode = sgGeneral.add(new EnumSetting.Builder<Rotation.LockMode>()
-            .name("yaw-lock")
-            .description("Whether to enable yaw lock or not")
+            .name("偏航锁")
+            .description("是否启用偏航锁定")
             .defaultValue(Rotation.LockMode.Smart)
             .visible(() -> flightMode.get() == ElytraFlightModes.Bounce)
             .build()
     );
 
     public final Setting<Double> pitch = sgGeneral.add(new DoubleSetting.Builder()
-        .name("pitch")
-        .description("The pitch angle to look at when using the bounce mode.")
+        .name("俯仰")
+        .description("使用弹跳模式时要查看的俯仰角.")
         .defaultValue(85)
         .range(0, 90)
         .sliderRange(0, 90)
@@ -217,8 +217,8 @@ public class ElytraFly extends Module {
     );
 
     public final Setting<Double> yaw = sgGeneral.add(new DoubleSetting.Builder()
-            .name("yaw")
-            .description("The yaw angle to look at when using simple rotation lock in bounce mode.")
+            .name("偏航")
+            .description("在弹跳模式下使用简单旋转锁定时要查看的偏航角.")
             .defaultValue(0)
             .range(0, 360)
             .sliderRange(0,360)
@@ -227,16 +227,16 @@ public class ElytraFly extends Module {
     );
 
     public final Setting<Boolean> restart = sgGeneral.add(new BoolSetting.Builder()
-        .name("restart")
-        .description("Restarts flying with the elytra when rubberbanding.")
+        .name("重新开始")
+        .description("当被拉回时,用鞘翅重新开始飞行.")
         .defaultValue(true)
         .visible(() -> flightMode.get() == ElytraFlightModes.Bounce)
         .build()
     );
 
     public final Setting<Integer> restartDelay = sgGeneral.add(new IntSetting.Builder()
-        .name("restart-delay")
-        .description("How many ticks to wait before restarting the elytra again after rubberbanding.")
+        .name("重启延迟")
+        .description("拉回后再次重新启动鞘翅之前要等待多少个tick.")
         .defaultValue(7)
         .min(0)
         .sliderRange(0, 20)
@@ -245,8 +245,8 @@ public class ElytraFly extends Module {
     );
 
     public final Setting<Boolean> sprint = sgGeneral.add(new BoolSetting.Builder()
-        .name("sprint")
-        .description("Sprints all the time. If turned off, it will only sprint when the player is touching the ground.")
+        .name("冲刺")
+        .description("一直在冲刺.如果关闭,它只会在玩家接触地面时冲刺.")
         .defaultValue(true)
         .visible(() -> flightMode.get() == ElytraFlightModes.Bounce)
         .build()
@@ -255,15 +255,15 @@ public class ElytraFly extends Module {
     // Inventory
 
     public final Setting<Boolean> replace = sgInventory.add(new BoolSetting.Builder()
-        .name("elytra-replace")
-        .description("Replaces broken elytra with a new elytra.")
+        .name("鞘翅替换")
+        .description("用新的鞘翅替换破损的鞘翅.")
         .defaultValue(false)
         .build()
     );
 
     public final Setting<Integer> replaceDurability = sgInventory.add(new IntSetting.Builder()
-        .name("replace-durability")
-        .description("The durability threshold your elytra will be replaced at.")
+        .name("更换耐久")
+        .description("您的鞘翅将被更换的耐久阈值.")
         .defaultValue(2)
         .range(1, Items.ELYTRA.getComponents().get(DataComponentTypes.MAX_DAMAGE) - 1)
         .sliderRange(1, Items.ELYTRA.getComponents().get(DataComponentTypes.MAX_DAMAGE) - 1)
@@ -272,22 +272,22 @@ public class ElytraFly extends Module {
     );
 
     public final Setting<ChestSwapMode> chestSwap = sgInventory.add(new EnumSetting.Builder<ChestSwapMode>()
-        .name("chest-swap")
-        .description("Enables ChestSwap when toggling this module.")
+        .name("胸甲切换")
+        .description("切换此模块时启用胸甲切换.")
         .defaultValue(ChestSwapMode.Never)
         .build()
     );
 
     public final Setting<Boolean> autoReplenish = sgInventory.add(new BoolSetting.Builder()
-        .name("replenish-fireworks")
-        .description("Moves fireworks into a selected hotbar slot.")
+        .name("补充烟花")
+        .description("将烟花移至选定的快捷栏.")
         .defaultValue(false)
         .build()
     );
 
     public final Setting<Integer> replenishSlot = sgInventory.add(new IntSetting.Builder()
-        .name("replenish-slot")
-        .description("The slot auto move moves fireworks to.")
+        .name("补充位置")
+        .description("自动将烟花移动到的位置.")
         .defaultValue(9)
         .range(1, 9)
         .sliderRange(1, 9)
@@ -298,24 +298,24 @@ public class ElytraFly extends Module {
     // Autopilot
 
     public final Setting<Boolean> autoPilot = sgAutopilot.add(new BoolSetting.Builder()
-        .name("auto-pilot")
-        .description("Moves forward while elytra flying.")
+        .name("自动驾驶")
+        .description("鞘翅飞行时向前移动.")
         .defaultValue(false)
         .visible(() -> flightMode.get() != ElytraFlightModes.Pitch40 && flightMode.get() != ElytraFlightModes.Bounce)
         .build()
     );
 
     public final Setting<Boolean> useFireworks = sgAutopilot.add(new BoolSetting.Builder()
-        .name("use-fireworks")
-        .description("Uses firework rockets every second of your choice.")
+        .name("使用烟花")
+        .description("根据您的选择每秒使用烟花火箭.")
         .defaultValue(false)
         .visible(() -> autoPilot.get() && flightMode.get() != ElytraFlightModes.Pitch40 && flightMode.get() != ElytraFlightModes.Bounce)
         .build()
     );
 
     public final Setting<Double> autoPilotFireworkDelay = sgAutopilot.add(new DoubleSetting.Builder()
-        .name("firework-delay")
-        .description("The delay in seconds in between using fireworks if \"Use Fireworks\" is enabled.")
+        .name("烟花延迟")
+        .description("使用烟花之间的延迟(以秒为单位)如果 \"使用烟花\" 已启用.")
         .min(1)
         .defaultValue(8)
         .sliderMax(20)
@@ -324,8 +324,8 @@ public class ElytraFly extends Module {
     );
 
     public final Setting<Double> autoPilotMinimumHeight = sgAutopilot.add(new DoubleSetting.Builder()
-        .name("minimum-height")
-        .description("The minimum height for autopilot.")
+        .name("最低高度")
+        .description("自动驾驶最低高度.")
         .defaultValue(120)
         .min(-128)
         .sliderMax(260)
@@ -336,7 +336,7 @@ public class ElytraFly extends Module {
     private ElytraFlightMode currentMode = new Vanilla();
 
     public ElytraFly() {
-        super(Categories.Movement, "elytra-fly", "Gives you more control over your elytra.");
+        super(Categories.Movement, "鞘翅飞行", "让你更好地控制你的鞘翅.");
     }
 
     @Override

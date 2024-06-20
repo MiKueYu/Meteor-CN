@@ -24,29 +24,29 @@ public class Step extends Module {
 
     public final Setting<Double> height = sgGeneral.add(new DoubleSetting.Builder()
         .name("高度")
-        .description("Step height.")
+        .description("越障高度.")
         .defaultValue(1)
         .min(0)
         .build()
     );
 
     private final Setting<ActiveWhen> activeWhen = sgGeneral.add(new EnumSetting.Builder<ActiveWhen>()
-        .name("active-when")
-        .description("Step is active when you meet these requirements.")
+        .name("激活条件")
+        .description("当你满足这些条件时,越障才会激活.")
         .defaultValue(ActiveWhen.Always)
         .build()
     );
 
     private final Setting<Boolean> safeStep = sgGeneral.add(new BoolSetting.Builder()
-        .name("safe-step")
-        .description("Doesn't let you step out of a hole if you are low on health or there is a crystal nearby.")
+        .name("安全越障")
+        .description("如果您的生命值较低或附近有水晶,则不会让您走出洞.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Integer> stepHealth = sgGeneral.add(new IntSetting.Builder()
-        .name("step-health")
-        .description("The health you stop being able to step at.")
+        .name("越障生命值")
+        .description("你无法越障的健康.")
         .defaultValue(5)
         .range(1, 36)
         .sliderRange(1, 36)
@@ -58,7 +58,7 @@ public class Step extends Module {
     private boolean prevPathManagerStep;
 
     public Step() {
-        super(Categories.Movement, "step", "Allows you to walk up full blocks instantly.");
+        super(Categories.Movement, "自动越障", "让你可以立刻走上整个方块.");
     }
 
     @Override

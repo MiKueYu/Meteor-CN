@@ -31,15 +31,15 @@ public class ElytraBoost extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> dontConsumeFirework = sgGeneral.add(new BoolSetting.Builder()
-        .name("anti-consume")
-        .description("Prevents fireworks from being consumed when using Elytra Boost.")
+        .name("反消耗")
+        .description("防止使用鞘翅加速时消耗烟花.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Integer> fireworkLevel = sgGeneral.add(new IntSetting.Builder()
-        .name("firework-duration")
-        .description("The duration of the firework.")
+        .name("烟花持续时间")
+        .description("烟花的持续时间.")
         .defaultValue(0)
         .range(0, 255)
         .sliderMax(255)
@@ -47,16 +47,16 @@ public class ElytraBoost extends Module {
     );
 
     private final Setting<Boolean> playSound = sgGeneral.add(new BoolSetting.Builder()
-        .name("play-sound")
-        .description("Plays the firework sound when a boost is triggered.")
+        .name("播放声音")
+        .description("触发加速时播放烟花声.")
         .defaultValue(true)
         .build()
     );
 
     @SuppressWarnings("unused")
     private final Setting<Keybind> keybind = sgGeneral.add(new KeybindSetting.Builder()
-        .name("keybind")
-        .description("The keybind to boost.")
+        .name("按键绑定")
+        .description("加速的按键绑定.")
         .action(this::boost)
         .build()
     );
@@ -64,7 +64,7 @@ public class ElytraBoost extends Module {
     private final List<FireworkRocketEntity> fireworks = new ArrayList<>();
 
     public ElytraBoost() {
-        super(Categories.Movement, "elytra-boost", "Boosts your elytra as if you used a firework.");
+        super(Categories.Movement, "鞘翅加速", "加速你的鞘翅，就像你使用烟花一样.");
     }
 
     @Override

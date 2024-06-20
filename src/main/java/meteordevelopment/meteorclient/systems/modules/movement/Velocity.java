@@ -22,15 +22,15 @@ public class Velocity extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<Boolean> knockback = sgGeneral.add(new BoolSetting.Builder()
-        .name("knockback")
-        .description("Modifies the amount of knockback you take from attacks.")
+        .name("击退")
+        .description("修改你受到攻击的击退量.")
         .defaultValue(true)
         .build()
     );
 
     public final Setting<Double> knockbackHorizontal = sgGeneral.add(new DoubleSetting.Builder()
-        .name("knockback-horizontal")
-        .description("How much horizontal knockback you will take.")
+        .name("水平击退")
+        .description("你会承受多少水平击退.")
         .defaultValue(0)
         .sliderMax(1)
         .visible(knockback::get)
@@ -38,8 +38,8 @@ public class Velocity extends Module {
     );
 
     public final Setting<Double> knockbackVertical = sgGeneral.add(new DoubleSetting.Builder()
-        .name("knockback-vertical")
-        .description("How much vertical knockback you will take.")
+        .name("垂直击退")
+        .description("你会承受多少垂直击退.")
         .defaultValue(0)
         .sliderMax(1)
         .visible(knockback::get)
@@ -47,15 +47,15 @@ public class Velocity extends Module {
     );
 
     public final Setting<Boolean> explosions = sgGeneral.add(new BoolSetting.Builder()
-        .name("explosions")
-        .description("Modifies your knockback from explosions.")
+        .name("爆炸")
+        .description("修改你的爆炸击退.")
         .defaultValue(true)
         .build()
     );
 
     public final Setting<Double> explosionsHorizontal = sgGeneral.add(new DoubleSetting.Builder()
-        .name("explosions-horizontal")
-        .description("How much velocity you will take from explosions horizontally.")
+        .name("水平爆炸")
+        .description("您将从水平爆炸中获得多少速度.")
         .defaultValue(0)
         .sliderMax(1)
         .visible(explosions::get)
@@ -63,8 +63,8 @@ public class Velocity extends Module {
     );
 
     public final Setting<Double> explosionsVertical = sgGeneral.add(new DoubleSetting.Builder()
-        .name("explosions-vertical")
-        .description("How much velocity you will take from explosions vertically.")
+        .name("垂直爆炸")
+        .description("您将从垂直爆炸中获得多少速度.")
         .defaultValue(0)
         .sliderMax(1)
         .visible(explosions::get)
@@ -72,15 +72,15 @@ public class Velocity extends Module {
     );
 
     public final Setting<Boolean> liquids = sgGeneral.add(new BoolSetting.Builder()
-        .name("liquids")
-        .description("Modifies the amount you are pushed by flowing liquids.")
+        .name("液体")
+        .description("修改流动液体推动的量.")
         .defaultValue(true)
         .build()
     );
 
     public final Setting<Double> liquidsHorizontal = sgGeneral.add(new DoubleSetting.Builder()
-        .name("liquids-horizontal")
-        .description("How much velocity you will take from liquids horizontally.")
+        .name("液体水平")
+        .description("您将从水平液体中获取多少速度.")
         .defaultValue(0)
         .sliderMax(1)
         .visible(liquids::get)
@@ -88,8 +88,8 @@ public class Velocity extends Module {
     );
 
     public final Setting<Double> liquidsVertical = sgGeneral.add(new DoubleSetting.Builder()
-        .name("liquids-vertical")
-        .description("How much velocity you will take from liquids vertically.")
+        .name("液体垂直")
+        .description("液体垂直方向的速度是多少.")
         .defaultValue(0)
         .sliderMax(1)
         .visible(liquids::get)
@@ -97,15 +97,15 @@ public class Velocity extends Module {
     );
 
     public final Setting<Boolean> entityPush = sgGeneral.add(new BoolSetting.Builder()
-        .name("entity-push")
-        .description("Modifies the amount you are pushed by entities.")
+        .name("实体推动")
+        .description("修改你被实体推动的量.")
         .defaultValue(true)
         .build()
     );
 
     public final Setting<Double> entityPushAmount = sgGeneral.add(new DoubleSetting.Builder()
-        .name("entity-push-amount")
-        .description("How much you will be pushed.")
+        .name("实体推动量")
+        .description("你将被推动的量.")
         .defaultValue(0)
         .sliderMax(1)
         .visible(entityPush::get)
@@ -114,27 +114,27 @@ public class Velocity extends Module {
 
     public final Setting<Boolean> blocks = sgGeneral.add(new BoolSetting.Builder()
         .name("方块")
-        .description("Prevents you from being pushed out of blocks.")
+        .description("防止你被推出方块.")
         .defaultValue(true)
         .build()
     );
 
     public final Setting<Boolean> sinking = sgGeneral.add(new BoolSetting.Builder()
-        .name("sinking")
-        .description("Prevents you from sinking in liquids.")
+        .name("下沉")
+        .description("防止您沉入液体中.")
         .defaultValue(false)
         .build()
     );
 
     public final Setting<Boolean> fishing = sgGeneral.add(new BoolSetting.Builder()
-        .name("fishing")
-        .description("Prevents you from being pulled by fishing rods.")
+        .name("鱼竿")
+        .description("防止您被鱼竿拉扯.")
         .defaultValue(false)
         .build()
     );
 
     public Velocity() {
-        super(Categories.Movement, "velocity", "Prevents you from being moved by external forces.");
+        super(Categories.Movement, "防击退", "防止你被外力所动.");
     }
 
     @EventHandler
