@@ -24,8 +24,8 @@ public class Speed extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<SpeedModes> speedMode = sgGeneral.add(new EnumSetting.Builder<SpeedModes>()
-        .name("mode")
-        .description("The method of applying speed.")
+        .name("模式")
+        .description("应用速度的方法.")
         .defaultValue(SpeedModes.Vanilla)
         .onModuleActivated(speedModesSetting -> onSpeedModeChanged(speedModesSetting.get()))
         .onChanged(this::onSpeedModeChanged)
@@ -33,8 +33,8 @@ public class Speed extends Module {
     );
 
     public final Setting<Double> vanillaSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("vanilla-speed")
-        .description("The speed in blocks per second.")
+        .name("原版速度")
+        .description("以每秒方块数为单位的速度.")
         .defaultValue(5.6)
         .min(0)
         .sliderMax(20)
@@ -43,8 +43,8 @@ public class Speed extends Module {
     );
 
     public final Setting<Double> ncpSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("strafe-speed")
-        .description("The speed.")
+        .name("平移速度")
+        .description("速度.")
         .visible(() -> speedMode.get() == SpeedModes.Strafe)
         .defaultValue(1.6)
         .min(0)
@@ -53,8 +53,8 @@ public class Speed extends Module {
     );
 
     public final Setting<Boolean> ncpSpeedLimit = sgGeneral.add(new BoolSetting.Builder()
-        .name("speed-limit")
-        .description("Limits your speed on servers with very strict anticheats.")
+        .name("速度限制")
+        .description("在有非常严格的反作弊的服务器上限制你的速度.")
         .visible(() -> speedMode.get() == SpeedModes.Strafe)
         .defaultValue(false)
         .build()
@@ -62,7 +62,7 @@ public class Speed extends Module {
 
     public final Setting<Double> timer = sgGeneral.add(new DoubleSetting.Builder()
         .name("timer")
-        .description("Timer override.")
+        .description("Timer覆盖.")
         .defaultValue(1)
         .min(0.01)
         .sliderMin(0.01)
@@ -71,22 +71,22 @@ public class Speed extends Module {
     );
 
     public final Setting<Boolean> inLiquids = sgGeneral.add(new BoolSetting.Builder()
-        .name("in-liquids")
-        .description("Uses speed when in lava or water.")
+        .name("在液体中")
+        .description("在熔岩或水中时使用速度.")
         .defaultValue(false)
         .build()
     );
 
     public final Setting<Boolean> whenSneaking = sgGeneral.add(new BoolSetting.Builder()
-        .name("when-sneaking")
-        .description("Uses speed when sneaking.")
+        .name("潜行时")
+        .description("潜行时使用速度.")
         .defaultValue(false)
         .build()
     );
 
     public final Setting<Boolean> vanillaOnGround = sgGeneral.add(new BoolSetting.Builder()
-        .name("only-on-ground")
-        .description("Uses speed only when standing on a block.")
+        .name("仅在地面上")
+        .description("仅当站在方块上时才使用速度.")
         .visible(() -> speedMode.get() == SpeedModes.Vanilla)
         .defaultValue(false)
         .build()
@@ -95,7 +95,7 @@ public class Speed extends Module {
     private SpeedMode currentMode;
 
     public Speed() {
-        super(Categories.Movement, "speed", "Modifies your movement speed when moving on the ground.");
+        super(Categories.Movement, "速度", "修改你在地面上移动时的移动速度.");
 
         onSpeedModeChanged(speedMode.get());
     }

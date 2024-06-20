@@ -37,7 +37,7 @@ public class FastUse extends Module {
     );
 
     private final Setting<Boolean> blocks = sgGeneral.add(new BoolSetting.Builder()
-        .name("blocks")
+        .name("方块")
         .description("Fast-places blocks if the mode is \"Some\" mode.")
         .visible(() -> mode.get() == Mode.Some)
         .defaultValue(false)

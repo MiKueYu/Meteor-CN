@@ -43,9 +43,9 @@ public class Hud extends System<Hud> implements Iterable<HudElement> {
     // General
 
     private final Setting<Boolean> customFont = sgGeneral.add(new BoolSetting.Builder()
-        .name("自定义字体")
+        .name("自定义字体(开启将无法渲染中文)")
         .description("使用自定义字体.")
-        .defaultValue(true)
+        .defaultValue(false)
         .onChanged(aBoolean -> {
             for (HudElement element : elements) element.onFontChanged();
         })
@@ -61,7 +61,7 @@ public class Hud extends System<Hud> implements Iterable<HudElement> {
 
     private final Setting<Double> textScale = sgGeneral.add(new DoubleSetting.Builder()
         .name("文本比例")
-        .description("文本的缩放比例，如果未被元素覆盖.")
+        .description("文本的缩放比例,如果未被元素覆盖.")
         .defaultValue(1)
         .min(0.5)
         .sliderRange(0.5, 3)

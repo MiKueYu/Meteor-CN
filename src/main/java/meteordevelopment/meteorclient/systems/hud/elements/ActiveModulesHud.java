@@ -37,7 +37,7 @@ public class ActiveModulesHud extends HudElement {
 
     private final Setting<Boolean> activeInfo = sgGeneral.add(new BoolSetting.Builder()
         .name("额外信息")
-        .description("在激活模块列表中，模块名称旁边显示模块的额外信息.")
+        .description("在激活模块列表中,模块名称旁边显示模块的额外信息.")
         .defaultValue(true)
         .build()
     );
@@ -98,7 +98,7 @@ public class ActiveModulesHud extends HudElement {
 
     private final Setting<Boolean> customScale = sgGeneral.add(new BoolSetting.Builder()
         .name("自定义比例")
-        .description("使用自定义文本缩放比例，而不是全局缩放比例.")
+        .description("使用自定义文本缩放比例,而不是全局缩放比例.")
         .defaultValue(false)
         .build()
     );

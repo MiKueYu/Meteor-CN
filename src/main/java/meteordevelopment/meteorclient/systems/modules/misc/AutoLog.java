@@ -28,8 +28,8 @@ public class AutoLog extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Integer> health = sgGeneral.add(new IntSetting.Builder()
-        .name("health")
-        .description("Automatically disconnects when health is lower or equal to this value.")
+        .name("健康")
+        .description("当健康值低于或等于这个值时,自动断开连接.")
         .defaultValue(6)
         .range(0, 19)
         .sliderMax(19)
@@ -37,36 +37,36 @@ public class AutoLog extends Module {
     );
 
     private final Setting<Boolean> smart = sgGeneral.add(new BoolSetting.Builder()
-        .name("smart")
-        .description("Disconnects when you're about to take enough damage to kill you.")
+        .name("智能")
+        .description("当你即将受到足以杀死你的伤害时,断开连接.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> onlyTrusted = sgGeneral.add(new BoolSetting.Builder()
-        .name("only-trusted")
-        .description("Disconnects when a player not on your friends list appears in render distance.")
+        .name("只有信任人")
+        .description("当一个不在你的好友列表上的玩家出现在渲染距离内时,断开连接.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> instantDeath = sgGeneral.add(new BoolSetting.Builder()
         .name("32K")
-        .description("Disconnects when a player near you can instantly kill you.")
+        .description("当一个可以瞬间杀死你的玩家靠近你时,断开连接.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> crystalLog = sgGeneral.add(new BoolSetting.Builder()
-        .name("crystal-nearby")
-        .description("Disconnects when a crystal appears near you.")
+        .name("水晶附近")
+        .description("当一个水晶出现在你附近时,断开连接.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Integer> range = sgGeneral.add(new IntSetting.Builder()
-        .name("range")
-        .description("How close a crystal has to be to you before you disconnect.")
+        .name("范围")
+        .description("水晶离你多近才会让你断开连接.")
         .defaultValue(4)
         .range(1, 10)
         .sliderMax(5)
@@ -75,21 +75,21 @@ public class AutoLog extends Module {
     );
 
     private final Setting<Boolean> smartToggle = sgGeneral.add(new BoolSetting.Builder()
-        .name("smart-toggle")
-        .description("Disables Auto Log after a low-health logout. WILL re-enable once you heal.")
+        .name("智能切换")
+        .description("在低健康值退出后禁用自动登录.一旦你痊愈就会重新启用.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> toggleOff = sgGeneral.add(new BoolSetting.Builder()
-        .name("toggle-off")
-        .description("Disables Auto Log after usage.")
+        .name("切换关闭")
+        .description("使用后禁用自动退出。")
         .defaultValue(true)
         .build()
     );
 
     public AutoLog() {
-        super(Categories.Combat, "auto-log", "Automatically disconnects you when certain requirements are met.");
+        super(Categories.Combat, "自动退出", "满足某些要求时自动断开连接.");
     }
 
     @EventHandler
@@ -100,7 +100,7 @@ public class AutoLog extends Module {
             return;
         }
         if (playerHealth <= health.get()) {
-            disconnect("Health was lower than " + health.get() + ".");
+            disconnect("健康值低于 " + health.get() + ".");
             if(smartToggle.get()) {
                 this.toggle();
                 enableHealthListener();
@@ -108,7 +108,7 @@ public class AutoLog extends Module {
         }
 
         if (smart.get() && playerHealth + mc.player.getAbsorptionAmount() - PlayerUtils.possibleHealthReductions() < health.get()){
-            disconnect("Health was going to be lower than " + health.get() + ".");
+            disconnect("健康值将低于 " + health.get() + ".");
             if (toggleOff.get()) this.toggle();
         }
 
@@ -118,26 +118,26 @@ public class AutoLog extends Module {
         for (Entity entity : mc.world.getEntities()) {
             if (entity instanceof PlayerEntity player && player.getUuid() != mc.player.getUuid()) {
                 if (onlyTrusted.get() && player != mc.player && !Friends.get().isFriend(player)) {
-                        disconnect("A non-trusted player appeared in your render distance.");
+                        disconnect("您的渲染距离内出现了不受信任的玩家.");
                         if (toggleOff.get()) this.toggle();
                         break;
                 }
                 if (instantDeath.get() && PlayerUtils.isWithin(entity, 8) && DamageUtils.getAttackDamage(player, mc.player)
                         > playerHealth + mc.player.getAbsorptionAmount()) {
-                    disconnect("Anti-32k measures.");
+                    disconnect("反32k措施.");
                     if (toggleOff.get()) this.toggle();
                     break;
                 }
             }
             if (crystalLog.get() && entity instanceof EndCrystalEntity && PlayerUtils.isWithin(entity, range.get())) {
-                disconnect("End Crystal appeared within specified range.");
+                disconnect("水晶出现在指定范围内.");
                 if (toggleOff.get()) this.toggle();
             }
         }
     }
 
     private void disconnect(String reason) {
-        mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.literal("[AutoLog] " + reason)));
+        mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.literal("[自动退出] " + reason)));
     }
 
     private class StaticListener {

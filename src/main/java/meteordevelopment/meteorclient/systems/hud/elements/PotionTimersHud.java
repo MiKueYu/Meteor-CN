@@ -38,7 +38,7 @@ public class PotionTimersHud extends HudElement {
 
     private final Setting<Boolean> showAmbient = sgGeneral.add(new BoolSetting.Builder()
         .name("显示环境效果")
-        .description("是否显示环境效果，比如来自信标和潮涌核心的效果.")
+        .description("是否显示环境效果,比如来自信标和潮涌核心的效果.")
         .defaultValue(true)
         .build()
     );
@@ -123,7 +123,7 @@ public class PotionTimersHud extends HudElement {
 
     private final Setting<Boolean> customScale = sgScale.add(new BoolSetting.Builder()
         .name("自定义比例")
-        .description("应用自定义文本缩放比例，而不是全局缩放比例.")
+        .description("应用自定义文本缩放比例,而不是全局缩放比例.")
         .defaultValue(false)
         .build()
     );

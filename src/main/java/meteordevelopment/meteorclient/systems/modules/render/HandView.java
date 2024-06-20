@@ -54,7 +54,7 @@ public class HandView extends Module {
     );
 
     public final Setting<SwingMode> swingMode = sgGeneral.add(new EnumSetting.Builder<SwingMode>()
-        .name("swing-mode")
+        .name("挥动模式")
         .description("Modifies your client & server hand swinging.")
         .defaultValue(SwingMode.None)
         .build()

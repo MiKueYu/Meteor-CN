@@ -27,7 +27,7 @@ public class Chams extends Module {
     // Through walls
 
     public final Setting<Set<EntityType<?>>> entities = sgThroughWalls.add(new EntityTypeListSetting.Builder()
-        .name("entities")
+        .name("实体")
         .description("Select entities to show through walls.")
         .build()
     );

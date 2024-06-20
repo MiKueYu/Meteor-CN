@@ -29,44 +29,44 @@ public class ServerSpoof extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> spoofBrand = sgGeneral.add(new BoolSetting.Builder()
-        .name("spoof-brand")
-        .description("Whether or not to spoof the brand.")
+        .name("伪装版本")
+        .description("是否伪装版本.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<String> brand = sgGeneral.add(new StringSetting.Builder()
-        .name("brand")
-        .description("Specify the brand that will be send to the server.")
+        .name("版本")
+        .description("指定将发送到服务器的版本.")
         .defaultValue("vanilla")
         .visible(spoofBrand::get)
         .build()
     );
 
     private final Setting<Boolean> resourcePack = sgGeneral.add(new BoolSetting.Builder()
-        .name("resource-pack")
-        .description("Spoof accepting server resource pack.")
+        .name("资源包")
+        .description("欺骗接受服务器资源包.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> blockChannels = sgGeneral.add(new BoolSetting.Builder()
-        .name("block-channels")
-        .description("Whether or not to block some channels.")
+        .name("阻止渠道")
+        .description("是否屏蔽部分渠道.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<List<String>> channels = sgGeneral.add(new StringListSetting.Builder()
-        .name("channels")
-        .description("If the channel contains the keyword, this outgoing channel will be blocked.")
+        .name("渠道")
+        .description("如果渠道包含该关键字，则该渠道将被屏蔽.")
         .defaultValue("fabric", "minecraft:register")
         .visible(blockChannels::get)
         .build()
     );
 
     public ServerSpoof() {
-        super(Categories.Misc, "server-spoof", "Spoof client brand, resource pack and channels.");
+        super(Categories.Misc, "服务器欺骗", "伪装客户端版本、资源包和渠道.");
 
         runInMainMenu = true;
     }
@@ -102,10 +102,10 @@ public class ServerSpoof extends Module {
             if (!(event.packet instanceof ResourcePackSendS2CPacket packet)) return;
             event.cancel();
 
-            MutableText msg = Text.literal("This server has ");
-            msg.append(packet.required() ? "a required " : "an optional ").append("resource pack. ");
+            MutableText msg = Text.literal("该服务器有 ");
+            msg.append(packet.required() ? "一个必需的 " : "一个可选的 ").append("资源包. ");
 
-            MutableText link = Text.literal("[Download]");
+            MutableText link = Text.literal("[下载]");
             link.setStyle(link.getStyle()
                 .withColor(Formatting.BLUE)
                 .withUnderline(true)
@@ -113,7 +113,7 @@ public class ServerSpoof extends Module {
                 .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Click to download")))
             );
 
-            MutableText acceptance = Text.literal("[Spoof Acceptance]");
+            MutableText acceptance = Text.literal("[伪装接受]");
             acceptance.setStyle(acceptance.getStyle()
                 .withColor(Formatting.DARK_GREEN)
                 .withUnderline(true)
@@ -121,7 +121,7 @@ public class ServerSpoof extends Module {
                     event.connection.send(new ResourcePackStatusC2SPacket(packet.id(), ResourcePackStatusC2SPacket.Status.ACCEPTED));
                     event.connection.send(new ResourcePackStatusC2SPacket(packet.id(), ResourcePackStatusC2SPacket.Status.SUCCESSFULLY_LOADED));
                 }))
-                .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Click to spoof accepting the recourse pack.")))
+                .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("点击伪装接受资源包.")))
             );
 
             msg.append(link).append(" ");

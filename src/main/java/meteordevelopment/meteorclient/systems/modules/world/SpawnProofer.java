@@ -25,7 +25,7 @@ public class SpawnProofer extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Integer> range = sgGeneral.add(new IntSetting.Builder()
-        .name("range")
+        .name("范围")
         .description("Range for block placement and rendering")
         .defaultValue(3)
         .min(0)
@@ -33,7 +33,7 @@ public class SpawnProofer extends Module {
     );
 
     private final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
-        .name("blocks")
+        .name("方块")
         .description("Block to use for spawn proofing")
         .defaultValue(Blocks.TORCH, Blocks.STONE_BUTTON, Blocks.STONE_SLAB)
         .filter(this::filterBlocks)
@@ -41,7 +41,7 @@ public class SpawnProofer extends Module {
     );
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
-        .name("delay")
+        .name("延迟")
         .description("Delay in ticks between placing blocks")
         .defaultValue(0)
         .min(0)
@@ -49,7 +49,7 @@ public class SpawnProofer extends Module {
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
+        .name("旋转")
         .description("Rotates towards the blocks being placed.")
         .defaultValue(true)
         .build()

@@ -46,7 +46,7 @@ public class Tracers extends Module {
     // General
 
     private final Setting<Set<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
-        .name("entities")
+        .name("实体")
         .description("Select specific entities.")
         .defaultValue(EntityType.PLAYER)
         .build()

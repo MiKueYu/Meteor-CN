@@ -39,7 +39,7 @@ public class Flamethrower extends Module {
     );
 
     private final Setting<Boolean> antiBreak = sgGeneral.add(new BoolSetting.Builder()
-        .name("anti-break")
+        .name("防止损坏")
         .description("Prevents flint and steel from being broken.")
         .defaultValue(false)
         .build()
@@ -66,14 +66,14 @@ public class Flamethrower extends Module {
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
+        .name("旋转")
         .description("Automatically faces towards the animal roasted.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Set<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
-        .name("entities")
+        .name("实体")
         .description("Entities to cook.")
         .defaultValue(
             EntityType.PIG,

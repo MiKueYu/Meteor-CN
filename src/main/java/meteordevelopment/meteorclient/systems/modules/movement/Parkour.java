@@ -23,15 +23,15 @@ public class Parkour extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Double> edgeDistance = sgGeneral.add(new DoubleSetting.Builder()
-        .name("edge-distance")
-        .description("How far from the edge should you jump.")
+        .name("边缘距离")
+        .description("你应该距离边缘多远才能跳跃.")
         .range(0.001, 0.1)
         .defaultValue(0.001)
         .build()
     );
 
     public Parkour() {
-        super(Categories.Movement, "parkour", "Automatically jumps at the edges of blocks.");
+        super(Categories.Movement, "跑酷", "在方块的边缘自动跳跃.");
     }
 
     @EventHandler

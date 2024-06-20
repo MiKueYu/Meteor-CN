@@ -37,29 +37,29 @@ public class Burrow extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Block> block = sgGeneral.add(new EnumSetting.Builder<Block>()
-        .name("block-to-use")
-        .description("The block to use for Burrow.")
+        .name("使用方块")
+        .description("用于埋身的方块.")
         .defaultValue(Block.EChest)
         .build()
     );
 
     private final Setting<Boolean> instant = sgGeneral.add(new BoolSetting.Builder()
-        .name("instant")
-        .description("Jumps with packets rather than vanilla jump.")
+        .name("瞬间")
+        .description("用数据包跳跃而不是普通跳跃.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> automatic = sgGeneral.add(new BoolSetting.Builder()
-        .name("automatic")
-        .description("Automatically burrows on activate rather than waiting for jump.")
+        .name("自动")
+        .description("激活后自动埋身而不是等待跳跃.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Double> triggerHeight = sgGeneral.add(new DoubleSetting.Builder()
-        .name("trigger-height")
-        .description("How high you have to jump before a rubberband is triggered.")
+        .name("触发高度")
+        .description("需要跳多高才能触发rubberband.")
         .defaultValue(1.12)
         .range(0.01, 1.4)
         .sliderRange(0.01, 1.4)
@@ -67,8 +67,8 @@ public class Burrow extends Module {
     );
 
     private final Setting<Double> rubberbandHeight = sgGeneral.add(new DoubleSetting.Builder()
-        .name("rubberband-height")
-        .description("How far to attempt to cause rubberband.")
+        .name("rubberband高度")
+        .description("需要跳多远才能触发rubberband.")
         .defaultValue(12)
         .sliderMin(-30)
         .sliderMax(30)
@@ -85,22 +85,22 @@ public class Burrow extends Module {
     );
 
     private final Setting<Boolean> onlyInHole = sgGeneral.add(new BoolSetting.Builder()
-        .name("only-in-holes")
-        .description("Stops you from burrowing when not in a hole.")
+        .name("仅在洞中生效")
+        .description("当你不在洞穴中时,它会阻止你挖掘.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> center = sgGeneral.add(new BoolSetting.Builder()
-        .name("center")
-        .description("Centers you to the middle of the block before burrowing.")
+        .name("中心")
+        .description("在你挖掘之前,它会把你移动到方块的中心位置.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
-        .description("Faces the block you place server-side.")
+        .name("旋转")
+        .description("它会让你面向你放置的方块,这个操作在服务器端进行.")
         .defaultValue(true)
         .build()
     );
@@ -109,25 +109,25 @@ public class Burrow extends Module {
     private boolean shouldBurrow;
 
     public Burrow() {
-        super(Categories.Combat, "burrow", "Attempts to clip you into a block.");
+        super(Categories.Combat, "埋身", "尝试将你卡进方块里.");
     }
 
     @Override
     public void onActivate() {
         if (!mc.world.getBlockState(mc.player.getBlockPos()).isReplaceable()) {
-            error("Already burrowed, disabling.");
+            error("已经埋身,禁用.");
             toggle();
             return;
         }
 
         if (!PlayerUtils.isInHole(false) && onlyInHole.get()) {
-            error("Not in a hole, disabling.");
+            error("不在洞里,禁用.");
             toggle();
             return;
         }
 
         if (!checkHead()) {
-            error("Not enough headroom to burrow, disabling.");
+            error("头顶空间不足,禁用.");
             toggle();
             return;
         }
@@ -135,7 +135,7 @@ public class Burrow extends Module {
         FindItemResult result = getItem();
 
         if (!result.isHotbar() && !result.isOffhand()) {
-            error("No burrow block found, disabling.");
+            error("没有找到埋身方块,禁用.");
             toggle();
             return;
         }
@@ -150,7 +150,7 @@ public class Burrow extends Module {
             if (instant.get()) shouldBurrow = true;
             else mc.player.jump();
         } else {
-            info("Waiting for manual jump.");
+            info("等待手动跳跃.");
         }
     }
 

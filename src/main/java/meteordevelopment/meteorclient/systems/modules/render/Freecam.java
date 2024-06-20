@@ -96,7 +96,7 @@ public class Freecam extends Module {
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
+        .name("旋转")
         .description("Rotates to the block or entity you are looking at.")
         .defaultValue(false)
         .build()

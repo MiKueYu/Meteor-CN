@@ -18,22 +18,22 @@ public class NoSlow extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> items = sgGeneral.add(new BoolSetting.Builder()
-        .name("items")
-        .description("Whether or not using items will slow you.")
+        .name("物品")
+        .description("使用物品是否会减慢您的速度.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<WebMode> web = sgGeneral.add(new EnumSetting.Builder<WebMode>()
-        .name("web")
-        .description("Whether or not cobwebs will not slow you down.")
+        .name("蜘蛛网")
+        .description("蜘蛛网是否会减慢你的速度.")
         .defaultValue(WebMode.Vanilla)
         .build()
     );
 
     private final Setting<Double> webTimer = sgGeneral.add(new DoubleSetting.Builder()
-        .name("web-timer")
-        .description("The timer value for WebMode Timer.")
+        .name("蜘蛛网timer")
+        .description("蜘蛛网模式 Timer的timer值.")
         .defaultValue(10)
         .min(1)
         .sliderMin(1)
@@ -42,64 +42,64 @@ public class NoSlow extends Module {
     );
 
     private final Setting<Boolean> honeyBlock = sgGeneral.add(new BoolSetting.Builder()
-        .name("honey-block")
-        .description("Whether or not honey blocks will not slow you down.")
+        .name("蜂蜜块")
+        .description("蜂蜜块是否不会减慢您的速度.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> soulSand = sgGeneral.add(new BoolSetting.Builder()
-        .name("soul-sand")
-        .description("Whether or not soul sand will not slow you down.")
+        .name("灵魂沙")
+        .description("灵魂之沙是否不会让你慢下来.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> slimeBlock = sgGeneral.add(new BoolSetting.Builder()
-        .name("slime-block")
-        .description("Whether or not slime blocks will not slow you down.")
+        .name("粘液块")
+        .description("粘液块是否不会减慢你的速度.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> berryBush = sgGeneral.add(new BoolSetting.Builder()
-        .name("berry-bush")
-        .description("Whether or not berry bushes will not slow you down.")
+        .name("浆果丛")
+        .description("浆果丛是否不会让你放慢脚步.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> airStrict = sgGeneral.add(new BoolSetting.Builder()
-        .name("air-strict")
-        .description("Will attempt to bypass anti-cheats like 2b2t's. Only works while in air.")
+        .name("空中严格")
+        .description("将尝试绕过像 2b2t 这样的反作弊。仅在空中工作.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> fluidDrag = sgGeneral.add(new BoolSetting.Builder()
-        .name("fluid-drag")
-        .description("Whether or not fluid drag will not slow you down.")
+        .name("流体阻力")
+        .description("流体阻力是否不会减慢您的速度.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> sneaking = sgGeneral.add(new BoolSetting.Builder()
-        .name("sneaking")
-        .description("Whether or not sneaking will not slow you down.")
+        .name("潜行")
+        .description("潜行是否不会减慢你的速度.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> hunger = sgGeneral.add(new BoolSetting.Builder()
-        .name("hunger")
-        .description("Whether or not hunger will not slow you down.")
+        .name("饥饿")
+        .description("饥饿是否不会让你放慢脚步.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> slowness = sgGeneral.add(new BoolSetting.Builder()
-        .name("slowness")
-        .description("Whether or not slowness will not slow you down.")
+        .name("缓慢")
+        .description("缓慢是否不会减慢你的速度.")
         .defaultValue(false)
         .build()
     );
@@ -107,7 +107,7 @@ public class NoSlow extends Module {
     private boolean resetTimer;
 
     public NoSlow() {
-        super(Categories.Movement, "no-slow", "Allows you to move normally when using objects that will slow you.");
+        super(Categories.Movement, "无缓慢", "允许您在使用会减慢您的速度的物体时正常移动.");
     }
 
     @Override

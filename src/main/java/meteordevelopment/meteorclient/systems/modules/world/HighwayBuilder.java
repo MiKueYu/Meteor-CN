@@ -96,7 +96,7 @@ public class HighwayBuilder extends Module {
     );
 
     private final Setting<Integer> height = sgGeneral.add(new IntSetting.Builder()
-        .name("height")
+        .name("高度")
         .description("Height of the highway.")
         .defaultValue(3)
         .range(2, 5)
@@ -141,7 +141,7 @@ public class HighwayBuilder extends Module {
     );
 
     private final Setting<Boolean> pauseOnLag = sgGeneral.add(new BoolSetting.Builder()
-        .name("pause-on-lag")
+        .name("网络延迟暂停")
         .description("Pauses the current process while the server stops responding.")
         .defaultValue(true)
         .build()
@@ -167,7 +167,7 @@ public class HighwayBuilder extends Module {
     );
 
     private final Setting<Integer> breakDelay = sgDigging.add(new IntSetting.Builder()
-        .name("break-delay")
+        .name("破坏间隔")
         .description("The delay between breaking blocks.")
         .defaultValue(0)
         .min(0)
@@ -194,7 +194,7 @@ public class HighwayBuilder extends Module {
     );
 
     private final Setting<Integer> placeDelay = sgPaving.add(new IntSetting.Builder()
-        .name("place-delay")
+        .name("放置延迟")
         .description("The delay between placing blocks.")
         .defaultValue(0)
         .min(0)

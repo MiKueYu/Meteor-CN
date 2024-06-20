@@ -16,8 +16,8 @@ public class Slippy extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<Double> friction = sgGeneral.add(new DoubleSetting.Builder()
-        .name("friction")
-        .description("The base friction level.")
+        .name("摩擦")
+        .description("基础摩擦力水平.")
         .range(0.01, 1.10)
         .sliderRange(0.01, 1.10)
         .defaultValue(1)
@@ -25,28 +25,28 @@ public class Slippy extends Module {
     );
 
     public final Setting<ListMode> listMode = sgGeneral.add(new EnumSetting.Builder<ListMode>()
-        .name("list-mode")
-        .description("The mode to select blocks.")
+        .name("列表模式")
+        .description("选择方块的模式.")
         .defaultValue(ListMode.Blacklist)
         .build()
     );
 
     public final Setting<List<Block>> ignoredBlocks = sgGeneral.add(new BlockListSetting.Builder()
-        .name("ignored-blocks")
-        .description("Decide which blocks not to slip on")
+        .name("忽略的块")
+        .description("决定哪些方块不滑动.")
         .visible(() -> listMode.get() == ListMode.Blacklist)
         .build()
     );
 
     public final Setting<List<Block>> allowedBlocks = sgGeneral.add(new BlockListSetting.Builder()
-        .name("allowed-blocks")
-        .description("Decide which blocks to slip on")
+        .name("允许的方块")
+        .description("决定哪些方块会滑动.")
         .visible(() -> listMode.get() == ListMode.Whitelist)
         .build()
     );
 
     public Slippy() {
-        super(Categories.Movement, "slippy", "Changes the base friction level of blocks.");
+        super(Categories.Movement, "滑溜溜", "更改方块的基础摩擦级别.");
     }
 
     public enum ListMode {

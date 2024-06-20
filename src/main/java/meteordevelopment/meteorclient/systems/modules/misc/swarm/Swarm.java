@@ -23,23 +23,23 @@ public class Swarm extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
-        .name("mode")
-        .description("What type of client to run.")
+        .name("模式")
+        .description("要运行什么类型的客户端.")
         .defaultValue(Mode.Host)
         .build()
     );
 
     private final Setting<String> ipAddress = sgGeneral.add(new StringSetting.Builder()
         .name("ip")
-        .description("The IP address of the host server.")
+        .description("主机服务器的IP地址.")
         .defaultValue("localhost")
         .visible(() -> mode.get() == Mode.Worker)
         .build()
     );
 
     private final Setting<Integer> serverPort = sgGeneral.add(new IntSetting.Builder()
-        .name("port")
-        .description("The port used for connections.")
+        .name("端口")
+        .description("用于连接的端口.")
         .defaultValue(6969)
         .range(1, 65535)
         .noSlider()
@@ -50,7 +50,7 @@ public class Swarm extends Module {
     public SwarmWorker worker;
 
     public Swarm() {
-        super(Categories.Misc, "swarm", "Allows you to control multiple instances of Meteor from one central host.");
+        super(Categories.Misc, "远程控制", "允许您从一台中央主机控制Meteor的多个实例.");
     }
 
     @Override
@@ -59,7 +59,7 @@ public class Swarm extends Module {
 
         WHorizontalList b = list.add(theme.horizontalList()).expandX().widget();
 
-        WButton start = b.add(theme.button("Start")).expandX().widget();
+        WButton start = b.add(theme.button("开始")).expandX().widget();
         start.action = () -> {
             if (!isActive()) return;
 
@@ -68,10 +68,10 @@ public class Swarm extends Module {
             else worker = new SwarmWorker(ipAddress.get(), serverPort.get());
         };
 
-        WButton stop = b.add(theme.button("Stop")).expandX().widget();
+        WButton stop = b.add(theme.button("停止")).expandX().widget();
         stop.action = this::close;
 
-        WButton guide = list.add(theme.button("Guide")).expandX().widget();
+        WButton guide = list.add(theme.button("指导")).expandX().widget();
         guide.action = () -> Util.getOperatingSystem().open("https://github.com/MeteorDevelopment/meteor-client/wiki/Swarm-Guide");
 
         return list;

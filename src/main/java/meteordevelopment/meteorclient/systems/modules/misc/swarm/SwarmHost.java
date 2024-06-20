@@ -21,7 +21,7 @@ public class SwarmHost extends Thread {
             socket = new ServerSocket(port);
         } catch (IOException e) {
             socket = null;
-            ChatUtils.errorPrefix("Swarm", "Couldn't start a server on port %s.", port);
+            ChatUtils.errorPrefix("Swarm", "无法在端口 %s 上启动服务器.", port);
             e.printStackTrace();
         }
 
@@ -30,14 +30,14 @@ public class SwarmHost extends Thread {
 
     @Override
     public void run() {
-        ChatUtils.infoPrefix("Swarm", "Listening for incoming connections on port %s.", socket.getLocalPort());
+        ChatUtils.infoPrefix("Swarm", "侦听端口 %s 上的传入连接.", socket.getLocalPort());
 
         while (!isInterrupted()) {
             try {
                 Socket connection = socket.accept();
                 assignConnectionToSubServer(connection);
             } catch (IOException e) {
-                ChatUtils.errorPrefix("Swarm", "Error making a connection to worker.");
+                ChatUtils.errorPrefix("Swarm", "与工作节点连接时出错.");
                 e.printStackTrace();
             }
         }
@@ -63,7 +63,7 @@ public class SwarmHost extends Thread {
             e.printStackTrace();
         }
 
-        ChatUtils.infoPrefix("Swarm", "Server closed on port %s.", socket.getLocalPort());
+        ChatUtils.infoPrefix("Swarm", "服务器在端口 %s 上关闭.", socket.getLocalPort());
 
         interrupt();
     }

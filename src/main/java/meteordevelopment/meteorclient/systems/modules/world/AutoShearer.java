@@ -34,14 +34,14 @@ public class AutoShearer extends Module {
     );
 
     private final Setting<Boolean> antiBreak = sgGeneral.add(new BoolSetting.Builder()
-        .name("anti-break")
+        .name("防止损坏")
         .description("Prevents shears from being broken.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
+        .name("旋转")
         .description("Automatically faces towards the animal being sheared.")
         .defaultValue(true)
         .build()

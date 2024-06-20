@@ -30,8 +30,8 @@ public class BreakIndicators extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<ShapeMode> shapeMode = sgGeneral.add(new EnumSetting.Builder<ShapeMode>()
-        .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .name("形状模式")
+        .description("形状的渲染方式.")
         .defaultValue(ShapeMode.Both)
         .build()
     );

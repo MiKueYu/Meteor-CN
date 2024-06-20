@@ -36,7 +36,7 @@ public class WallHack extends Module {
     );
 
     public final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
-        .name("blocks")
+        .name("方块")
         .description("What blocks should be targeted for Wall Hack.")
         .defaultValue()
         .onChanged(onChanged -> {

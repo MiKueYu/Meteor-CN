@@ -27,13 +27,13 @@ public class AutoNametag extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Set<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
-        .name("entities")
+        .name("实体")
         .description("Which entities to nametag.")
         .build()
     );
 
     private final Setting<Double> range = sgGeneral.add(new DoubleSetting.Builder()
-        .name("range")
+        .name("范围")
         .description("The maximum range an entity can be to be nametagged.")
         .defaultValue(5)
         .min(0)
@@ -42,7 +42,7 @@ public class AutoNametag extends Module {
     );
 
     private final Setting<SortPriority> priority = sgGeneral.add(new EnumSetting.Builder<SortPriority>()
-        .name("priority")
+        .name("优先级")
         .description("Priority sort")
         .defaultValue(SortPriority.LowestDistance)
         .build()
@@ -56,7 +56,7 @@ public class AutoNametag extends Module {
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
+        .name("旋转")
         .description("Automatically faces towards the mob being nametagged.")
         .defaultValue(true)
         .build()

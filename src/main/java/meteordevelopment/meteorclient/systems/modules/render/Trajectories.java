@@ -35,7 +35,7 @@ import java.util.List;
 
 public class Trajectories extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgRender = settings.createGroup("Render");
+    private final SettingGroup sgRender = settings.createGroup("渲染");
 
     // General
 
@@ -62,15 +62,15 @@ public class Trajectories extends Module {
     );
 
     private final Setting<Boolean> accurate = sgGeneral.add(new BoolSetting.Builder()
-        .name("accurate")
-        .description("Whether or not to calculate more accurate.")
+        .name("精准")
+        .description("是否计算更精确.")
         .defaultValue(false)
         .build()
     );
 
     public final Setting<Integer> simulationSteps = sgGeneral.add(new IntSetting.Builder()
-        .name("simulation-steps")
-        .description("How many steps to simulate projectiles. Zero for no limit")
+        .name("模拟步骤")
+        .description("模拟投掷物的步骤数,0 表示无限制")
         .defaultValue(500)
         .sliderMax(5000)
         .build()
@@ -79,21 +79,21 @@ public class Trajectories extends Module {
     // Render
 
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .name("形状模式")
+        .description("形状的渲染方式.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
 
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
-        .name("side-color")
+        .name("侧面颜色")
         .description("The side color.")
         .defaultValue(new SettingColor(255, 150, 0, 35))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
-        .name("line-color")
+        .name("线条颜色")
         .description("The line color.")
         .defaultValue(new SettingColor(255, 150, 0))
         .build()

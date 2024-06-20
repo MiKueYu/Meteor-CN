@@ -35,19 +35,19 @@ import java.util.List;
 
 public class Quiver extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgSafety = settings.createGroup("Safety");
+    private final SettingGroup sgSafety = settings.createGroup("安全");
 
 
     private final Setting<List<StatusEffect>> effects = sgGeneral.add(new StatusEffectListSetting.Builder()
-        .name("effects")
-        .description("Which effects to shoot you with.")
+        .name("效果")
+        .description("要给你射出的效果.")
         .defaultValue(StatusEffects.STRENGTH.value())
         .build()
     );
 
     private final Setting<Integer> cooldown = sgGeneral.add(new IntSetting.Builder()
-        .name("cooldown")
-        .description("How many ticks between shooting effects (19 minimum for NCP).")
+        .name("冷却")
+        .description("射击效果之间应该间隔多少tick(NCP最低19tick).")
         .defaultValue(10)
         .range(0,40)
         .sliderRange(0,40)
@@ -55,22 +55,22 @@ public class Quiver extends Module {
     );
 
     private final Setting<Boolean> checkEffects = sgGeneral.add(new BoolSetting.Builder()
-        .name("check-effects")
-        .description("Won't shoot you with effects you already have.")
+        .name("检查效果")
+        .description("不会用你已有的效果向你射击.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> silentBow = sgGeneral.add(new BoolSetting.Builder()
-        .name("silent-bow")
-        .description("Takes a bow from your inventory to quiver.")
+        .name("无声弓")
+        .description("从你的物品栏拿出一把弓来射箭.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> chatInfo = sgGeneral.add(new BoolSetting.Builder()
-        .name("chat-info")
-        .description("Sends info about quiver checks in chat.")
+        .name("聊天信息")
+        .description("在聊天中发送有关箭检查的信息.")
         .defaultValue(false)
         .build()
     );
@@ -78,22 +78,22 @@ public class Quiver extends Module {
     // Safety
 
     private final Setting<Boolean> onlyInHoles = sgSafety.add(new BoolSetting.Builder()
-        .name("only-in-holes")
-        .description("Only quiver when you're in a hole.")
+        .name("只在洞里")
+        .description("只有在洞里时才射箭.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> onlyOnGround = sgSafety.add(new BoolSetting.Builder()
-        .name("only-on-ground")
-        .description("Only quiver when you're on the ground.")
+        .name("只在地面上")
+        .description("只有当你在地面上时才会射箭.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Double> minHealth = sgSafety.add(new DoubleSetting.Builder()
-        .name("min-health")
-        .description("How much health you must have to quiver.")
+        .name("最低生命值")
+        .description("你必须有多少生命值才能射箭.")
         .defaultValue(10)
         .range(0,36)
         .sliderRange(0,36)
@@ -107,7 +107,7 @@ public class Quiver extends Module {
     private final BlockPos.Mutable testPos = new BlockPos.Mutable();
 
     public Quiver() {
-        super(Categories.Combat, "quiver", "Shoots arrows at yourself.");
+        super(Categories.Combat, "射箭", "给自己射箭.");
     }
 
     @Override
@@ -196,31 +196,31 @@ public class Quiver extends Module {
 
     private boolean shouldQuiver() {
         if (!bow.found() || !bow.isHotbar() && !silentBow.get()) {
-            if (chatInfo.get()) error("Couldn't find a usable bow, disabling.");
+            if (chatInfo.get()) error("找不到可用的弓,禁用.");
             toggle();
             return false;
         }
 
         if (!headIsOpen()) {
-            if (chatInfo.get()) error("Not enough space to quiver, disabling.");
+            if (chatInfo.get()) error("没有足够的空间来射箭,禁用.");
             toggle();
             return false;
         }
 
         if (EntityUtils.getTotalHealth(mc.player) < minHealth.get()) {
-            if (chatInfo.get()) error("Not enough health to quiver, disabling.");
+            if (chatInfo.get()) error("生命值不足以射箭,禁用.");
             toggle();
             return false;
         }
 
         if (onlyOnGround.get() && !mc.player.isOnGround()) {
-            if (chatInfo.get()) error("You are not on the ground, disabling.");
+            if (chatInfo.get()) error("你不在地面上,禁用.");
             toggle();
             return false;
         }
 
         if (onlyInHoles.get() && !isSurrounded(mc.player)) {
-            if (chatInfo.get()) error("You are not in a hole, disabling.");
+            if (chatInfo.get()) error("你不在洞里,禁用.");
             toggle();
             return false;
         }

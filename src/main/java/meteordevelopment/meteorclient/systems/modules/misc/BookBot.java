@@ -49,15 +49,15 @@ public class BookBot extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
-        .name("mode")
-        .description("What kind of text to write.")
+        .name("模式")
+        .description("要写的文本的类型.")
         .defaultValue(Mode.Random)
         .build()
     );
 
     private final Setting<Integer> pages = sgGeneral.add(new IntSetting.Builder()
-        .name("pages")
-        .description("The number of pages to write per book.")
+        .name("页数")
+        .description("每本书要写的页数.")
         .defaultValue(50)
         .range(1, 100)
         .sliderRange(1, 100)
@@ -66,16 +66,16 @@ public class BookBot extends Module {
     );
 
     private final Setting<Boolean> onlyAscii = sgGeneral.add(new BoolSetting.Builder()
-        .name("ascii-only")
-        .description("Only uses the characters in the ASCII charset.")
+        .name("仅-ASCII")
+        .description("仅使用-ASCII-字符集中的字符.")
         .defaultValue(false)
         .visible(() -> mode.get() == Mode.Random)
         .build()
     );
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
-        .name("delay")
-        .description("The amount of delay between writing books.")
+        .name("延迟")
+        .description("写书之间的延迟.")
         .defaultValue(20)
         .min(1)
         .sliderRange(1, 200)
@@ -83,23 +83,23 @@ public class BookBot extends Module {
     );
 
     private final Setting<Boolean> sign = sgGeneral.add(new BoolSetting.Builder()
-        .name("sign")
-        .description("Whether to sign the book.")
+        .name("签名")
+        .description("是否在书上签名.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<String> name = sgGeneral.add(new StringSetting.Builder()
-        .name("name")
-        .description("The name you want to give your books.")
+        .name("名称")
+        .description("您想要为书指定的名称.")
         .defaultValue("Meteor on Crack!")
         .visible(sign::get)
         .build()
     );
 
     private final Setting<Boolean> count = sgGeneral.add(new BoolSetting.Builder()
-        .name("append-count")
-        .description("Whether to append the number of the book to the title.")
+        .name("追加计数")
+        .description("是否在标题后附加书号.")
         .defaultValue(true)
         .visible(sign::get)
         .build()
@@ -112,7 +112,7 @@ public class BookBot extends Module {
     private Random random;
 
     public BookBot() {
-        super(Categories.Misc, "book-bot", "Automatically writes in books.");
+        super(Categories.Misc, "书写机器人", "自动写在书上.");
 
         if (!file.exists()) {
             file = null;
@@ -130,13 +130,13 @@ public class BookBot extends Module {
     public WWidget getWidget(GuiTheme theme) {
         WHorizontalList list = theme.horizontalList();
 
-        WButton selectFile = list.add(theme.button("Select File")).widget();
+        WButton selectFile = list.add(theme.button("选择文件")).widget();
 
-        WLabel fileName = list.add(theme.label((file != null && file.exists()) ? file.getName() : "No file selected.")).widget();
+        WLabel fileName = list.add(theme.label((file != null && file.exists()) ? file.getName() : "未选择文件.")).widget();
 
         selectFile.action = () -> {
             String path = TinyFileDialogs.tinyfd_openFileDialog(
-                "Select File",
+                "选择文件",
                 new File(MeteorClient.FOLDER, "bookbot.txt").getAbsolutePath(),
                 filters,
                 null,
@@ -155,7 +155,7 @@ public class BookBot extends Module {
     @Override
     public void onActivate() {
         if ((file == null || !file.exists()) && mode.get() == Mode.File) {
-            info("No file selected, please select a file in the GUI.");
+            info("未选择文件,请在-GUI-中选择一个文件.");
             toggle();
             return;
         }
@@ -210,7 +210,7 @@ public class BookBot extends Module {
         } else if (mode.get() == Mode.File) {
             // Ignore if somehow the file got deleted
             if ((file == null || !file.exists()) && mode.get() == Mode.File) {
-                info("No file selected, please select a file in the GUI.");
+                info("未选择文件,请在-GUI-中选择一个文件.");
                 toggle();
                 return;
             }
@@ -218,8 +218,8 @@ public class BookBot extends Module {
             // Handle the file being empty
             if (file.length() == 0) {
                 MutableText message = Text.literal("");
-                message.append(Text.literal("The bookbot file is empty! ").formatted(Formatting.RED));
-                message.append(Text.literal("Click here to edit it.")
+                message.append(Text.literal("书写机器人文件为空! ").formatted(Formatting.RED));
+                message.append(Text.literal("单击此处进行编辑.")
                     .setStyle(Style.EMPTY
                         .withFormatting(Formatting.UNDERLINE, Formatting.RED)
                         .withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath()))
@@ -244,7 +244,7 @@ public class BookBot extends Module {
                 // Write the file string to a book
                 writeBook(file.toString().chars().iterator());
             } catch (IOException ignored) {
-                error("Failed to read the file.");
+                error("读取文件失败.");
             }
         }
     }
@@ -330,7 +330,7 @@ public class BookBot extends Module {
         NbtCompound tag = super.toTag();
 
         if (file != null && file.exists()) {
-            tag.putString("file", file.getAbsolutePath());
+            tag.putString("文件", file.getAbsolutePath());
         }
 
         return tag;
@@ -338,8 +338,8 @@ public class BookBot extends Module {
 
     @Override
     public Module fromTag(NbtCompound tag) {
-        if (tag.contains("file")) {
-            file = new File(tag.getString("file"));
+        if (tag.contains("文件")) {
+            file = new File(tag.getString("文件"));
         }
 
         return super.fromTag(tag);

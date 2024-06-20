@@ -45,7 +45,7 @@ public class LiquidFiller extends Module {
     );
 
     private final Setting<Double> range = sgGeneral.add(new DoubleSetting.Builder()
-        .name("range")
+        .name("范围")
         .description("The place range.")
         .defaultValue(4)
         .min(0)
@@ -53,7 +53,7 @@ public class LiquidFiller extends Module {
     );
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
-        .name("delay")
+        .name("延迟")
         .description("Delay between actions in ticks.")
         .defaultValue(0)
         .min(0)
@@ -77,7 +77,7 @@ public class LiquidFiller extends Module {
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
+        .name("旋转")
         .description("Automatically rotates towards the space targeted for filling.")
         .defaultValue(true)
         .build()

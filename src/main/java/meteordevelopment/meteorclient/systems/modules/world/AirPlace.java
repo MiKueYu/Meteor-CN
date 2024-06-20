@@ -22,34 +22,34 @@ import net.minecraft.util.hit.HitResult;
 
 public class AirPlace extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgRange = settings.createGroup("Range");
+    private final SettingGroup sgRange = settings.createGroup("范围");
 
     // General
 
     private final Setting<Boolean> render = sgGeneral.add(new BoolSetting.Builder()
-        .name("render")
+        .name("渲染")
         .description("Renders a block overlay where the obsidian will be placed.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<ShapeMode> shapeMode = sgGeneral.add(new EnumSetting.Builder<ShapeMode>()
-        .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .name("形状模式")
+        .description("形状的渲染方式.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
 
     private final Setting<SettingColor> sideColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("side-color")
+        .name("侧面颜色")
         .description("The color of the sides of the blocks being rendered.")
         .defaultValue(new SettingColor(204, 0, 0, 10))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("line-color")
-        .description("The color of the lines of the blocks being rendered.")
+        .name("线条颜色")
+        .description("要放置的位置的线颜色.")
         .defaultValue(new SettingColor(204, 0, 0, 255))
         .build()
     );
@@ -64,7 +64,7 @@ public class AirPlace extends Module {
     );
 
     private final Setting<Double> range = sgRange.add(new DoubleSetting.Builder()
-        .name("range")
+        .name("范围")
         .description("Custom range to place at.")
         .visible(customRange::get)
         .defaultValue(5)

@@ -24,15 +24,15 @@ public class FastClimb extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> timerMode = sgGeneral.add(new BoolSetting.Builder()
-        .name("timer-mode")
-        .description("Use timer.")
+        .name("时间模式")
+        .description("加速时间.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Double> speed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("climb-speed")
-        .description("Your climb speed.")
+        .name("爬升速度")
+        .description("您的爬升速度.")
         .defaultValue(0.2872)
         .min(0.0)
         .visible(() -> !timerMode.get())
@@ -40,8 +40,8 @@ public class FastClimb extends Module {
     );
 
     private final Setting<Double> timer = sgGeneral.add(new DoubleSetting.Builder()
-        .name("timer")
-        .description("The timer value for Timer.")
+        .name("时间")
+        .description("加速的值.")
         .defaultValue(1.436)
         .min(1)
         .sliderMin(1)
@@ -52,7 +52,7 @@ public class FastClimb extends Module {
     private boolean resetTimer;
 
     public FastClimb() {
-        super(Categories.Movement, "fast-climb", "Allows you to climb faster.");
+        super(Categories.Movement, "快速爬梯", "让你爬得更快.");
     }
 
     @Override

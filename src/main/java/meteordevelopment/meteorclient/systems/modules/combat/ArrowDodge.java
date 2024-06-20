@@ -25,18 +25,18 @@ import java.util.*;
 
 public class ArrowDodge extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgMovement = settings.createGroup("Movement");
+    private final SettingGroup sgMovement = settings.createGroup("移动");
 
     private final Setting<MoveType> moveType = sgMovement.add(new EnumSetting.Builder<MoveType>()
-        .name("move-type")
-        .description("The way you are moved by this module.")
+        .name("移动类型")
+        .description("这个模块移动你的方式.")
         .defaultValue(MoveType.Velocity)
         .build()
     );
 
     private final Setting<Double> moveSpeed = sgMovement.add(new DoubleSetting.Builder()
-        .name("move-speed")
-        .description("How fast should you be when dodging arrow.")
+        .name("移动速度")
+        .description("移动速度躲避箭矢时你的速度应该有多快.")
         .defaultValue(1)
         .min(0.01)
         .sliderRange(0.01, 5)
@@ -44,8 +44,8 @@ public class ArrowDodge extends Module {
     );
 
     private final Setting<Double> distanceCheck = sgMovement.add(new DoubleSetting.Builder()
-        .name("distance-check")
-        .description("How far should an arrow be from the player to be considered not hitting.")
+        .name("距离检查")
+        .description("箭矢离玩家多远才算没有命中.")
         .defaultValue(1)
         .min(0.01)
         .sliderRange(0.01, 5)
@@ -53,36 +53,36 @@ public class ArrowDodge extends Module {
     );
 
     private final Setting<Boolean> accurate = sgGeneral.add(new BoolSetting.Builder()
-        .name("accurate")
-        .description("Whether or not to calculate more accurate.")
+        .name("精准")
+        .description("是否计算更精确.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> groundCheck = sgGeneral.add(new BoolSetting.Builder()
-        .name("ground-check")
-        .description("Tries to prevent you from falling to your death.")
+        .name("地面检查")
+        .description("试图防止你摔死.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> allProjectiles = sgGeneral.add(new BoolSetting.Builder()
-        .name("all-projectiles")
-        .description("Dodge all projectiles, not only arrows.")
+        .name("所有投掷物")
+        .description("躲避所有投掷物,不仅仅是箭矢.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> ignoreOwn = sgGeneral.add(new BoolSetting.Builder()
-        .name("ignore-own")
-        .description("Ignore your own projectiles.")
+        .name("忽略自身")
+        .description("忽略你自己的投射物.")
         .defaultValue(false)
         .build()
     );
 
     public final Setting<Integer> simulationSteps = sgGeneral.add(new IntSetting.Builder()
-        .name("simulation-steps")
-        .description("How many steps to simulate projectiles. Zero for no limit.")
+        .name("模拟步骤")
+        .description("模拟投掷物的步骤数,0 表示无限制.")
         .defaultValue(500)
         .sliderMax(5000)
         .build()
@@ -104,7 +104,7 @@ public class ArrowDodge extends Module {
     private final List<Vector3d> points = new ArrayList<>();
 
     public ArrowDodge() {
-        super(Categories.Combat, "arrow-dodge", "Tries to dodge arrows coming at you.");
+        super(Categories.Combat, "箭矢躲避", "尝试躲避射向你的箭矢.");
     }
 
     @EventHandler

@@ -22,21 +22,21 @@ public class AntiAnchor extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
-        .description("Makes you rotate when placing.")
+        .name("旋转")
+        .description("放置时让你旋转.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> swing = sgGeneral.add(new BoolSetting.Builder()
-        .name("swing")
-        .description("Swings your hand when placing.")
+        .name("挥手")
+        .description("挥动你的手来放置.")
         .defaultValue(true)
         .build()
     );
 
     public AntiAnchor() {
-        super(Categories.Combat, "anti-anchor", "Automatically prevents Anchor Aura by placing a slab on your head.");
+        super(Categories.Combat, "反重生锚", "自动通过在你头上放置一块石头来阻止重生锚光环.");
     }
 
     @EventHandler

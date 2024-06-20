@@ -28,8 +28,8 @@ import java.util.List;
 import java.util.Set;
 
 public class NoInteract extends Module {
-    private final SettingGroup sgBlocks = settings.createGroup("Blocks");
-    private final SettingGroup sgEntities = settings.createGroup("Entities");
+    private final SettingGroup sgBlocks = settings.createGroup("方块");
+    private final SettingGroup sgEntities = settings.createGroup("实体");
 
     // Blocks
 
@@ -111,14 +111,14 @@ public class NoInteract extends Module {
     );
 
     private final Setting<InteractMode> babies = sgEntities.add(new EnumSetting.Builder<InteractMode>()
-        .name("babies")
+        .name("幼崽")
         .description("Baby entity cancel mode.")
         .defaultValue(InteractMode.None)
         .build()
     );
 
     private final Setting<InteractMode> nametagged = sgEntities.add(new EnumSetting.Builder<InteractMode>()
-        .name("nametagged")
+        .name("名称标签")
         .description("Nametagged entity cancel mode.")
         .defaultValue(InteractMode.None)
         .build()

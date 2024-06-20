@@ -32,7 +32,7 @@ public class Config extends System<Config> {
     // Visual
 
     public final Setting<Boolean> customFont = sgVisual.add(new BoolSetting.Builder()
-        .name("custom-font|自定义字体(开启此功能将会无法渲染中文!)")
+        .name("自定义字体(开启将无法渲染中文)")
         .description("使用自定义字体.")
         .defaultValue(false)
         .build()
@@ -112,7 +112,7 @@ public class Config extends System<Config> {
 
     public final Setting<Boolean> deleteChatFeedback = sgChat.add(new BoolSetting.Builder()
         .name("删除聊天反馈")
-        .description("删除之前重复的聊天反馈，保持聊天清晰.")
+        .description("删除之前重复的聊天反馈,保持聊天清晰.")
         .visible(chatFeedback::get)
         .defaultValue(true)
         .build()
@@ -144,7 +144,7 @@ public class Config extends System<Config> {
 
     public final Setting<Boolean> heuristicCombatUtils = sgMisc.add(new BoolSetting.Builder()
             .name("启发式伤害工具")
-            .description(" 通过增加计算时间来提高战斗相关计算的准确性，但会牺牲帧率.")
+            .description(" 通过增加计算时间来提高战斗相关计算的准确性,但会牺牲帧率.")
             .defaultValue(true)
             .build()
     );

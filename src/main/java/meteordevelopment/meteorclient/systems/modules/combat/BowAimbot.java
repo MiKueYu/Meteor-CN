@@ -33,8 +33,8 @@ public class BowAimbot extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Double> range = sgGeneral.add(new DoubleSetting.Builder()
-        .name("range")
-        .description("The maximum range the entity can be to aim at it.")
+        .name("范围")
+        .description("实体可以被瞄准的最大范围.")
         .defaultValue(20)
         .range(0, 100)
         .sliderMax(100)
@@ -42,37 +42,37 @@ public class BowAimbot extends Module {
     );
 
     private final Setting<Set<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
-        .name("entities")
-        .description("Entities to attack.")
+        .name("实体")
+        .description("攻击的实体.")
         .onlyAttackable()
         .build()
     );
 
     private final Setting<SortPriority> priority = sgGeneral.add(new EnumSetting.Builder<SortPriority>()
-        .name("priority")
-        .description("What type of entities to target.")
+        .name("优先级")
+        .description("目标实体的类型.")
         .defaultValue(SortPriority.LowestHealth)
         .build()
     );
 
     private final Setting<Boolean> babies = sgGeneral.add(new BoolSetting.Builder()
-        .name("babies")
-        .description("Whether or not to attack baby variants of the entity.")
+        .name("幼崽")
+        .description("是否攻击实体的幼崽变种.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> nametagged = sgGeneral.add(new BoolSetting.Builder()
-        .name("nametagged")
-        .description("Whether or not to attack mobs with a name tag.")
+        .name("名称标签")
+        .description("是否攻击带有名称标签的生物.")
         .defaultValue(false)
         .build()
     );
 
 
     private final Setting<Boolean> pauseOnCombat = sgGeneral.add(new BoolSetting.Builder()
-        .name("pause-on-combat")
-        .description("Freezes Baritone temporarily until you released the bow.")
+        .name("战斗时暂停")
+        .description("暂时冻结Baritone,直到你释放弓.")
         .defaultValue(false)
         .build()
     );
@@ -81,7 +81,7 @@ public class BowAimbot extends Module {
     private Entity target;
 
     public BowAimbot() {
-        super(Categories.Combat, "bow-aimbot", "Automatically aims your bow for you.");
+        super(Categories.Combat, "弓箭自瞄", "自动帮你瞄准弓箭.");
     }
 
     @Override

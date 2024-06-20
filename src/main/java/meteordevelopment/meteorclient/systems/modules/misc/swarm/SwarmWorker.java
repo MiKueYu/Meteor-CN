@@ -23,7 +23,7 @@ public class SwarmWorker extends Thread {
             socket = new Socket(ip, port);
         } catch (Exception e) {
             socket = null;
-            ChatUtils.warningPrefix("Swarm", "Server not found at %s on port %s.", ip, port);
+            ChatUtils.warningPrefix("Swarm", "在端口 %s 上的 %s 处找不到服务器.", ip, port);
             e.printStackTrace();
         }
 
@@ -32,7 +32,7 @@ public class SwarmWorker extends Thread {
 
     @Override
     public void run() {
-        ChatUtils.infoPrefix("Swarm", "Connected to Swarm host on at %s on port %s.", getIp(socket.getInetAddress().getHostAddress()), socket.getPort());
+        ChatUtils.infoPrefix("Swarm", "已连接到位于 %s 端口 %s 上的 Swarm 主机.", getIp(socket.getInetAddress().getHostAddress()), socket.getPort());
 
         try {
             DataInputStream in = new DataInputStream(socket.getInputStream());
@@ -42,12 +42,12 @@ public class SwarmWorker extends Thread {
                 String read = in.readUTF();
 
                 if (read.startsWith("swarm")) {
-                    ChatUtils.infoPrefix("Swarm", "Received command: (highlight)%s", read);
+                    ChatUtils.infoPrefix("Swarm", "收到命令: (highlight)%s", read);
 
                     try {
                         Commands.dispatch(read);
                     } catch (Exception e) {
-                        ChatUtils.error("Error fetching command.");
+                        ChatUtils.error("获取命令时出错.");
                         e.printStackTrace();
                     }
                 }
@@ -55,7 +55,7 @@ public class SwarmWorker extends Thread {
 
             in.close();
         } catch (IOException e) {
-            ChatUtils.errorPrefix("Swarm", "Error in connection to host.");
+            ChatUtils.errorPrefix("Swarm", "连接主机错误.");
             e.printStackTrace();
             disconnect();
         }
@@ -70,7 +70,7 @@ public class SwarmWorker extends Thread {
 
         PathManagers.get().stop();
 
-        ChatUtils.infoPrefix("Swarm", "Disconnected from host.");
+        ChatUtils.infoPrefix("Swarm", "与主机断开连接.");
 
         interrupt();
     }
