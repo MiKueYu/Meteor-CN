@@ -170,7 +170,7 @@ public class Nuker extends Module {
     );
 
     private final Setting<List<Block>> blacklist = sgWhitelist.add(new BlockListSetting.Builder()
-            .name("blacklist")
+            .name("黑名单")
             .description("The blocks you don't want to mine.")
             .visible(() -> listMode.get() == ListMode.Blacklist)
             .build()

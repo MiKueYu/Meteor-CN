@@ -104,7 +104,7 @@ public class AutoTool extends Module {
     );
 
     private final Setting<List<Item>> blacklist = sgWhitelist.add(new ItemListSetting.Builder()
-        .name("blacklist")
+        .name("黑名单")
         .description("The tools you don't want to use.")
         .visible(() -> listMode.get() == ListMode.Blacklist)
         .filter(AutoTool::isTool)

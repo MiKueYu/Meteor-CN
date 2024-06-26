@@ -21,15 +21,15 @@ public class AntiHunger extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> sprint = sgGeneral.add(new BoolSetting.Builder()
-        .name("sprint")
-        .description("Spoofs sprinting packets.")
+        .name("奔跑")
+        .description("伪装奔跑数据包.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> onGround = sgGeneral.add(new BoolSetting.Builder()
-        .name("on-ground")
-        .description("Spoofs the onGround flag.")
+        .name("在地上")
+        .description("伪装在地上标志.")
         .defaultValue(true)
         .build()
     );
@@ -37,7 +37,7 @@ public class AntiHunger extends Module {
     private boolean lastOnGround, ignorePacket;
 
     public AntiHunger() {
-        super(Categories.Player, "anti-hunger", "Reduces (does NOT remove) hunger consumption.");
+        super(Categories.Player, "抗饥饿", "减少(不是消除)饥饿消耗.");
     }
 
     @Override
