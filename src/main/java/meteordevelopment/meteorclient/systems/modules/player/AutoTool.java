@@ -14,13 +14,13 @@ import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 import meteordevelopment.meteorclient.systems.modules.render.Xray;
 import meteordevelopment.meteorclient.systems.modules.world.InfinityMiner;
+import meteordevelopment.meteorclient.utils.Utils;
 import meteordevelopment.meteorclient.utils.player.InvUtils;
 import meteordevelopment.meteorclient.utils.world.BlockUtils;
 import meteordevelopment.orbit.EventHandler;
 import meteordevelopment.orbit.EventPriority;
 import net.minecraft.block.*;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.*;
 import net.minecraft.registry.tag.BlockTags;
@@ -56,7 +56,7 @@ public class AutoTool extends Module {
     );
 
     private final Setting<Boolean> antiBreak = sgGeneral.add(new BoolSetting.Builder()
-        .name("防止损坏")
+        .name("anti-break")
         .description("Stops you from breaking your tool.")
         .defaultValue(false)
         .build()
@@ -80,7 +80,7 @@ public class AutoTool extends Module {
     );
 
     private final Setting<Integer> switchDelay = sgGeneral.add((new IntSetting.Builder()
-        .name("切换延迟")
+        .name("switch-delay")
         .description("Delay in ticks before switching tools.")
         .defaultValue(0)
         .build()
@@ -104,7 +104,7 @@ public class AutoTool extends Module {
     );
 
     private final Setting<List<Item>> blacklist = sgWhitelist.add(new ItemListSetting.Builder()
-        .name("黑名单")
+        .name("blacklist")
         .description("The tools you don't want to use.")
         .visible(() -> listMode.get() == ListMode.Blacklist)
         .filter(AutoTool::isTool)
@@ -195,25 +195,25 @@ public class AutoTool extends Module {
 
         if (silkTouchEnderChest
             && state.getBlock() == Blocks.ENDER_CHEST
-            && EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, itemStack) == 0) {
+            && !Utils.hasEnchantments(itemStack, Enchantments.SILK_TOUCH)) {
             return -1;
         }
 
         if (fortuneOre
             && isFortunable(state.getBlock())
-            && EnchantmentHelper.getLevel(Enchantments.FORTUNE, itemStack) == 0) {
+            && !Utils.hasEnchantments(itemStack, Enchantments.FORTUNE)) {
             return -1;
         }
 
         double score = 0;
 
         score += itemStack.getMiningSpeedMultiplier(state) * 1000;
-        score += EnchantmentHelper.getLevel(Enchantments.UNBREAKING, itemStack);
-        score += EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, itemStack);
-        score += EnchantmentHelper.getLevel(Enchantments.MENDING, itemStack);
+        score += Utils.getEnchantmentLevel(itemStack, Enchantments.UNBREAKING);
+        score += Utils.getEnchantmentLevel(itemStack, Enchantments.EFFICIENCY);
+        score += Utils.getEnchantmentLevel(itemStack, Enchantments.MENDING);
 
-        if (enchantPreference == EnchantPreference.Fortune) score += EnchantmentHelper.getLevel(Enchantments.FORTUNE, itemStack);
-        if (enchantPreference == EnchantPreference.SilkTouch) score += EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, itemStack);
+        if (enchantPreference == EnchantPreference.Fortune) score += Utils.getEnchantmentLevel(itemStack, Enchantments.FORTUNE);
+        if (enchantPreference == EnchantPreference.SilkTouch) score += Utils.getEnchantmentLevel(itemStack, Enchantments.SILK_TOUCH);
 
         if (itemStack.getItem() instanceof SwordItem item && (state.getBlock() instanceof BambooBlock || state.getBlock() instanceof BambooShootBlock))
             score += 9000 + (item.getComponents().get(DataComponentTypes.TOOL).getSpeed(state) * 1000);

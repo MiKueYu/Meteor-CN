@@ -5,13 +5,13 @@
 
 package meteordevelopment.meteorclient.systems.hud.elements;
 
+import meteordevelopment.meteorclient.MeteorClient;
 import meteordevelopment.meteorclient.settings.*;
 import meteordevelopment.meteorclient.systems.hud.Hud;
 import meteordevelopment.meteorclient.systems.hud.HudElement;
 import meteordevelopment.meteorclient.systems.hud.HudElementInfo;
 import meteordevelopment.meteorclient.systems.hud.HudRenderer;
 import meteordevelopment.meteorclient.utils.Utils;
-import meteordevelopment.meteorclient.utils.misc.MeteorIdentifier;
 import meteordevelopment.meteorclient.utils.render.color.Color;
 import meteordevelopment.meteorclient.utils.render.color.SettingColor;
 import net.minecraft.item.ItemStack;
@@ -21,23 +21,23 @@ import net.minecraft.util.Identifier;
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 
 public class InventoryHud extends HudElement {
-    public static final HudElementInfo<InventoryHud> INFO = new HudElementInfo<>(Hud.GROUP, "背包", "显示你的背包.", InventoryHud::new);
+    public static final HudElementInfo<InventoryHud> INFO = new HudElementInfo<>(Hud.GROUP, "inventory", "Displays your inventory.", InventoryHud::new);
 
-    private static final Identifier TEXTURE = new MeteorIdentifier("textures/container.png");
-    private static final Identifier TEXTURE_TRANSPARENT = new MeteorIdentifier("textures/container-transparent.png");
+    private static final Identifier TEXTURE = MeteorClient.identifier("textures/container.png");
+    private static final Identifier TEXTURE_TRANSPARENT = MeteorClient.identifier("textures/container-transparent.png");
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> containers = sgGeneral.add(new BoolSetting.Builder()
-        .name("容器")
-        .description("拿着容器时显示容器的内容.")
+        .name("containers")
+        .description("Shows the contents of a container when holding them.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
-        .name("比例")
-        .description("比例.")
+        .name("scale")
+        .description("The scale.")
         .defaultValue(2)
         .min(1)
         .sliderRange(1, 5)
@@ -46,16 +46,16 @@ public class InventoryHud extends HudElement {
     );
 
     private final Setting<Background> background = sgGeneral.add(new EnumSetting.Builder<Background>()
-        .name("背景")
-        .description("背包查看器的背景.")
+        .name("background")
+        .description("Background of inventory viewer.")
         .defaultValue(Background.Texture)
         .onChanged(bg -> calculateSize())
         .build()
     );
 
     private final Setting<SettingColor> color = sgGeneral.add(new ColorSetting.Builder()
-        .name("背景颜色")
-        .description("用于背景的颜色.")
+        .name("background-color")
+        .description("Color of the background.")
         .defaultValue(new SettingColor(255, 255, 255))
         .visible(() -> background.get() != Background.None)
         .build()

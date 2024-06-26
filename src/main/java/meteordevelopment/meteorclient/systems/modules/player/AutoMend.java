@@ -12,10 +12,10 @@ import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.systems.modules.Categories;
 import meteordevelopment.meteorclient.systems.modules.Module;
+import meteordevelopment.meteorclient.utils.Utils;
 import meteordevelopment.meteorclient.utils.player.InvUtils;
 import meteordevelopment.orbit.EventHandler;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,22 +26,22 @@ public class AutoMend extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<List<Item>> blacklist = sgGeneral.add(new ItemListSetting.Builder()
-        .name("黑名单")
-        .description("物品黑名单.")
+        .name("blacklist")
+        .description("Item blacklist.")
         .filter(item -> item.getComponents().get(DataComponentTypes.DAMAGE) != null)
         .build()
     );
 
     private final Setting<Boolean> force = sgGeneral.add(new BoolSetting.Builder()
-        .name("强制")
-        .description("即使副手中有其他不可修复的物品,也替换副手中的物品.")
+        .name("force")
+        .description("Replaces item in offhand even if there is some other non-repairable item.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> autoDisable = sgGeneral.add(new BoolSetting.Builder()
-        .name("自动禁用")
-        .description("当没有更多要修复的物品时自动关闭.")
+        .name("auto-disable")
+        .description("Automatically disables when there are no more items to repair.")
         .defaultValue(true)
         .build()
     );
@@ -49,7 +49,7 @@ public class AutoMend extends Module {
     private boolean didMove;
 
     public AutoMend() {
-        super(Categories.Player, "自动修补", "完全修复后自动替换副手物品并进行修复.");
+        super(Categories.Player, "auto-mend", "Automatically replaces items in your offhand with mending when fully repaired.");
     }
 
     @Override
@@ -65,7 +65,7 @@ public class AutoMend extends Module {
 
         if (slot == -1) {
             if (autoDisable.get()) {
-                info("修复了所有物品,禁用");
+                info("Repaired all items, disabling");
 
                 if (didMove) {
                     int emptySlot = getEmptySlot();
@@ -85,7 +85,7 @@ public class AutoMend extends Module {
 
         if (itemStack.isEmpty()) return false;
 
-        if (EnchantmentHelper.getLevel(Enchantments.MENDING, itemStack) > 0) {
+        if (Utils.hasEnchantments(itemStack, Enchantments.MENDING)) {
             return itemStack.getDamage() != 0;
         }
 
@@ -97,7 +97,7 @@ public class AutoMend extends Module {
             ItemStack itemStack = mc.player.getInventory().getStack(i);
             if (blacklist.get().contains(itemStack.getItem())) continue;
 
-            if (EnchantmentHelper.getLevel(Enchantments.MENDING, itemStack) > 0 && itemStack.getDamage() > 0) {
+            if (Utils.hasEnchantments(itemStack, Enchantments.MENDING) && itemStack.getDamage() > 0) {
                 return i;
             }
         }

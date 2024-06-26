@@ -23,15 +23,15 @@ import org.joml.Vector3f;
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 
 public class PlayerModelHud extends HudElement {
-    public static final HudElementInfo<PlayerModelHud> INFO = new HudElementInfo<>(Hud.GROUP, "玩家模型", "显示玩家的模型.", PlayerModelHud::new);
+    public static final HudElementInfo<PlayerModelHud> INFO = new HudElementInfo<>(Hud.GROUP, "player-model", "Displays a model of your player.", PlayerModelHud::new);
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgBackground = settings.createGroup("背景");
+    private final SettingGroup sgBackground = settings.createGroup("Background");
 
     // General
 
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
-        .name("比例")
-        .description("自定义比例.")
+        .name("scale")
+        .description("The scale.")
         .defaultValue(2)
         .min(1)
         .sliderRange(1, 5)
@@ -40,15 +40,15 @@ public class PlayerModelHud extends HudElement {
     );
 
     private final Setting<Boolean> copyYaw = sgGeneral.add(new BoolSetting.Builder()
-        .name("复制偏航角")
-        .description("使玩家模型的偏航角与你的偏航角一致.")
+        .name("copy-yaw")
+        .description("Makes the player model's yaw equal to yours.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Integer> customYaw = sgGeneral.add(new IntSetting.Builder()
-        .name("自定义偏航角")
-        .description("当复制偏航角关闭时使用的自定义偏航角.")
+        .name("custom-yaw")
+        .description("Custom yaw for when copy yaw is off.")
         .defaultValue(0)
         .range(-180, 180)
         .sliderRange(-180, 180)
@@ -57,15 +57,15 @@ public class PlayerModelHud extends HudElement {
     );
 
     private final Setting<Boolean> copyPitch = sgGeneral.add(new BoolSetting.Builder()
-        .name("复制俯仰角")
-        .description("使玩家模型的俯仰角与你的俯仰角一致.")
+        .name("copy-pitch")
+        .description("Makes the player model's pitch equal to yours.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Integer> customPitch = sgGeneral.add(new IntSetting.Builder()
-        .name("自定义俯仰角")
-        .description("当复制俯仰关闭时使用的自定义俯仰角.")
+        .name("custom-pitch")
+        .description("Custom pitch for when copy pitch is off.")
         .defaultValue(0)
         .range(-90, 90)
         .sliderRange(-90, 90)
@@ -74,8 +74,8 @@ public class PlayerModelHud extends HudElement {
     );
 
     private final Setting<CenterOrientation> centerOrientation = sgGeneral.add(new EnumSetting.Builder<CenterOrientation>()
-        .name("中心方向")
-        .description("HUD 模型正对前方时,玩家面对的方向.")
+        .name("center-orientation")
+        .description("Which direction the player faces when the HUD model faces directly forward.")
         .defaultValue(CenterOrientation.South)
         .build()
     );
@@ -83,15 +83,15 @@ public class PlayerModelHud extends HudElement {
     // Background
 
     private final Setting<Boolean> background = sgBackground.add(new BoolSetting.Builder()
-        .name("背景")
-        .description("显示背景.")
+        .name("background")
+        .description("Displays background.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<SettingColor> backgroundColor = sgBackground.add(new ColorSetting.Builder()
-        .name("背景颜色")
-        .description("用于背景的颜色.")
+        .name("background-color")
+        .description("Color used for the background.")
         .visible(background::get)
         .defaultValue(new SettingColor(25, 25, 25, 50))
         .build()
@@ -111,7 +111,7 @@ public class PlayerModelHud extends HudElement {
 
             float offset = centerOrientation.get() == CenterOrientation.North ? 180 : 0;
 
-            float yaw = copyYaw.get() ? MathHelper.wrapDegrees(player.prevYaw + (player.getYaw() - player.prevYaw) * mc.getTickDelta() + offset) : (float) customYaw.get();
+            float yaw = copyYaw.get() ? MathHelper.wrapDegrees(player.prevYaw + (player.getYaw() - player.prevYaw) * mc.getRenderTickCounter().getTickDelta(true) + offset) : (float) customYaw.get();
             float pitch = copyPitch.get() ? player.getPitch() : (float) customPitch.get();
 
             drawEntity(renderer.drawContext, x, y, (int) (30 * scale.get()), -yaw, -pitch, player);
