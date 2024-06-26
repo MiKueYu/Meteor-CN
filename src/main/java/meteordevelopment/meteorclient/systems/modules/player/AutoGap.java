@@ -38,35 +38,35 @@ public class AutoGap extends Module {
     private static final Class<? extends Module>[] AURAS = new Class[] { KillAura.class, CrystalAura.class, AnchorAura.class, BedAura.class };
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgPotions = settings.createGroup("Potions");
-    private final SettingGroup sgHealth = settings.createGroup("Health");
+    private final SettingGroup sgPotions = settings.createGroup("药水");
+    private final SettingGroup sgHealth = settings.createGroup("生命值");
 
     // General
 
     private final Setting<Boolean> allowEgap = sgGeneral.add(new BoolSetting.Builder()
-        .name("allow-egap")
-        .description("Allow eating E-Gaps over Gaps if found.")
+        .name("允许金苹果")
+        .description("如果检测到附魔金苹果,优先吃附魔金苹果而不是普通金苹果.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> always = sgGeneral.add(new BoolSetting.Builder()
-        .name("always")
-        .description("If it should always eat.")
+        .name("总是")
+        .description("是否应该总是吃东西.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> pauseAuras = sgGeneral.add(new BoolSetting.Builder()
-        .name("pause-auras")
-        .description("Pauses all auras when eating.")
+        .name("暂停光环")
+        .description("进食时暂停所有光环.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> pauseBaritone = sgGeneral.add(new BoolSetting.Builder()
-        .name("pause-baritone")
-        .description("Pause baritone when eating.")
+        .name("暂停baritone")
+        .description("进食时暂停baritone.")
         .defaultValue(true)
         .build()
     );
@@ -74,23 +74,23 @@ public class AutoGap extends Module {
     // Potions
 
     private final Setting<Boolean> potionsRegeneration = sgPotions.add(new BoolSetting.Builder()
-        .name("potions-regeneration")
-        .description("If it should eat when Regeneration runs out.")
+        .name("药水再生")
+        .description("如果再生效果消失,是否应该进食.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> potionsFireResistance = sgPotions.add(new BoolSetting.Builder()
-        .name("potions-fire-resistance")
-        .description("If it should eat when Fire Resistance runs out. Requires E-Gaps.")
+        .name("药水抗火")
+        .description("如果抗火效果消失,是否应该进食.需要附魔金苹果.")
         .defaultValue(true)
         .visible(allowEgap::get)
         .build()
     );
 
     private final Setting<Boolean> potionsResistance = sgPotions.add(new BoolSetting.Builder()
-        .name("potions-absorption")
-        .description("If it should eat when Resistance runs out. Requires E-Gaps.")
+        .name("药水抗性")
+        .description("如果抗性效果消失,是否应该进食.需要附魔金苹果.")
         .defaultValue(false)
         .visible(allowEgap::get)
         .build()
@@ -99,15 +99,15 @@ public class AutoGap extends Module {
     // Health
 
     private final Setting<Boolean> healthEnabled = sgHealth.add(new BoolSetting.Builder()
-        .name("health-enabled")
-        .description("If it should eat when health drops below threshold.")
+        .name("生命值启用")
+        .description("当生命值低于阈值时是否应该进食.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Integer> healthThreshold = sgHealth.add(new IntSetting.Builder()
-        .name("health-threshold")
-        .description("Health threshold to eat at. Includes absorption.")
+        .name("生命值阈值")
+        .description("进食的生命值阈值.包括抗性.")
         .defaultValue(20)
         .min(0)
         .sliderMax(40)
@@ -123,7 +123,7 @@ public class AutoGap extends Module {
     private boolean wasBaritone;
 
     public AutoGap() {
-        super(Categories.Player, "auto-gap", "Automatically eats Gaps or E-Gaps.");
+        super(Categories.Player, "自动金苹果", "自动吃金苹果或附魔金苹果.");
     }
 
     @Override

@@ -109,7 +109,7 @@ public class LiquidFiller extends Module {
     );
 
     private final Setting<List<Block>> blacklist = sgWhitelist.add(new BlockListSetting.Builder()
-        .name("blacklist")
+        .name("黑名单")
         .description("The denied blocks that it not will use to fill up the liquid.")
         .visible(() -> listMode.get() == ListMode.Blacklist)
         .build()

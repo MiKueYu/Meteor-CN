@@ -35,7 +35,7 @@ import meteordevelopment.orbit.EventHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.NoteBlock;
-import net.minecraft.block.enums.Instrument;
+import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.sound.SoundEvents;
@@ -61,12 +61,12 @@ import java.util.stream.Collectors;
 public class Notebot extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgNoteMap = settings.createGroup("音符地图", false);
-    private final SettingGroup sgRender = settings.createGroup("渲染", true);
+    private final SettingGroup sgNoteMap = settings.createGroup("Note Map", false);
+    private final SettingGroup sgRender = settings.createGroup("Render", true);
 
     public final Setting<Integer> tickDelay = sgGeneral.add(new IntSetting.Builder()
-        .name("tick延迟")
-        .description("加载歌曲时的延迟.")
+        .name("tick-delay")
+        .description("The delay when loading a song.")
         .defaultValue(1)
         .sliderRange(1, 20)
         .min(1)
@@ -74,8 +74,8 @@ public class Notebot extends Module {
     );
 
     public final Setting<Integer> concurrentTuneBlocks = sgGeneral.add(new IntSetting.Builder()
-        .name("并发调音块")
-        .description("可以同时调音多少个音符盒。在Paper上建议将其设置为1以避免错误.")
+        .name("concurrent-tune-blocks")
+        .description("How many noteblocks can be tuned at the same time. On Paper it is recommended to set it to 1 to avoid bugs.")
         .defaultValue(1)
         .min(1)
         .sliderRange(1, 20)
@@ -83,57 +83,57 @@ public class Notebot extends Module {
     );
 
     public final Setting<NotebotUtils.NotebotMode> mode = sgGeneral.add(new EnumSetting.Builder<NotebotUtils.NotebotMode>()
-        .name("模式")
-        .description("选择音符机器人的模式")
+        .name("mode")
+        .description("Select mode of notebot")
         .defaultValue(NotebotUtils.NotebotMode.ExactInstruments)
         .build()
     );
 
     public final Setting<InstrumentDetectMode> instrumentDetectMode = sgGeneral.add(new EnumSetting.Builder<InstrumentDetectMode>()
-        .name("乐器检测模式")
-        .description("选择一个乐器检测模式。当服务器有一个可以修改音符盒状态的插件(例如ItemsAdder)但音符盒仍然可以播放正确的音符时，这会很有用")
+        .name("instrument-detect-mode")
+        .description("Select an instrument detect mode. Can be useful when server has a plugin that modifies noteblock state (e.g ItemsAdder) but noteblock can still play the right note")
         .defaultValue(InstrumentDetectMode.BlockState)
         .build()
     );
 
     public final Setting<Boolean> polyphonic = sgGeneral.add(new BoolSetting.Builder()
-        .name("和弦")
-        .description("是否允许同时演奏多个音符")
+        .name("polyphonic")
+        .description("Whether or not to allow multiple notes to be played at the same time")
         .defaultValue(true)
         .build()
     );
 
     public final Setting<Boolean> autoRotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("自动旋转")
-        .description("当客户端想要击中音符盒时是否应该看它")
+        .name("auto-rotate")
+        .description("Should client look at note block when it wants to hit it")
         .defaultValue(true)
         .build()
     );
 
     public final Setting<Boolean> autoPlay = sgGeneral.add(new BoolSetting.Builder()
-        .name("自动播放")
-        .description("自动播放随机歌曲")
+        .name("auto-play")
+        .description("Auto plays random songs")
         .defaultValue(false)
         .build()
     );
 
     public final Setting<Boolean> roundOutOfRange = sgGeneral.add(new BoolSetting.Builder()
-        .name("舍入超出范围")
-        .description("舍入超出范围的音符盒")
+        .name("round-out-of-range")
+        .description("Rounds out of range notes")
         .defaultValue(false)
         .build()
     );
 
     public final Setting<Boolean> swingArm = sgGeneral.add(new BoolSetting.Builder()
-        .name("摆臂")
-        .description("敲击时是否应该摇摆手臂")
+        .name("swing-arm")
+        .description("Should swing arm on hit")
         .defaultValue(true)
         .build()
     );
 
     public final Setting<Integer> checkNoteblocksAgainDelay = sgGeneral.add(new IntSetting.Builder()
-        .name("再次检查音符盒延迟")
-        .description("调整结束和再次检查之间应延迟多少时间")
+        .name("check-noteblocks-again-delay")
+        .description("How much delay should be between end of tuning and checking again")
         .defaultValue(10)
         .min(1)
         .sliderRange(1, 20)
@@ -141,93 +141,93 @@ public class Notebot extends Module {
     );
 
     public final Setting<Boolean> renderText = sgRender.add(new BoolSetting.Builder()
-        .name("渲染文本")
-        .description("是否渲染音符盒上方的文本.")
+        .name("render-text")
+        .description("Whether or not to render the text above noteblocks.")
         .defaultValue(true)
         .build()
     );
 
     public final Setting<Boolean> renderBoxes = sgRender.add(new BoolSetting.Builder()
-        .name("渲染框")
-        .description("是否渲染音符盒周围的轮廓.")
+        .name("render-boxes")
+        .description("Whether or not to render the outline around the noteblocks.")
         .defaultValue(true)
         .build()
     );
 
     public final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("形状模式")
-        .description("形状的渲染方式.")
+        .name("shape-mode")
+        .description("How the shapes are rendered.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
 
     public final Setting<SettingColor> untunedSideColor = sgRender.add(new ColorSetting.Builder()
-        .name("未调音的侧面颜色")
-        .description("正在渲染的未调音方块侧面的颜色.")
+        .name("untuned-side-color")
+        .description("The color of the sides of the untuned blocks being rendered.")
         .defaultValue(new SettingColor(204, 0, 0, 10))
         .build()
     );
 
     public final Setting<SettingColor> untunedLineColor = sgRender.add(new ColorSetting.Builder()
-        .name("未调音的边框颜色")
-        .description("正在渲染的未调音方块的线条颜色.")
+        .name("untuned-line-color")
+        .description("The color of the lines of the untuned blocks being rendered.")
         .defaultValue(new SettingColor(204, 0, 0, 255))
         .build()
     );
 
     public final Setting<SettingColor> tunedSideColor = sgRender.add(new ColorSetting.Builder()
-        .name("已调音侧面颜色")
-        .description("正在渲染的已调音方块的侧面颜色。")
+        .name("tuned-side-color")
+        .description("The color of the sides of the tuned blocks being rendered.")
         .defaultValue(new SettingColor(0, 204, 0, 10))
         .build()
     );
 
     public final Setting<SettingColor> tunedLineColor = sgRender.add(new ColorSetting.Builder()
-        .name("已调音边框颜色")
-        .description("正在渲染的已调音方块的线条颜色.")
+        .name("tuned-line-color")
+        .description("The color of the lines of the tuned blocks being rendered.")
         .defaultValue(new SettingColor(0, 204, 0, 255))
         .build()
     );
 
     public final Setting<SettingColor> tuneHitSideColor = sgRender.add(new ColorSetting.Builder()
-        .name("敲击侧颜色")
-        .description("在音符方块调音敲击时渲染的侧面颜色.")
+        .name("hit-side-color")
+        .description("The color of the sides being rendered on noteblock tune hit.")
         .defaultValue(new SettingColor(255, 153, 0, 10))
         .build()
     );
 
     private final Setting<SettingColor> tuneHitLineColor = sgRender.add(new ColorSetting.Builder()
-        .name("命中线颜色")
-        .description("音符盒上渲染的边框颜色.")
+        .name("hit-line-color")
+        .description("The color of the lines being rendered on noteblock tune hit.")
         .defaultValue(new SettingColor(255, 153, 0, 255))
         .build()
     );
 
     public final Setting<SettingColor> scannedNoteblockSideColor = sgRender.add(new ColorSetting.Builder()
-        .name("扫描音符方块侧颜色")
-        .description("渲染的扫描音符方块侧面的颜色.")
+        .name("scanned-noteblock-side-color")
+        .description("The color of the sides of the scanned noteblocks being rendered.")
         .defaultValue(new SettingColor(255, 255, 0, 30))
         .build()
     );
 
     private final Setting<SettingColor> scannedNoteblockLineColor = sgRender.add(new ColorSetting.Builder()
-        .name("扫描的音符方块边框颜色")
-        .description("正在渲染的扫描音符方块的边框颜色.")
+        .name("scanned-noteblock-line-color")
+        .description("The color of the lines of the scanned noteblocks being rendered.")
         .defaultValue(new SettingColor(255, 255, 0, 255))
         .build()
     );
 
     public final Setting<Double> noteTextScale = sgRender.add(new DoubleSetting.Builder()
-        .name("音符文本比例")
-        .description("比例.")
+        .name("note-text-scale")
+        .description("The scale.")
         .defaultValue(1.5)
         .min(0)
         .build()
     );
 
     public final Setting<Boolean> showScannedNoteblocks = sgRender.add(new BoolSetting.Builder()
-        .name("显示扫描的音符方块")
-        .description("显示扫描的音符方块")
+        .name("show-scanned-noteblocks")
+        .description("Show scanned Noteblocks")
         .defaultValue(false)
         .build()
     );
@@ -252,9 +252,9 @@ public class Notebot extends Module {
 
 
     public Notebot() {
-        super(Categories.Misc, "音符机器人", "很好地演奏音符方块");
+        super(Categories.Misc, "notebot", "Plays noteblock nicely");
 
-        for (Instrument inst : Instrument.values()) {
+        for (NoteBlockInstrument inst : NoteBlockInstrument.values()) {
             NotebotUtils.OptionalInstrument optionalInstrument = NotebotUtils.OptionalInstrument.fromMinecraftInstrument(inst);
             if (optionalInstrument != null) {
                 sgNoteMap.add(new EnumSetting.Builder<NotebotUtils.OptionalInstrument>()
@@ -270,7 +270,7 @@ public class Notebot extends Module {
     @Override
     public String getInfoString() {
         if (stage == Stage.None) {
-            return "无";
+            return "None";
         } else {
             return playingMode.toString() + " | " + stage.toString();
         }
@@ -413,7 +413,7 @@ public class Notebot extends Module {
             waitTicks--;
             if (waitTicks == 0) {
                 waitTicks = -1;
-                info("再次检查音符方块...");
+                info("Checking noteblocks again...");
 
                 setupTuneHitsMap();
                 stage = Stage.Tune;
@@ -422,14 +422,14 @@ public class Notebot extends Module {
         else if (stage == Stage.SetUp) {
             scanForNoteblocks();
             if (scannedNoteblocks.isEmpty()) {
-                error("附近找不到任何的音符方块！");
+                error("Can't find any nearby noteblock!");
                 stop();
                 return;
             }
 
             setupNoteblocksMap();
             if (noteBlockPositions.isEmpty()) {
-                error("找不到任何有效的音符方块来播放歌曲.");
+                error("Can't find any valid noteblock to play song.");
                 stop();
                 return;
             }
@@ -451,7 +451,7 @@ public class Notebot extends Module {
             if (song.getNotesMap().containsKey(currentTick)) {
                 if (playingMode == PlayingMode.Preview) onTickPreview();
                 else if (mc.player.getAbilities().creativeMode) {
-                    error("你需要处于生存模式.");
+                    error("You need to be in survival mode.");
                     stop();
                     return;
                 }
@@ -473,7 +473,7 @@ public class Notebot extends Module {
         // Modifiable list of unique notes
         List<Note> uniqueNotesToUse = new ArrayList<>(song.getRequirements());
         // A map with noteblocks that have incorrect note level
-        Map<Instrument, List<BlockPos>> incorrectNoteBlocks = new HashMap<>();
+        Map<NoteBlockInstrument, List<BlockPos>> incorrectNoteBlocks = new HashMap<>();
 
         // Check if there are already tuned noteblocks
         for (var entry : scannedNoteblocks.asMap().entrySet()) {
@@ -502,7 +502,7 @@ public class Notebot extends Module {
             List<BlockPos> positions = entry.getValue();
 
             if (mode.get() == NotebotUtils.NotebotMode.ExactInstruments) {
-                Instrument inst = entry.getKey();
+                NoteBlockInstrument inst = entry.getKey();
 
                 List<Note> foundNotes = uniqueNotesToUse.stream()
                     .filter(note -> note.getInstrument() == inst)
@@ -530,9 +530,9 @@ public class Notebot extends Module {
 
         if (!uniqueNotesToUse.isEmpty()) {
             for (Note note : uniqueNotesToUse) {
-                warning("缺少音符: "+note.getInstrument()+", "+note.getNoteLevel());
+                warning("Missing note: "+note.getInstrument()+", "+note.getNoteLevel());
             }
-            warning(uniqueNotesToUse.size()+" 缺少音符!");
+            warning(uniqueNotesToUse.size()+" missing notes!");
         }
     }
 
@@ -561,13 +561,13 @@ public class Notebot extends Module {
         WTable table = theme.table();
 
         // Open Song GUI
-        WButton openSongGUI = table.add(theme.button("打开歌曲GUI")).expandX().minWidth(100).widget();
+        WButton openSongGUI = table.add(theme.button("Open Song GUI")).expandX().minWidth(100).widget();
         openSongGUI.action = () -> mc.setScreen(theme.notebotSongs());
 
         table.row();
 
         // Align Center
-        WButton alignCenter = table.add(theme.button("居中对齐")).expandX().minWidth(100).widget();
+        WButton alignCenter = table.add(theme.button("Align Center")).expandX().minWidth(100).widget();
         alignCenter.action = () -> {
             if (mc.player == null) return;
             Vec3d pos = Vec3d.ofBottomCenter(mc.player.getBlockPos());
@@ -580,15 +580,15 @@ public class Notebot extends Module {
         status = table.add(theme.label(getStatus())).expandCellX().widget();
 
         // Pause
-        WButton pause = table.add(theme.button(isPlaying ? "暂停" : "恢复")).right().widget();
+        WButton pause = table.add(theme.button(isPlaying ? "Pause" : "Resume")).right().widget();
         pause.action = () -> {
             pause();
-            pause.set(isPlaying ? "暂停" : "恢复");
+            pause.set(isPlaying ? "Pause" : "Resume");
             updateStatus();
         };
 
         // Stop
-        WButton stop = table.add(theme.button("停止")).right().widget();
+        WButton stop = table.add(theme.button("Stop")).right().widget();
         stop.action = this::stop;
 
         return table;
@@ -600,12 +600,12 @@ public class Notebot extends Module {
      * @return A status
      */
     public String getStatus() {
-        if (!this.isActive()) return "模块已禁用.";
-        if (song == null) return "没有加载歌曲.";
-        if (isPlaying) return String.format("正在播放歌曲. %d/%d", currentTick, song.getLastTick());
-        if (stage == Stage.Playing) return "准备播放.";
+        if (!this.isActive()) return "Module disabled.";
+        if (song == null) return "No song loaded.";
+        if (isPlaying) return String.format("Playing song. %d/%d", currentTick, song.getLastTick());
+        if (stage == Stage.Playing) return "Ready to play.";
         if (stage == Stage.SetUp || stage == Stage.Tune || stage == Stage.WaitingToCheckNoteblocks) return "Setting up the noteblocks.";
-        else return String.format("阶段: %s.", stage.toString());
+        else return String.format("Stage: %s.", stage.toString());
     }
 
     /**
@@ -614,28 +614,28 @@ public class Notebot extends Module {
     public void play() {
         if (mc.player == null) return;
         if (mc.player.getAbilities().creativeMode && playingMode != PlayingMode.Preview) {
-            error("你需要处于生存模式.");
+            error("You need to be in survival mode.");
         } else if (stage == Stage.Playing) {
             isPlaying = true;
-            info("播放.");
+            info("Playing.");
         } else {
-            error("没有加载歌曲.");
+            error("No song loaded.");
         }
     }
 
     public void pause() {
         if (!isActive()) toggle();
         if (isPlaying) {
-            info("暂停.");
+            info("Pausing.");
             isPlaying = false;
         } else {
-            info("恢复.");
+            info("Resuming.");
             isPlaying = true;
         }
     }
 
     public void stop() {
-        info("停止.");
+        info("Stopping.");
         disable();
         updateStatus();
     }
@@ -649,7 +649,7 @@ public class Notebot extends Module {
     }
 
     public void playRandomSong() {
-        File[] files = MeteorClient.FOLDER.toPath().resolve("音符机器人").toFile().listFiles();
+        File[] files = MeteorClient.FOLDER.toPath().resolve("notebot").toFile().listFiles();
         if (files == null) return;
 
         File randomSong = files[ThreadLocalRandom.current().nextInt(files.length)];
@@ -708,16 +708,16 @@ public class Notebot extends Module {
      */
     public boolean loadFileToMap(File file, Runnable callback) {
         if (!file.exists() || !file.isFile()) {
-            error("文件未找到");
+            error("File not found");
             return false;
         }
 
         if (!SongDecoders.hasDecoder(file)) {
-            error("文件格式错误.未找到解码器.");
+            error("File is in wrong format. Decoder not found.");
             return false;
         }
 
-        info("加载歌曲 \"%s\".", FilenameUtils.getBaseName(file.getName()));
+        info("Loading song \"%s\".", FilenameUtils.getBaseName(file.getName()));
 
         // Start loading song
         loadingSongFuture = CompletableFuture.supplyAsync(() -> {
@@ -735,7 +735,7 @@ public class Notebot extends Module {
             if (ex == null) {
                 // Song is null only when it times out
                 if (song == null) {
-                    error("加载歌曲 '" + FilenameUtils.getBaseName(file.getName()) + "' 超时.");
+                    error("Loading song '" + FilenameUtils.getBaseName(file.getName()) + "' timed out.");
                     onSongEnd();
                     return;
                 }
@@ -744,14 +744,14 @@ public class Notebot extends Module {
                 long time2 = System.currentTimeMillis();
                 long diff = time2 - time1;
 
-                info("歌曲 '" + FilenameUtils.getBaseName(file.getName()) + "' 已经加载到内存中! 耗时 "+diff+"ms");
+                info("Song '" + FilenameUtils.getBaseName(file.getName()) + "' has been loaded to the memory! Took "+diff+"ms");
                 callback.run();
             } else {
                 if (ex instanceof CancellationException) {
-                    error("加载歌曲 '" + FilenameUtils.getBaseName(file.getName()) + "' 被取消.");
+                    error("Loading song '" + FilenameUtils.getBaseName(file.getName()) + "' was cancelled.");
                 } else {
-                    error("加载歌曲时发生错误 '" + FilenameUtils.getBaseName(file.getName()) + "'. 查看日志以获取更多详细信息");
-                    MeteorClient.LOG.error("加载歌曲时发生错误 '" + FilenameUtils.getBaseName(file.getName()) + "'", ex);
+                    error("An error occurred while loading song '" + FilenameUtils.getBaseName(file.getName()) + "'. See the logs for more details");
+                    MeteorClient.LOG.error("An error occurred while loading song '" + FilenameUtils.getBaseName(file.getName()) + "'", ex);
                     onSongEnd();
                 }
             }
@@ -810,10 +810,10 @@ public class Notebot extends Module {
                 waitTicks = checkNoteblocksAgainDelay.get();
                 stage = Stage.WaitingToCheckNoteblocks;
 
-                info("延迟检查音符块");
+                info("Delaying check for noteblocks");
             } else {
                 stage = Stage.Playing;
-                info("加载完成.");
+                info("Loading done.");
                 play();
             }
             return;
@@ -936,13 +936,13 @@ public class Notebot extends Module {
     }
 
     /**
-     * Gets an Instrument from Note Map
+     * Gets an NoteBlockInstrument from Note Map
      *
      * @param inst An instrument
      * @return A new instrument mapped by instrument given in parameters
      */
     @Nullable
-    public Instrument getMappedInstrument(@NotNull Instrument inst) {
+    public NoteBlockInstrument getMappedInstrument(@NotNull NoteBlockInstrument inst) {
         if (mode.get() == NotebotUtils.NotebotMode.ExactInstruments) {
             NotebotUtils.OptionalInstrument optionalInstrument = (NotebotUtils.OptionalInstrument) sgNoteMap.getByIndex(inst.ordinal()).get();
             return optionalInstrument.toMinecraftInstrument();

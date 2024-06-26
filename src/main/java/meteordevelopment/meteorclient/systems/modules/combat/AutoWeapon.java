@@ -12,7 +12,6 @@ import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.utils.entity.EntityUtils;
 import meteordevelopment.meteorclient.utils.player.InvUtils;
 import meteordevelopment.orbit.EventHandler;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
@@ -22,28 +21,28 @@ public class AutoWeapon extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Weapon> weapon = sgGeneral.add(new EnumSetting.Builder<Weapon>()
-        .name("武器")
-        .description("使用什么类型的武器.")
+        .name("weapon")
+        .description("What type of weapon to use.")
         .defaultValue(Weapon.Sword)
         .build()
     );
 
     private final Setting<Integer> threshold = sgGeneral.add(new IntSetting.Builder()
-        .name("阈值")
-        .description("如果非首选武器产生的伤害达到这个值，将优先使用它而不是你的首选武器.")
+        .name("threshold")
+        .description("If the non-preferred weapon produces this much damage this will favor it over your preferred weapon.")
         .defaultValue(4)
         .build()
     );
 
     private final Setting<Boolean> antiBreak = sgGeneral.add(new BoolSetting.Builder()
-        .name("防止损坏")
-        .description("防止你的武器破损.")
+        .name("anti-break")
+        .description("Prevents you from breaking your weapon.")
         .defaultValue(false)
         .build()
     );
 
     public AutoWeapon() {
-        super(Categories.Combat, "自动武器", "在你的快捷栏中找到最好的武器.");
+        super(Categories.Combat, "auto-weapon", "Finds the best weapon to use in your hotbar.");
     }
 
     @EventHandler
@@ -62,14 +61,14 @@ public class AutoWeapon extends Module {
             ItemStack stack = mc.player.getInventory().getStack(i);
             if (stack.getItem() instanceof SwordItem swordItem
                 && (!antiBreak.get() || (stack.getMaxDamage() - stack.getDamage()) > 10)) {
-                currentDamageS = swordItem.getMaterial().getAttackDamage() + EnchantmentHelper.getAttackDamage(stack, group) + 2;
+                currentDamageS = swordItem.getMaterial().getAttackDamage() /*fixme + EnchantmentHelper.getAttackDamage(stack, group)*/ + 2;
                 if (currentDamageS > damageS) {
                     damageS = currentDamageS;
                     slotS = i;
                 }
             } else if (stack.getItem() instanceof AxeItem axeItem
                 && (!antiBreak.get() || (stack.getMaxDamage() - stack.getDamage()) > 10)) {
-                currentDamageA = axeItem.getMaterial().getAttackDamage() + EnchantmentHelper.getAttackDamage(stack, group) + 2;
+                currentDamageA = axeItem.getMaterial().getAttackDamage() /*fixme + EnchantmentHelper.getAttackDamage(stack, group)*/ + 2;
                 if (currentDamageA > damageA) {
                     damageA = currentDamageA;
                     slotA = i;

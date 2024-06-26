@@ -15,7 +15,6 @@ import meteordevelopment.meteorclient.utils.entity.ProjectileEntitySimulator;
 import meteordevelopment.meteorclient.utils.misc.Pool;
 import meteordevelopment.meteorclient.utils.render.color.SettingColor;
 import meteordevelopment.orbit.EventHandler;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,7 +34,7 @@ import java.util.List;
 
 public class Trajectories extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgRender = settings.createGroup("渲染");
+    private final SettingGroup sgRender = settings.createGroup("Render");
 
     // General
 
@@ -62,15 +61,15 @@ public class Trajectories extends Module {
     );
 
     private final Setting<Boolean> accurate = sgGeneral.add(new BoolSetting.Builder()
-        .name("精准")
-        .description("是否计算更精确.")
+        .name("accurate")
+        .description("Whether or not to calculate more accurate.")
         .defaultValue(false)
         .build()
     );
 
     public final Setting<Integer> simulationSteps = sgGeneral.add(new IntSetting.Builder()
-        .name("模拟步骤")
-        .description("模拟投掷物的步骤数,0 表示无限制")
+        .name("simulation-steps")
+        .description("How many steps to simulate projectiles. Zero for no limit")
         .defaultValue(500)
         .sliderMax(5000)
         .build()
@@ -79,21 +78,21 @@ public class Trajectories extends Module {
     // Render
 
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("形状模式")
-        .description("形状的渲染方式.")
+        .name("shape-mode")
+        .description("How the shapes are rendered.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
 
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
-        .name("侧面颜色")
+        .name("side-color")
         .description("The side color.")
         .defaultValue(new SettingColor(255, 150, 0, 35))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
-        .name("线条颜色")
+        .name("line-color")
         .description("The line color.")
         .defaultValue(new SettingColor(255, 150, 0))
         .build()
@@ -149,7 +148,7 @@ public class Trajectories extends Module {
         if (!simulator.set(player, itemStack, 0, accurate.get(), tickDelta)) return;
         getEmptyPath().calculate();
 
-        if (itemStack.getItem() instanceof CrossbowItem && EnchantmentHelper.getLevel(Enchantments.MULTISHOT, itemStack) > 0) {
+        if (itemStack.getItem() instanceof CrossbowItem && Utils.hasEnchantment(itemStack, Enchantments.MULTISHOT)) {
             if (!simulator.set(player, itemStack, MULTISHOT_OFFSET, accurate.get(), tickDelta)) return; // left multishot arrow
             getEmptyPath().calculate();
 

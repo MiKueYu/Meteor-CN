@@ -64,8 +64,8 @@ public class StorageESP extends Module {
     );
 
     public final Setting<ShapeMode> shapeMode = sgGeneral.add(new EnumSetting.Builder<ShapeMode>()
-        .name("形状模式")
-        .description("形状的渲染方式.")
+        .name("shape-mode")
+        .description("How the shapes are rendered.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
@@ -192,7 +192,7 @@ public class StorageESP extends Module {
         else if (blockEntity instanceof BarrelBlockEntity) lineColor.set(barrel.get());
         else if (blockEntity instanceof ShulkerBoxBlockEntity) lineColor.set(shulker.get());
         else if (blockEntity instanceof EnderChestBlockEntity) lineColor.set(enderChest.get());
-        else if (blockEntity instanceof AbstractFurnaceBlockEntity || blockEntity instanceof DispenserBlockEntity || blockEntity instanceof HopperBlockEntity) lineColor.set(other.get());
+        else if (blockEntity instanceof AbstractFurnaceBlockEntity || blockEntity instanceof BrewingStandBlockEntity || blockEntity instanceof ChiseledBookshelfBlockEntity || blockEntity instanceof CrafterBlockEntity || blockEntity instanceof DispenserBlockEntity || blockEntity instanceof DecoratedPotBlockEntity || blockEntity instanceof HopperBlockEntity) lineColor.set(other.get());
         else return;
 
         render = true;

@@ -5,11 +5,11 @@
 
 package meteordevelopment.meteorclient.systems.modules.render;
 
+import meteordevelopment.meteorclient.MeteorClient;
 import meteordevelopment.meteorclient.settings.*;
 import meteordevelopment.meteorclient.systems.modules.Categories;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.utils.Utils;
-import meteordevelopment.meteorclient.utils.misc.MeteorIdentifier;
 import meteordevelopment.meteorclient.utils.render.color.SettingColor;
 import meteordevelopment.meteorclient.utils.render.postprocess.PostProcessShaders;
 import net.minecraft.entity.Entity;
@@ -27,7 +27,7 @@ public class Chams extends Module {
     // Through walls
 
     public final Setting<Set<EntityType<?>>> entities = sgThroughWalls.add(new EntityTypeListSetting.Builder()
-        .name("实体")
+        .name("entities")
         .description("Select entities to show through walls.")
         .build()
     );
@@ -215,7 +215,7 @@ public class Chams extends Module {
         .build()
     );
 
-    public static final Identifier BLANK = new MeteorIdentifier("textures/blank.png");
+    public static final Identifier BLANK = MeteorClient.identifier("textures/blank.png");
 
     public Chams() {
         super(Categories.Render, "chams", "Tweaks rendering of entities.");
