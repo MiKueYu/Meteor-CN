@@ -34,6 +34,7 @@ import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.MaceItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.util.Hand;
@@ -48,56 +49,56 @@ import java.util.function.Predicate;
 
 public class KillAura extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgTargeting = settings.createGroup("目标");
-    private final SettingGroup sgTiming = settings.createGroup("时机");
+    private final SettingGroup sgTargeting = settings.createGroup("Targeting");
+    private final SettingGroup sgTiming = settings.createGroup("Timing");
 
     // General
 
     private final Setting<Weapon> weapon = sgGeneral.add(new EnumSetting.Builder<Weapon>()
-        .name("武器")
-        .description("只在手持指定的武器时攻击实体。")
-        .defaultValue(Weapon.Both)
+        .name("weapon")
+        .description("Only attacks an entity when a specified weapon is in your hand.")
+        .defaultValue(Weapon.All)
         .build()
     );
 
     private final Setting<RotationMode> rotation = sgGeneral.add(new EnumSetting.Builder<RotationMode>()
-        .name("旋转")
-        .description("计算何时应该转向目标.")
+        .name("rotate")
+        .description("Determines when you should rotate towards the target.")
         .defaultValue(RotationMode.Always)
         .build()
     );
 
     private final Setting<Boolean> autoSwitch = sgGeneral.add(new BoolSetting.Builder()
-        .name("自动切换")
-        .description("攻击目标时切换到你选择的武器.")
+        .name("auto-switch")
+        .description("Switches to your selected weapon when attacking the target.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> onlyOnClick = sgGeneral.add(new BoolSetting.Builder()
-        .name("仅在点击时")
-        .description("只在按住左键时攻击.")
+        .name("only-on-click")
+        .description("Only attacks when holding left click.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> onlyOnLook = sgGeneral.add(new BoolSetting.Builder()
-        .name("仅在注视时")
-        .description("只有在看向实体时才会攻击.")
+        .name("only-on-look")
+        .description("Only attacks when looking at an entity.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> pauseOnCombat = sgGeneral.add(new BoolSetting.Builder()
-        .name("暂停baritone")
-        .description("暂时冻结Baritone,直到你完成对实体的攻击.")
+        .name("pause-baritone")
+        .description("Freezes Baritone temporarily until you are finished attacking the entity.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<ShieldMode> shieldMode = sgGeneral.add(new EnumSetting.Builder<ShieldMode>()
-        .name("盾牌模式")
-        .description("会尝试用斧头破坏目标的盾牌。")
+        .name("shield-mode")
+        .description("Will try and use an axe to break target shields.")
         .defaultValue(ShieldMode.Break)
         .visible(() -> autoSwitch.get() && weapon.get() != Weapon.Axe)
         .build()
@@ -106,23 +107,23 @@ public class KillAura extends Module {
     // Targeting
 
     private final Setting<Set<EntityType<?>>> entities = sgTargeting.add(new EntityTypeListSetting.Builder()
-        .name("实体")
-        .description("攻击的实体.")
+        .name("entities")
+        .description("Entities to attack.")
         .onlyAttackable()
         .defaultValue(EntityType.PLAYER)
         .build()
     );
 
     private final Setting<SortPriority> priority = sgTargeting.add(new EnumSetting.Builder<SortPriority>()
-        .name("优先级")
-        .description("如何过滤范围内的目标.")
+        .name("priority")
+        .description("How to filter targets within range.")
         .defaultValue(SortPriority.ClosestAngle)
         .build()
     );
 
     private final Setting<Integer> maxTargets = sgTargeting.add(new IntSetting.Builder()
-        .name("最大目标")
-        .description("可以同时攻击多少个目标.")
+        .name("max-targets")
+        .description("How many entities to target at once.")
         .defaultValue(1)
         .min(1)
         .sliderRange(1, 5)
@@ -131,8 +132,8 @@ public class KillAura extends Module {
     );
 
     private final Setting<Double> range = sgTargeting.add(new DoubleSetting.Builder()
-        .name("范围")
-        .description("可以攻击实体的最大距离.")
+        .name("range")
+        .description("The maximum range the entity can be to attack it.")
         .defaultValue(4.5)
         .min(0)
         .sliderMax(6)
@@ -140,8 +141,8 @@ public class KillAura extends Module {
     );
 
     private final Setting<Double> wallsRange = sgTargeting.add(new DoubleSetting.Builder()
-        .name("穿墙范围")
-        .description("可以穿墙攻击实体的最大距离.")
+        .name("walls-range")
+        .description("The maximum range the entity can be attacked through walls.")
         .defaultValue(3.5)
         .min(0)
         .sliderMax(6)
@@ -149,29 +150,29 @@ public class KillAura extends Module {
     );
 
     private final Setting<EntityAge> mobAgeFilter = sgTargeting.add(new EnumSetting.Builder<EntityAge>()
-        .name("忽略")
-        .description("是否攻击实体的幼崽变种.")
+        .name("mob-age-filter")
+        .description("Determines the age of the mobs to target (baby, adult, or both).")
         .defaultValue(EntityAge.Adult)
         .build()
     );
 
     private final Setting<Boolean> ignoreNamed = sgTargeting.add(new BoolSetting.Builder()
-        .name("忽略命名")
-        .description("是否攻击有名字的生物.")
+        .name("ignore-named")
+        .description("Whether or not to attack mobs with a name.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> ignorePassive = sgTargeting.add(new BoolSetting.Builder()
-        .name("忽略被动")
-        .description("只有在被被动生物攻击你时,才会对它们发动攻击.")
+        .name("ignore-passive")
+        .description("Will only attack sometimes passive mobs if they are targeting you.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> ignoreTamed = sgTargeting.add(new BoolSetting.Builder()
-        .name("忽略驯服")
-        .description("会避免攻击你驯服的生物.")
+        .name("ignore-tamed")
+        .description("Will avoid attacking mobs you tamed.")
         .defaultValue(false)
         .build()
     );
@@ -179,43 +180,43 @@ public class KillAura extends Module {
     // Timing
 
     private final Setting<Boolean> pauseOnLag = sgTiming.add(new BoolSetting.Builder()
-        .name("网络延迟暂停")
-        .description("服务器卡顿时暂停.")
+        .name("pause-on-lag")
+        .description("Pauses if the server is lagging.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> pauseOnUse = sgTiming.add(new BoolSetting.Builder()
-        .name("暂停使用")
-        .description("使用物品时不攻击.")
+        .name("pause-on-use")
+        .description("Does not attack while using an item.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> pauseOnCA = sgTiming.add(new BoolSetting.Builder()
-        .name("暂停CA")
-        .description("在 CA 放置物品时不会攻击.")
+        .name("pause-on-CA")
+        .description("Does not attack while CA is placing.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> tpsSync = sgTiming.add(new BoolSetting.Builder()
-        .name("TPS同步")
-        .description("尝试将攻击间隔与服务器的TPS同步。")
+        .name("TPS-sync")
+        .description("Tries to sync attack delay with the server's TPS.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> customDelay = sgTiming.add(new BoolSetting.Builder()
-        .name("自定义间隔")
-        .description("使用自定义间隔而不是原版冷却时间.")
+        .name("custom-delay")
+        .description("Use a custom delay instead of the vanilla cooldown.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Integer> hitDelay = sgTiming.add(new IntSetting.Builder()
-        .name("攻击间隔")
-        .description("每tick攻击实体的次数.")
+        .name("hit-delay")
+        .description("How fast you hit the entity in ticks.")
         .defaultValue(11)
         .min(0)
         .sliderMax(60)
@@ -224,8 +225,8 @@ public class KillAura extends Module {
     );
 
     private final Setting<Integer> switchDelay = sgTiming.add(new IntSetting.Builder()
-        .name("切换间隔")
-        .description("切换物品栏后,需要等待多少tick才能攻击实体.")
+        .name("switch-delay")
+        .description("How many ticks to wait before hitting an entity after switching hotbar slots.")
         .defaultValue(0)
         .min(0)
         .sliderMax(10)
@@ -238,7 +239,7 @@ public class KillAura extends Module {
     public boolean attacking;
 
     public KillAura() {
-        super(Categories.Combat, "杀戮光环", "攻击你周围的指定实体.");
+        super(Categories.Combat, "kill-aura", "Attacks specified entities around you.");
     }
 
     @Override
@@ -283,7 +284,8 @@ public class KillAura extends Module {
             Predicate<ItemStack> predicate = switch (weapon.get()) {
                 case Axe -> stack -> stack.getItem() instanceof AxeItem;
                 case Sword -> stack -> stack.getItem() instanceof SwordItem;
-                case Both -> stack -> stack.getItem() instanceof AxeItem || stack.getItem() instanceof SwordItem;
+                case Mace -> stack -> stack.getItem() instanceof MaceItem;
+                case All -> stack -> stack.getItem() instanceof AxeItem || stack.getItem() instanceof SwordItem || stack.getItem() instanceof MaceItem;
                 default -> o -> true;
             };
             FindItemResult weaponResult = InvUtils.findInHotbar(predicate);
@@ -400,7 +402,8 @@ public class KillAura extends Module {
         return switch (weapon.get()) {
             case Axe -> mc.player.getMainHandStack().getItem() instanceof AxeItem;
             case Sword -> mc.player.getMainHandStack().getItem() instanceof SwordItem;
-            case Both -> mc.player.getMainHandStack().getItem() instanceof AxeItem || mc.player.getMainHandStack().getItem() instanceof SwordItem;
+            case Mace -> mc.player.getMainHandStack().getItem() instanceof MaceItem;
+            case All -> mc.player.getMainHandStack().getItem() instanceof AxeItem || mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof MaceItem;
             default -> true;
         };
     }
@@ -419,7 +422,8 @@ public class KillAura extends Module {
     public enum Weapon {
         Sword,
         Axe,
-        Both,
+        Mace,
+        All,
         Any
     }
 
